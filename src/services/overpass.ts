@@ -1,25 +1,8 @@
-import { get, writable } from "svelte/store";
-import type { Geolocation } from "./geolocation";
+import type { Geolocation } from "../types/geolocation";
 import store from "../store";
 import { RacksReducer } from "../store/racks";
 
 const baseUrl = "https://overpass-api.de/api/interpreter";
-
-export type Rack = {
-  id: number;
-  lat: number;
-  lng: number;
-  tags: {
-    amenity?: string;
-    bicycle_parking?: string;
-    capacity?: string;
-    covered?: string;
-    fee?: string;
-    lit?: string;
-    operator?: string;
-    source?: string;
-  };
-};
 
 export const op = async (query: string) => {
   const response = await fetch(`${baseUrl}?data=${encodeURIComponent(query)}`);

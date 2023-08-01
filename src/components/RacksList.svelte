@@ -4,7 +4,6 @@
   import store from "../store/index";
   import { getState } from "../flux";
 
-  // $: racks = getState(store.racks).all;
   $: racks = store.racks.getters.racksWithLocation;
   $: console.log(racks);
 </script>

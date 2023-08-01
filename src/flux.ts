@@ -6,12 +6,9 @@
  * - Computed getters
  * - Dispatchable actions
  */
-
 import {
   writable,
-  readable,
   derived,
-  readonly,
   get,
   type Writable,
   type Readable,
@@ -37,9 +34,10 @@ type Store = {
   modules?: {
     [key: string]: Store;
   };
+  parentModule?: StoreInstance;
 };
 
-type StoreInstance = {
+interface StoreInstance {
   state: Writable<any>;
   getters?: {
     [key: string]: Readable<any>;
@@ -51,7 +49,16 @@ type StoreInstance = {
     [key: string]: Action;
   };
   // Modules
+  parentModule?: StoreInstance;
   [key: string]: any; // TODO: Figure out how to type this as StoreInstance
+}
+
+// Return the top-level store
+const getRootStore = (store: StoreInstance): StoreInstance => {
+  if (store.parentModule) {
+    return getRootStore(store.parentModule);
+  }
+  return store;
 };
 
 const createStore = ({
@@ -60,48 +67,58 @@ const createStore = ({
   mutations,
   actions,
   modules,
+  parentModule,
 }: Store) => {
-  const rootStore: StoreInstance = {
+  const store: StoreInstance = {
     state: writable(state || {}),
     getters: {},
     mutations,
     actions,
+    parentModule,
   };
 
   if (getters) {
     Object.entries(getters).forEach(([key, getter]) => {
-      rootStore.getters[key] = derived(rootStore.state, ($state) =>
-        getter($state, rootStore.getters)
-      );
+      store.getters[key] = derived(store.state, ($state) => {
+        const rootStore = getRootStore(store);
+        return getter({
+          state: $state,
+          getters: store.getters,
+          rootStore,
+        });
+      });
     });
   }
 
   const commit = (name: string, payload?: any) => {
-    const $state = get(rootStore.state);
-    rootStore.mutations[name]($state, payload);
-    rootStore.state.set($state);
+    const $state = get(store.state);
+    store.mutations[name]($state, payload);
+    store.state.set($state);
   };
 
   const dispatch = (name: string, payload?: any) => {
     const context = {
-      state: get(rootStore.state),
+      state: get(store.state),
       commit,
       dispatch,
     };
-    rootStore.actions[name](context, payload);
+    store.actions[name](context, payload);
   };
 
   if (modules) {
     Object.entries(modules).forEach(([key, module]) => {
-      rootStore[key] = createStore(module);
+      store[key] = createStore({
+        ...module,
+        parentModule: store,
+      });
     });
   }
 
-  return rootStore;
+  return store;
 };
 
 const getState = (store: StoreInstance) => {
   return get(store.state);
 };
 
-export { createStore, getState };
+export { createStore, getState, getRootStore };

@@ -1,5 +1,5 @@
 import store from "../store";
-import { LocationReducer } from "../store/location";
+import { LocationAction } from "../store/location";
 
 let locationWatcher;
 
@@ -29,7 +29,7 @@ export const watchLocation = async () => {
       altitudeAccuracy,
       timestamp,
     };
-    store.dispatch({ type: LocationReducer.UPDATE_LOCATION, payload });
+    store.dispatch({ type: LocationAction.UPDATE_LOCATION, payload });
   });
 };
 

@@ -1,33 +1,35 @@
+import { getState } from "../flux";
 import { haversine } from "../util";
 
-const initialState = {
-  all: [],
-};
-
-export enum RacksReducer {
+export enum RacksMutation {
   ADD_RACK,
 }
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case RacksReducer.ADD_RACK:
-      return {
-        ...state,
-        all: [...state.all, action.payload],
-      };
-    default:
-      return state;
-  }
+const initialState = {
+  all: [
+    {
+      id: 1,
+      lat: 35.2271,
+      lng: -80.8431,
+      name: "Rack 1",
+      tags: {
+        bicycle_parking: "stands",
+        capacity: 2,
+      },
+    },
+  ],
+};
+
+const mutations = {
+  ADD_RACK: (state, payload) => {
+    state.all.push(payload);
+  },
 };
 
 const getters = {
-  racks: (state) => state.all,
-  racksWithLocation: (state) => {
-    // const me = getters.location;
-    const me = {
-      lat: 35.2271,
-      lng: -80.8431,
-    };
+  racks: ({ state }) => state.all,
+  racksWithLocation: ({ state, rootStore }) => {
+    const me = getState(rootStore.location);
     return state.all
       .map((rack) => {
         const distance = haversine(me, rack);
@@ -37,4 +39,8 @@ const getters = {
   },
 };
 
-export { reducer as racksReducer, initialState, getters as racksGetters };
+export default {
+  state: initialState,
+  mutations,
+  getters,
+};
