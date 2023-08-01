@@ -1,5 +1,7 @@
 const baseUrl = "https://overpass-api.de/api/interpreter";
 
+import { racks } from "../store";
+
 export const op = async (query: string) => {
   const response = await fetch(`${baseUrl}?data=${encodeURIComponent(query)}`);
   const data = await response.json();
@@ -16,5 +18,7 @@ export const fetchBikeRacks = async (
     node["amenity"="bicycle_parking"](around:${radius}, ${lat}, ${lng});
     out;
   `;
-  return await op(query);
+  const { elements } = await op(query);
+  racks.set(elements);
+  return elements;
 };

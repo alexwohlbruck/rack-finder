@@ -5,6 +5,7 @@
   import colors, { inherit } from "tailwindcss/colors";
   import * as op from "../services/overpass";
   import { Button } from "flowbite-svelte";
+  import { racks } from "../store";
 
   let map;
   let mapContainer;
@@ -44,22 +45,24 @@
 
   function queryRacks(lat, lng) {
     // Query for bike racks within a radius of a given point
-    op.fetchBikeRacks(lat, lng, 10000).then(({ elements }) => {
-      for (const element of elements) {
-        console.log({ element });
-        const { bicycle_parking: type, capacity } = element.tags;
-        const description = `${type} rack, ${capacity} bike capacity`;
-        const capitalized =
-          description.charAt(0).toUpperCase() + description.slice(1);
-        const popup = new Popup({ offset: 25 }).setText(capitalized);
-        const marker = new Marker({ color: colors.pink["500"] })
-          .setLngLat([element.lon, element.lat])
-          .setPopup(popup)
-          .addTo(map);
-        markers.push(marker);
-      }
-    });
+    op.fetchBikeRacks(lat, lng, 10000);
   }
+
+  racks.subscribe((racks) => {
+    for (const rack of racks) {
+      console.log({ rack });
+      const { bicycle_parking: type, capacity } = rack.tags;
+      const description = `${type} rack, ${capacity} bike capacity`;
+      const capitalized =
+        description.charAt(0).toUpperCase() + description.slice(1);
+      const popup = new Popup({ offset: 25 }).setText(capitalized);
+      const marker = new Marker({ color: colors.amber["500"] })
+        .setLngLat([rack.lon, rack.lat])
+        .setPopup(popup)
+        .addTo(map);
+      markers.push(marker);
+    }
+  });
 
   async function refresh() {
     clearMarkers();
@@ -68,11 +71,11 @@
   }
 
   onDestroy(() => {
-    map.remove();
+    map?.remove();
   });
 </script>
 
-<div class="map-wrap">
+<div class="relative w-full h-full">
   <div class="map" bind:this={mapContainer} />
   <div class="refresh">
     <Button pill on:click={refresh}>Refresh</Button>

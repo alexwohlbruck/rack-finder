@@ -16,7 +16,7 @@ const config = {
   theme: {
     extend: {
       colors: {
-        primary: colors.blue,
+        primary: colors.amber,
         // primary: {
         //   50: colors.blue[50],
         //   100: colors.blue[100],
