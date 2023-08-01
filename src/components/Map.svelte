@@ -8,6 +8,11 @@
   import { locationStore } from "../store/location";
   import colors from "tailwindcss/colors";
 
+  // TODO: Import palette from tailwind config
+  // import tailwindConfig from "../../tailwind.config.cjs";
+  // const palette = tailwindConfig.theme.extend.colors;
+  const palette = colors.yellow;
+
   const INITIAL_STATE = {
     lng: -80.843124,
     lat: 35.227085,
@@ -61,7 +66,7 @@
         },
         cluster: true,
         clusterMaxZoom: 14,
-        clusterRadius: 50,
+        clusterRadius: 25,
       });
 
       map.addLayer({
@@ -70,14 +75,26 @@
         source: "racks",
         filter: ["has", "point_count"],
         paint: {
-          "circle-color": colors.blue[500],
+          "circle-color": palette[300],
+          "circle-stroke-width": 1.5,
+          "circle-stroke-color": palette[500],
           "circle-radius": [
             "step",
             ["get", "point_count"],
-            20,
+            10,
+            50,
+            15,
             100,
+            20,
+            250,
+            25,
+            500,
             30,
-            750,
+            1000,
+            33,
+            5000,
+            37,
+            10000,
             40,
           ],
         },
@@ -101,10 +118,10 @@
         source: "racks",
         filter: ["!", ["has", "point_count"]],
         paint: {
-          "circle-color": colors.blue[500],
-          "circle-radius": 6,
-          "circle-stroke-width": 1,
-          "circle-stroke-color": colors.blue[800],
+          "circle-color": palette[600],
+          "circle-radius": 3,
+          "circle-stroke-width": 2,
+          "circle-stroke-color": palette[800],
         },
       });
     });

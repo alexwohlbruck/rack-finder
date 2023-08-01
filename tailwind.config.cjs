@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config}*/
-const colors = require('tailwindcss/colors')
+// const colors = require('tailwindcss/colors')
+import colors from 'tailwindcss/colors'
 
 const config = {
   content: [
@@ -16,7 +17,7 @@ const config = {
   theme: {
     extend: {
       colors: {
-        primary: colors.amber,
+        primary: colors.blue,
         // primary: {
         //   50: colors.blue[50],
         //   100: colors.blue[100],
@@ -34,4 +35,5 @@ const config = {
   },
 };
 
-module.exports = config;
+// module.exports = config;
+export default config
