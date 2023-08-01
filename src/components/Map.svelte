@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { Map, Marker, Popup } from "mapbox-gl";
+  import { Map, Marker, Popup, GeolocateControl } from "mapbox-gl";
   import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import { onMount, onDestroy } from "svelte";
   import * as op from "../services/overpass";
-  import { watchLocation, stopWatchingLocation } from "../services/geolocation";
   import { racksStore } from "../store/racks";
-  import { locationStore } from "../store/location";
   import colors from "tailwindcss/colors";
 
   // TODO: Import palette from tailwind config
@@ -18,17 +16,14 @@
     lat: 35.227085,
     zoom: 14,
   };
-  let map;
   let mapContainer;
-  const markers = [];
+  let map;
+  let geolocateControl;
 
   onMount(() => {
     initMap();
-    watchLocation();
   });
-
   onDestroy(() => {
-    stopWatchingLocation();
     map?.remove();
   });
 
@@ -42,11 +37,22 @@
       zoom: INITIAL_STATE.zoom,
     });
 
-    fetchRacks();
+    geolocateControl = new GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+      showUserHeading: true,
+      fitBoundsOptions: {
+        maxZoom: 17,
+      },
+    });
 
-    // Add a geojson source with clustered markers
+    map.addControl(geolocateControl);
+
     map.on("load", () => {
-      map.addSource("racks", {
+      const racksSourceName = "racks";
+      const racksLayer = {
         type: "geojson",
         data: {
           type: "FeatureCollection",
@@ -67,9 +73,8 @@
         cluster: true,
         clusterMaxZoom: 14,
         clusterRadius: 25,
-      });
-
-      map.addLayer({
+      };
+      const clustersLayer = {
         id: "clusters",
         type: "circle",
         source: "racks",
@@ -98,9 +103,8 @@
             40,
           ],
         },
-      });
-
-      map.addLayer({
+      };
+      const clustersCountLayer = {
         id: "cluster-count",
         type: "symbol",
         source: "racks",
@@ -110,12 +114,11 @@
           "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
           "text-size": 12,
         },
-      });
-
-      map.addLayer({
+      };
+      const unclusteredPointLayer = {
         id: "unclustered-point",
         type: "circle",
-        source: "racks",
+        source: racksSourceName,
         filter: ["!", ["has", "point_count"]],
         paint: {
           "circle-color": palette[600],
@@ -123,17 +126,19 @@
           "circle-stroke-width": 2,
           "circle-stroke-color": palette[800],
         },
-      });
+      };
+
+      map.addSource(racksSourceName, racksLayer);
+      map.addLayer(clustersLayer);
+      map.addLayer(clustersCountLayer);
+      map.addLayer(unclusteredPointLayer);
     });
 
     map.on("moveend", () => {
       fetchRacks();
     });
-  }
 
-  $: {
-    const { lng, lat } = $locationStore;
-    map?.setCenter([lng, lat]);
+    fetchRacks();
   }
 
   $: {
@@ -158,12 +163,6 @@
   function fetchRacks() {
     op.fetchRacks(map.getCenter(), 5000);
   }
-
-  function clearMarkers() {
-    for (const marker of markers) {
-      marker.remove();
-    }
-  }
 </script>
 
 <div class="relative w-full h-full">
@@ -171,13 +170,6 @@
 </div>
 
 <style>
-  .refresh {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    z-index: 5;
-  }
-
   .map {
     position: absolute;
     width: 100%;
