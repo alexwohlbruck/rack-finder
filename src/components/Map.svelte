@@ -1,85 +1,84 @@
-<script>
+<script lang="ts">
   import { Map, Marker, Popup } from "mapbox-gl";
   import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import { onMount, onDestroy } from "svelte";
-  import colors, { inherit } from "tailwindcss/colors";
+  import colors from "tailwindcss/colors";
   import * as op from "../services/overpass";
-  import { Button } from "flowbite-svelte";
-  import { racks } from "../store";
+  import { racks } from "../services/overpass";
+  import {
+    location,
+    watchLocation,
+    stopWatchingLocation,
+  } from "../services/geolocation";
 
+  const INITIAL_STATE = {
+    lng: -80.843124,
+    lat: 35.227085,
+    zoom: 14,
+  };
   let map;
   let mapContainer;
-  let zoom = 14;
+  const markers = [];
 
   onMount(() => {
-    init();
+    initMap();
+    watchLocation();
   });
 
-  async function init() {
-    const pos = await new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
-    const lat = pos.coords.latitude;
-    const lng = pos.coords.longitude;
-    const initialState = { lng: lng, lat: lat, zoom: zoom };
+  onDestroy(() => {
+    stopWatchingLocation();
+    map?.remove();
+  });
 
+  function initMap() {
     map = new Map({
       container: mapContainer,
       accessToken:
         "pk.eyJ1IjoiYWxleHdvaGxicnVjayIsImEiOiJjbGtxNXhibTYwbGJ0M2RuenUybTg3bDZlIn0.lfZIscTvkJKY9P1cxR1nhQ",
       style: `mapbox://styles/mapbox/streets-v12`,
-      center: [initialState.lng, initialState.lat],
-      zoom: initialState.zoom,
+      center: [INITIAL_STATE.lng, INITIAL_STATE.lat],
+      zoom: INITIAL_STATE.zoom,
     });
 
-    queryRacks(lat, lng);
+    fetchRacks();
+    map.on("moveend", () => {
+      fetchRacks();
+    });
   }
 
-  const markers = [];
-
-  function clearMarkers() {
-    for (const marker of markers) {
-      marker.remove();
-    }
-  }
-
-  function queryRacks(lat, lng) {
-    // Query for bike racks within a radius of a given point
-    op.fetchBikeRacks(lat, lng, 10000);
-  }
+  location.subscribe(({ lng, lat }) => {
+    map?.setCenter([lng, lat]);
+  });
 
   racks.subscribe((racks) => {
+    clearMarkers();
     for (const rack of racks) {
-      console.log({ rack });
       const { bicycle_parking: type, capacity } = rack.tags;
       const description = `${type} rack, ${capacity} bike capacity`;
       const capitalized =
         description.charAt(0).toUpperCase() + description.slice(1);
       const popup = new Popup({ offset: 25 }).setText(capitalized);
       const marker = new Marker({ color: colors.amber["500"] })
-        .setLngLat([rack.lon, rack.lat])
+        .setLngLat([rack.lng, rack.lat])
         .setPopup(popup)
         .addTo(map);
       markers.push(marker);
     }
   });
 
-  async function refresh() {
-    clearMarkers();
-    const center = map.getCenter();
-    queryRacks(center.lat, center.lng);
+  function fetchRacks() {
+    op.fetchRacks(map.getCenter(), 5000);
   }
 
-  onDestroy(() => {
-    map?.remove();
-  });
+  function clearMarkers() {
+    for (const marker of markers) {
+      marker.remove();
+    }
+  }
 </script>
 
 <div class="relative w-full h-full">
   <div class="map" bind:this={mapContainer} />
-  <div class="refresh">
-    <Button pill on:click={refresh}>Refresh</Button>
-  </div>
 </div>
 
 <style>
