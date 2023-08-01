@@ -1,15 +1,15 @@
 import type { Geolocation } from "../types/Geolocation";
 
-const initialState: Geolocation = {
-  lat: 0,
-  lng: 0,
-  accuracy: 0,
-  heading: null,
-  speed: null,
-  altitude: null,
-  altitudeAccuracy: null,
-  timestamp: 0,
-};
+// const initialState: Geolocation = {
+//   lat: 50,
+//   lng: -81,
+//   accuracy: 0,
+//   heading: null,
+//   speed: null,
+//   altitude: null,
+//   altitudeAccuracy: null,
+//   timestamp: 0,
+// };
 
 export enum LocationReducer {
   UPDATE_LOCATION,
@@ -27,4 +27,4 @@ const reducer = (state, action) => {
   }
 };
 
-export { reducer as locationReducer, initialState };
+export { reducer as locationReducer };

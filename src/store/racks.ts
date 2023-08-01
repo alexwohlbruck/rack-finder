@@ -1,4 +1,4 @@
-// import { haversine } from "../util";
+import { haversine } from "../util";
 
 const initialState = {
   all: [],
@@ -20,17 +20,21 @@ const reducer = (state, action) => {
   }
 };
 
-// const getters = {
-//   racks: (state) => state.all,
-//   racksWithLocation: (state, getters) => {
-//     const me = getters.location;
-//     return state.all
-//       .map((rack) => {
-//         const distance = haversine(me, rack);
-//         return { ...rack, distance };
-//       })
-//       .sort((a, b) => a.distance - b.distance);
-//   },
-// };
+const getters = {
+  racks: (state) => state.all,
+  racksWithLocation: (state) => {
+    // const me = getters.location;
+    const me = {
+      lat: 35.2271,
+      lng: -80.8431,
+    };
+    return state.all
+      .map((rack) => {
+        const distance = haversine(me, rack);
+        return { ...rack, distance };
+      })
+      .sort((a, b) => a.distance - b.distance);
+  },
+};
 
-export { reducer as racksReducer, initialState };
+export { reducer as racksReducer, initialState, getters as racksGetters };
