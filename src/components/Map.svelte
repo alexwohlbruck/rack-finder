@@ -38,6 +38,77 @@
     });
 
     fetchRacks();
+
+    // Add a geojson source with clustered markers
+    map.on("load", () => {
+      map.addSource("racks", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: [
+            {
+              type: "Feature",
+              geometry: {
+                type: "Point",
+                coordinates: [-80.843124, 35.227085],
+              },
+              properties: {
+                id: "1",
+                cluster: true,
+              },
+            },
+          ],
+        },
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 50,
+      });
+
+      map.addLayer({
+        id: "clusters",
+        type: "circle",
+        source: "racks",
+        filter: ["has", "point_count"],
+        paint: {
+          "circle-color": colors.blue[500],
+          "circle-radius": [
+            "step",
+            ["get", "point_count"],
+            20,
+            100,
+            30,
+            750,
+            40,
+          ],
+        },
+      });
+
+      map.addLayer({
+        id: "cluster-count",
+        type: "symbol",
+        source: "racks",
+        filter: ["has", "point_count"],
+        layout: {
+          "text-field": "{point_count_abbreviated}",
+          "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+          "text-size": 12,
+        },
+      });
+
+      map.addLayer({
+        id: "unclustered-point",
+        type: "circle",
+        source: "racks",
+        filter: ["!", ["has", "point_count"]],
+        paint: {
+          "circle-color": colors.blue[500],
+          "circle-radius": 6,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": colors.blue[800],
+        },
+      });
+    });
+
     map.on("moveend", () => {
       fetchRacks();
     });
@@ -50,19 +121,21 @@
 
   $: {
     const { racks: all } = $racksStore;
-    clearMarkers();
-    for (const rack of Object.values(all)) {
-      const { bicycle_parking: type, capacity } = rack.tags;
-      const description = `${type} rack, ${capacity} bike capacity`;
-      const capitalized =
-        description.charAt(0).toUpperCase() + description.slice(1);
-      const popup = new Popup({ offset: 25 }).setText(capitalized);
-      const marker = new Marker({ color: colors.amber["500"] })
-        .setLngLat([rack.lng, rack.lat])
-        .setPopup(popup)
-        .addTo(map);
-      markers.push(marker);
-    }
+
+    map?.getSource("racks")?.setData({
+      type: "FeatureCollection",
+      features: Object.values(all).map((rack) => ({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [rack.lng, rack.lat],
+        },
+        properties: {
+          id: rack.id,
+          cluster: true,
+        },
+      })),
+    });
   }
 
   function fetchRacks() {
