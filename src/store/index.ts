@@ -1,12 +1,12 @@
-import { createStore } from "../flux";
-import racks from "./racks";
-import location from "./location";
+// import { createStore } from "../flux";
+// import racks from "./racks";
+// import location from "./location";
 
-const store = createStore({
-  modules: {
-    location,
-    racks,
-  },
-});
+// const store = createStore({
+//   modules: {
+//     location,
+//     racks,
+//   },
+// });
 
-export default store;
+// export default store;

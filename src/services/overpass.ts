@@ -1,6 +1,5 @@
+import { addRack } from "../store/racks";
 import type { Geolocation } from "../types/geolocation";
-import store from "../store";
-import { RacksMutation } from "../store/racks";
 
 const baseUrl = "https://overpass-api.de/api/interpreter";
 
@@ -22,6 +21,6 @@ export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
       ...element,
       lng: element.lon,
     };
-    store.commit(RacksMutation.AddRack, payload);
+    addRack(payload);
   });
 };

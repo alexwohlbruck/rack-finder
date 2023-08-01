@@ -1,20 +1,12 @@
 <script>
   import { A, P, Listgroup, ListgroupItem } from "flowbite-svelte";
-  import store from "../store/index";
-  import { get } from "svelte/store";
-  import { getState } from "../flux";
-
-  $: racks = get(store.racks.state).all;
-  $: console.log({ racks });
-  // $: racks = store.racks.getters.racks;
+  import { racks } from "../store/racks";
 </script>
 
 <div>
   <P class="text-2xl mb-4 font-bold">Nearby racks</P>
 
-  <!-- <pre>{JSON.stringify($racks)}</pre> -->
-
-  <!-- <Listgroup>
+  <Listgroup>
     {#each $racks as rack}
       <ListgroupItem>
         <div class="flex items-center">
@@ -27,5 +19,5 @@
         </div>
       </ListgroupItem>
     {/each}
-  </Listgroup> -->
+  </Listgroup>
 </div>

@@ -1,24 +1,19 @@
 import type { Geolocation } from "../types/Geolocation";
+import { writable } from "svelte/store";
 
-export enum LocationMutation {
-  UpdateLocation = "UPDATE_LOCATION",
-}
-
-const initialState: Geolocation = {
+const locationStore = writable({
   lat: 35.2271,
   lng: -80.8431,
   accuracy: 0,
   heading: null,
   speed: null,
-};
+});
 
-const mutations = {
-  [LocationMutation.UpdateLocation]: (state, payload) => {
-    Object.assign(state, payload);
-  },
-};
+export function updateLocation(newLocation: Geolocation) {
+  locationStore.update(($data) => {
+    $data = { ...$data, ...newLocation };
+    return $data;
+  });
+}
 
-export default {
-  state: initialState,
-  mutations,
-};
+export { locationStore };

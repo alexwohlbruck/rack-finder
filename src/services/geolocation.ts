@@ -1,5 +1,4 @@
-import store from "../store";
-import { LocationMutation } from "../store/location";
+import { updateLocation } from "../store/location";
 
 let locationWatcher;
 
@@ -29,7 +28,7 @@ export const watchLocation = async () => {
       altitudeAccuracy,
       timestamp,
     };
-    store.dispatch({ type: LocationMutation.UpdateLocation, payload });
+    updateLocation(payload);
   });
 };
 

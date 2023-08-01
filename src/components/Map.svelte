@@ -2,11 +2,11 @@
   import { Map, Marker, Popup } from "mapbox-gl";
   import "../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import { onMount, onDestroy } from "svelte";
-  import colors from "tailwindcss/colors";
   import * as op from "../services/overpass";
-  // import { racks } from "../services/overpass";
   import { watchLocation, stopWatchingLocation } from "../services/geolocation";
-  import store from "../store/index";
+  import { racksStore } from "../store/racks";
+  import { locationStore } from "../store/location";
+  import colors from "tailwindcss/colors";
 
   const INITIAL_STATE = {
     lng: -80.843124,
@@ -43,27 +43,27 @@
     });
   }
 
-  // store.subscribe(({ location }) => {
-  //   const { lng, lat } = location;
-  //   map?.setCenter([lng, lat]);
-  // });
+  $: {
+    const { lng, lat } = $locationStore;
+    map?.setCenter([lng, lat]);
+  }
 
-  // store.subscribe(({ racks }) => {
-  //   console.log({ racks });
-  //   // clearMarkers();
-  //   // for (const rack of racks.all) {
-  //   //   const { bicycle_parking: type, capacity } = rack.tags;
-  //   //   const description = `${type} rack, ${capacity} bike capacity`;
-  //   //   const capitalized =
-  //   //     description.charAt(0).toUpperCase() + description.slice(1);
-  //   //   const popup = new Popup({ offset: 25 }).setText(capitalized);
-  //   //   const marker = new Marker({ color: colors.amber["500"] })
-  //   //     .setLngLat([rack.lng, rack.lat])
-  //   //     .setPopup(popup)
-  //   //     .addTo(map);
-  //   //   markers.push(marker);
-  //   // }
-  // });
+  $: {
+    const { racks: all } = $racksStore;
+    clearMarkers();
+    for (const rack of Object.values(all)) {
+      const { bicycle_parking: type, capacity } = rack.tags;
+      const description = `${type} rack, ${capacity} bike capacity`;
+      const capitalized =
+        description.charAt(0).toUpperCase() + description.slice(1);
+      const popup = new Popup({ offset: 25 }).setText(capitalized);
+      const marker = new Marker({ color: colors.amber["500"] })
+        .setLngLat([rack.lng, rack.lat])
+        .setPopup(popup)
+        .addTo(map);
+      markers.push(marker);
+    }
+  }
 
   function fetchRacks() {
     op.fetchRacks(map.getCenter(), 5000);
