@@ -1,6 +1,6 @@
 <script>
   import { Card } from "flowbite-svelte";
-  // import Map from "./components/Map.svelte";
+  import Map from "./components/Map.svelte";
   import RacksList from "./components/RacksList.svelte";
 </script>
 
@@ -10,7 +10,7 @@
       <RacksList />
     </Card>
     <Card padding="none" class="flex-auto max-w-none overflow-hidden">
-      <!-- <Map /> -->
+      <Map />
     </Card>
   </div>
 </main>

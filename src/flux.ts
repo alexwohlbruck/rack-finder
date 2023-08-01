@@ -48,6 +48,12 @@ interface StoreInstance {
   actions?: {
     [key: string]: Action;
   };
+
+  // Methods
+  // TODO: Allow mutation and action names to be typed
+  commit?: (name: any, payload?: any) => void;
+  dispatch?: (name: any, payload?: any) => void | Promise<any>;
+
   // Modules
   parentModule?: StoreInstance;
   [key: string]: any; // TODO: Figure out how to type this as StoreInstance
@@ -72,9 +78,10 @@ const createStore = ({
   const store: StoreInstance = {
     state: writable(state || {}),
     getters: {},
-    mutations,
-    actions,
-    parentModule,
+    mutations: mutations || {},
+    actions: actions || {},
+    modules: modules || {},
+    parentModule: parentModule || null,
   };
 
   if (getters) {
@@ -90,17 +97,34 @@ const createStore = ({
     });
   }
 
-  const commit = (name: string, payload?: any) => {
-    const $state = get(store.state);
-    store.mutations[name]($state, payload);
-    store.state.set($state);
+  store.commit = (name: any, payload?: any) => {
+    if (!store.mutations[name]) {
+      if (store.modules) {
+        Object.entries(store.modules).forEach(
+          ([key, module]: [string, StoreInstance]) => {
+            if (module.mutations && module.mutations[name]) {
+              store[key].commit(name, payload);
+            }
+          }
+        );
+      } else {
+        return console.error(`Tried to use unknown mutation "${name}"`);
+      }
+    } else {
+      const $state = get(store.state);
+      store.mutations[name]($state, payload);
+      store.state.set($state);
+    }
   };
 
-  const dispatch = (name: string, payload?: any) => {
+  store.dispatch = (name: any, payload?: any) => {
+    if (!store.actions[name]) {
+      return console.error(`Tried to use unknown action "${name}"`);
+    }
     const context = {
       state: get(store.state),
-      commit,
-      dispatch,
+      commit: store.commit,
+      dispatch: store.dispatch,
     };
     store.actions[name](context, payload);
   };

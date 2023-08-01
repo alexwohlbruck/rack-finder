@@ -39,14 +39,14 @@
 
     fetchRacks();
     map.on("moveend", () => {
-      // fetchRacks();
+      fetchRacks();
     });
   }
 
-  store.subscribe(({ location }) => {
-    const { lng, lat } = location;
-    map?.setCenter([lng, lat]);
-  });
+  // store.subscribe(({ location }) => {
+  //   const { lng, lat } = location;
+  //   map?.setCenter([lng, lat]);
+  // });
 
   // store.subscribe(({ racks }) => {
   //   console.log({ racks });

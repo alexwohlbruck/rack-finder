@@ -1,7 +1,7 @@
 import type { Geolocation } from "../types/Geolocation";
 
-export enum LocationAction {
-  UPDATE_LOCATION,
+export enum LocationMutation {
+  UpdateLocation = "UPDATE_LOCATION",
 }
 
 const initialState: Geolocation = {
@@ -13,7 +13,7 @@ const initialState: Geolocation = {
 };
 
 const mutations = {
-  UPDATE_LOCATION: (state, payload) => {
+  [LocationMutation.UpdateLocation]: (state, payload) => {
     Object.assign(state, payload);
   },
 };
