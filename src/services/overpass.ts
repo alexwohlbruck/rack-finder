@@ -1,5 +1,7 @@
 import { get, writable } from "svelte/store";
 import type { Geolocation } from "./geolocation";
+import store from "../store";
+import { RacksReducer } from "../store/racks";
 
 const baseUrl = "https://overpass-api.de/api/interpreter";
 
@@ -19,8 +21,6 @@ export type Rack = {
   };
 };
 
-export const racks = writable<Rack[]>([]);
-
 export const op = async (query: string) => {
   const response = await fetch(`${baseUrl}?data=${encodeURIComponent(query)}`);
   const data = await response.json();
@@ -34,12 +34,11 @@ export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
     out;
   `;
   const { elements } = await op(query);
-  const result = elements.map((element) => {
-    return {
+  elements.forEach((element) => {
+    const payload = {
       ...element,
       lng: element.lon,
     };
+    store.dispatch({ type: RacksReducer.ADD_RACK, payload });
   });
-
-  racks.set(result);
 };

@@ -1,26 +1,5 @@
-import { writable } from "svelte/store";
-
-export type Geolocation = {
-  lat: number;
-  lng: number;
-  accuracy?: number;
-  heading?: number | null;
-  speed?: number | null;
-  altitude?: number | null;
-  altitudeAccuracy?: number | null;
-  timestamp?: number;
-};
-
-export const location = writable<Geolocation>({
-  lat: 0,
-  lng: 0,
-  accuracy: 0,
-  heading: null,
-  speed: null,
-  altitude: null,
-  altitudeAccuracy: null,
-  timestamp: 0,
-});
+import store from "../store";
+import { LocationReducer } from "../store/location";
 
 let locationWatcher;
 
@@ -40,7 +19,7 @@ export const watchLocation = async () => {
       altitudeAccuracy,
     } = position.coords;
     const { timestamp } = position;
-    location.set({
+    const payload = {
       lat: latitude,
       lng: longitude,
       accuracy,
@@ -49,7 +28,8 @@ export const watchLocation = async () => {
       altitude,
       altitudeAccuracy,
       timestamp,
-    });
+    };
+    store.dispatch({ type: LocationReducer.UPDATE_LOCATION, payload });
   });
 };
 

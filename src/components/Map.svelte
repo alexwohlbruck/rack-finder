@@ -4,12 +4,9 @@
   import { onMount, onDestroy } from "svelte";
   import colors from "tailwindcss/colors";
   import * as op from "../services/overpass";
-  import { racks } from "../services/overpass";
-  import {
-    location,
-    watchLocation,
-    stopWatchingLocation,
-  } from "../services/geolocation";
+  // import { racks } from "../services/overpass";
+  import { watchLocation, stopWatchingLocation } from "../services/geolocation";
+  import store from "../store/index";
 
   const INITIAL_STATE = {
     lng: -80.843124,
@@ -42,29 +39,31 @@
 
     fetchRacks();
     map.on("moveend", () => {
-      fetchRacks();
+      // fetchRacks();
     });
   }
 
-  location.subscribe(({ lng, lat }) => {
+  store.subscribe(({ location }) => {
+    const { lng, lat } = location;
     map?.setCenter([lng, lat]);
   });
 
-  racks.subscribe((racks) => {
-    clearMarkers();
-    for (const rack of racks) {
-      const { bicycle_parking: type, capacity } = rack.tags;
-      const description = `${type} rack, ${capacity} bike capacity`;
-      const capitalized =
-        description.charAt(0).toUpperCase() + description.slice(1);
-      const popup = new Popup({ offset: 25 }).setText(capitalized);
-      const marker = new Marker({ color: colors.amber["500"] })
-        .setLngLat([rack.lng, rack.lat])
-        .setPopup(popup)
-        .addTo(map);
-      markers.push(marker);
-    }
-  });
+  // store.subscribe(({ racks }) => {
+  //   console.log({ racks });
+  //   // clearMarkers();
+  //   // for (const rack of racks.all) {
+  //   //   const { bicycle_parking: type, capacity } = rack.tags;
+  //   //   const description = `${type} rack, ${capacity} bike capacity`;
+  //   //   const capitalized =
+  //   //     description.charAt(0).toUpperCase() + description.slice(1);
+  //   //   const popup = new Popup({ offset: 25 }).setText(capitalized);
+  //   //   const marker = new Marker({ color: colors.amber["500"] })
+  //   //     .setLngLat([rack.lng, rack.lat])
+  //   //     .setPopup(popup)
+  //   //     .addTo(map);
+  //   //   markers.push(marker);
+  //   // }
+  // });
 
   function fetchRacks() {
     op.fetchRacks(map.getCenter(), 5000);
