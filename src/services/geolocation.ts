@@ -1,39 +1,33 @@
-import { updateLocation } from "../store/location";
+// Create an store that will be used to emit the location
 
-let locationWatcher;
+import { writable } from "svelte/store";
 
-export const watchLocation = async () => {
-  if (!navigator.geolocation) {
-    return;
-  }
+export const locationStore = writable<any>({});
 
-  locationWatcher = navigator.geolocation.watchPosition((position) => {
-    const {
-      latitude,
-      longitude,
-      accuracy,
-      heading,
-      speed,
-      altitude,
-      altitudeAccuracy,
-    } = position.coords;
-    const { timestamp } = position;
-    const payload = {
-      lat: latitude,
-      lng: longitude,
-      accuracy,
-      heading,
-      speed,
-      altitude,
-      altitudeAccuracy,
-      timestamp,
-    };
-    updateLocation(payload);
-  });
-};
+export async function getCurrentLocation() {
+  return new Promise((resolve, reject) =>
+    navigator.geolocation.getCurrentPosition(
+      (location) => {
+        locationStore.set(location);
+        resolve(location);
+      },
+      reject,
+      {
+        enableHighAccuracy: true,
+      }
+    )
+  );
+}
 
-export const stopWatchingLocation = () => {
-  if (locationWatcher) {
-    navigator.geolocation.clearWatch(locationWatcher);
-  }
-};
+export async function getLocationPermissionStatus() {
+  return new Promise((resolve, reject) =>
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then((result) => {
+        resolve(result.state);
+      })
+      .catch((error) => {
+        reject(error);
+      })
+  );
+}

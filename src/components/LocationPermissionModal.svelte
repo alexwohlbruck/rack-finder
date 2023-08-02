@@ -1,0 +1,70 @@
+<script lang="ts">
+  import { Modal, Alert } from "flowbite-svelte";
+  import Button from "../lib/Button.svelte";
+  import {
+    getCurrentLocation,
+    getLocationPermissionStatus,
+  } from "../services/geolocation";
+  import { createEventDispatcher, onMount } from "svelte";
+
+  onMount(async () => {
+    await checkLocationPermissionStatus();
+  });
+
+  type LocationPermissionStatus = "granted" | "denied" | "prompt";
+  let status: LocationPermissionStatus = "granted";
+  $: locationUnavailable = status !== "granted";
+
+  const dispatch = createEventDispatcher();
+
+  function locateUser() {
+    dispatch("locateUser");
+  }
+
+  async function checkLocationPermissionStatus() {
+    status = (await getLocationPermissionStatus()) as LocationPermissionStatus;
+    if (status === "granted") {
+      await getCurrentLocation();
+      setTimeout(locateUser, 0);
+    }
+  }
+
+  async function requestLocation() {
+    try {
+      await getCurrentLocation();
+      setTimeout(locateUser, 0);
+    } finally {
+      await checkLocationPermissionStatus();
+    }
+  }
+</script>
+
+<Modal bind:open={locationUnavailable} size="xs" permanent>
+  <div class="flex flex-col items-center">
+    <svg
+      class="mx-auto w-14 h-14 mb-4 dark:text-gray-200 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 14 20"
+    >
+      <path
+        d="M7 0a7 7 0 0 0-1 13.92V19a1 1 0 1 0 2 0v-5.08A7 7 0 0 0 7 0Zm0 5.5A1.5 1.5 0 0 0 5.5 7a1 1 0 0 1-2 0A3.5 3.5 0 0 1 7 3.5a1 1 0 0 1 0 2Z"
+      />
+    </svg>
+    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+      Grant access to your location to get started
+    </h3>
+    {#if status === "denied"}
+      <Alert class="text-center">
+        <span class="font-medium"
+          >Location permission denied! Check the site settings in your browser.</span
+        >
+      </Alert>
+    {:else}
+      <div class="flex gap-2">
+        <Button on:click={requestLocation}>Continue</Button>
+      </div>
+    {/if}
+  </div>
+</Modal>

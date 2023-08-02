@@ -5,16 +5,20 @@
   import * as op from "../services/overpass";
   import { racksStore } from "../store/racks";
   import colors from "tailwindcss/colors";
+  import { updateLocation } from "../store/location";
+  import {
+    getLocationPermissionStatus,
+    locationStore,
+  } from "../services/geolocation";
 
   // TODO: Import palette from tailwind config
   // import tailwindConfig from "../../tailwind.config.cjs";
   // const palette = tailwindConfig.theme.extend.colors;
   const palette = colors.yellow;
-
   const INITIAL_STATE = {
-    lng: -80.843124,
-    lat: 35.227085,
-    zoom: 14,
+    lng: -30.6271504,
+    lat: 29.108255,
+    zoom: 2,
   };
   let mapContainer;
   let map;
@@ -26,6 +30,14 @@
   onDestroy(() => {
     map?.remove();
   });
+
+  export function locateUser() {
+    geolocateControl.trigger();
+  }
+
+  function onGeolocateSuccess(e) {
+    updateLocation(e);
+  }
 
   function initMap() {
     map = new Map({
@@ -47,10 +59,11 @@
         maxZoom: 17,
       },
     });
+    geolocateControl.on("geolocate", onGeolocateSuccess);
 
     map.addControl(geolocateControl);
 
-    map.on("load", () => {
+    map.on("load", async () => {
       const racksSourceName = "racks";
       const racksLayer = {
         type: "geojson",

@@ -9,11 +9,11 @@ const locationStore = writable({
   speed: null,
 });
 
-export function updateLocation(newLocation: Geolocation) {
+function updateLocation(newLocation: Geolocation) {
   locationStore.update(($data) => {
     $data = { ...$data, ...newLocation };
     return $data;
   });
 }
 
-export { locationStore };
+export { locationStore, updateLocation };
