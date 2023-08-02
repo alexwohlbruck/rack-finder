@@ -5,11 +5,7 @@
   import * as op from "../services/overpass";
   import { racksStore } from "../store/racks";
   import colors from "tailwindcss/colors";
-  import { updateLocation } from "../store/location";
-  import {
-    getLocationPermissionStatus,
-    locationStore,
-  } from "../services/geolocation";
+  import { locationStore, updateLocation } from "../store/location";
 
   // TODO: Import palette from tailwind config
   // import tailwindConfig from "../../tailwind.config.cjs";
@@ -33,6 +29,9 @@
 
   export function locateUser() {
     geolocateControl.trigger();
+    if ($locationStore) {
+      fetchRacks($locationStore);
+    }
   }
 
   function onGeolocateSuccess(e) {
@@ -47,6 +46,7 @@
       style: `mapbox://styles/mapbox/streets-v12`,
       center: [INITIAL_STATE.lng, INITIAL_STATE.lat],
       zoom: INITIAL_STATE.zoom,
+      fadeDuration: 500,
     });
 
     geolocateControl = new GeolocateControl({
@@ -56,7 +56,7 @@
       trackUserLocation: true,
       showUserHeading: true,
       fitBoundsOptions: {
-        maxZoom: 17,
+        maxZoom: 15,
       },
     });
     geolocateControl.on("geolocate", onGeolocateSuccess);
@@ -150,8 +150,6 @@
     map.on("moveend", () => {
       fetchRacks();
     });
-
-    fetchRacks();
   }
 
   $: {
@@ -173,8 +171,9 @@
     });
   }
 
-  function fetchRacks() {
-    op.fetchRacks(map.getCenter(), 5000);
+  function fetchRacks(center?) {
+    center = center || map.getCenter();
+    op.fetchRacks(center, 5000);
   }
 </script>
 
