@@ -1,22 +1,16 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { Card, P } from "flowbite-svelte";
+  import { Card, Heading, P } from "flowbite-svelte";
   import RacksList from "./RacksList.svelte";
   import Button from "../lib/Button.svelte";
-
-  export let contributeModalDispatcher = createEventDispatcher();
-
-  function openContributeModal() {
-    contributeModalDispatcher("openContributeModal");
-  }
 </script>
 
-<Card class="flex-1 overflow-y-scroll overflow-x-hidden">
-  <div class="flex flex-col gap-3">
-    <div class="flex justify-between items-center">
-      <P class="text-2xl font-bold">Nearby racks</P>
-      <Button on:click={openContributeModal}>Contribute</Button>
-    </div>
+<Card padding="none" class="flex flex-col overflow-y-auto overflow-x-hidden">
+  <div class="p-4 flex gap-2 justify-between items-center">
+    <Heading tag="h5">Nearby racks</Heading>
+  </div>
+
+  <div class="flex-1 overflow-y-auto overflow-x-hidden border">
     <RacksList />
   </div>
 </Card>

@@ -4,19 +4,24 @@
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
   import { locationStore, updateLocation } from "../../store/location";
+  import { mapStore, syncMapCenter } from "../../store/map";
+  import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
     clustersCountLayer,
     clustersLayer,
     geolocateControlConfig,
     mapConfig,
+    palette,
     racksLayer,
     racksSourceName,
+    styles,
     unclusteredPointLayer,
   } from "./map.config";
 
   let mapContainer;
   let map;
   let geolocateControl;
+  let marker;
 
   onMount(() => {
     initMap();
@@ -54,11 +59,26 @@
       map.addLayer(unclusteredPointLayer);
     });
 
+    // Use debounce to only load 2s after the last moveend event
+    let timeout;
     map.on("moveend", () => {
-      fetchRacks();
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        fetchRacks();
+      }, 2000);
+    });
+
+    map.on("move", () => {
+      const center = map.getCenter();
+      marker?.setLngLat({
+        lat: center.lat,
+        lng: center.lng,
+      });
+      syncMapCenter(center);
     });
   }
 
+  // Watch racks data update and update map
   $: {
     const { racks: all } = $racksStore;
 
@@ -76,6 +96,45 @@
         },
       })),
     });
+  }
+
+  $: contributeMode = $mapStore.contributeMode;
+
+  $: {
+    if (map) {
+      // const style = map.contributeMode ? styles.satellite : styles.light;
+      // map.setStyle(style); // TODO: This doesn't work and clears layers
+
+      if (contributeMode) {
+        // Place a marker on the map center, pin the map center to the marker location, allow user to drag the marker'
+        marker = new Marker({
+          draggable: true,
+          color: palette[500],
+        })
+          .setLngLat([map.getCenter().lng, map.getCenter().lat])
+          .addTo(map);
+
+        marker.on("dragend", () => {
+          const { lng, lat } = marker.getLngLat();
+          map.panTo([lng, lat]);
+        });
+
+        marker.on("dragstart", () => {
+          map.dragPan.disable();
+        });
+
+        marker.on("dragend", () => {
+          map.dragPan.enable();
+        });
+
+        map.on("click", (e) => {
+          marker.setLngLat(e.lngLat).addTo(map);
+        });
+      } else {
+        map.off("click");
+        marker?.remove();
+      }
+    }
   }
 
   function fetchRacks(center?) {

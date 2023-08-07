@@ -8,14 +8,22 @@
 
 import { osmAuth } from "osm-auth";
 import { setUser } from "../store/auth";
+import type { BikeRack, Node } from "../types/OSM";
+import { js2xml, xml2js } from "xml-js";
 
-const redirectPath = `${window.location.origin}${window.location.pathname}`;
-
-console.log({ redirectPath });
+const ATTRIBUTION = "Rack Finder by @alexwohlbruck";
+const OSM_BASE_URL = "https://api.openstreetmap.org/api/0.6";
+const REDIRECT_PATH = `${window.location.origin}${window.location.pathname}`;
+const _declaration = {
+  _attributes: {
+    version: "1.0",
+    encoding: "UTF-8",
+  },
+};
 
 const osm = osmAuth({
   client_id: "aGe5vYFwWvRLM6--IrLwXVSM_oQ4Q-HN5e9Ow_lrN_w",
-  redirect_uri: redirectPath,
+  redirect_uri: REDIRECT_PATH,
   scope: "write_api read_prefs",
   auto: true,
 });
@@ -33,16 +41,9 @@ export const authenticate = async () => {
   }
 };
 
-export const getOsmUser = async () => {
-  try {
-    const response = await osm.fetch(
-      `https://api.openstreetmap.org/api/0.6/user/details.json`
-    );
-    const { user } = await response.json();
-    setUser(user);
-  } catch (err) {
-    console.error(err);
-  }
+export const logout = () => {
+  osm.logout();
+  setUser(null);
 };
 
 const init = async () => {
@@ -59,3 +60,125 @@ const init = async () => {
 };
 
 init();
+
+export const getOsmUser = async () => {
+  try {
+    const response = await osm.fetch(
+      `https://api.openstreetmap.org/api/0.6/user/details.json`
+    );
+    const { user } = await response.json();
+    setUser(user);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const createChangeset = async (comment) => {
+  const data = {
+    _declaration,
+    osm: {
+      changeset: {
+        tag: [
+          {
+            _attributes: {
+              k: "created_by",
+              v: ATTRIBUTION,
+            },
+          },
+          {
+            _attributes: {
+              k: "comment",
+              v: comment,
+            },
+          },
+        ],
+      },
+    },
+  };
+  const changesetResponse = await osm.fetch(
+    `${OSM_BASE_URL}/changeset/create`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "text/xml",
+      },
+      body: js2xml(data, { compact: true }),
+    }
+  );
+  const changeset = await changesetResponse.text();
+  return changeset as string;
+};
+
+const createNode = async ({ changeset, lat, lng, tags }: Node) => {
+  const data = {
+    _declaration,
+    osm: {
+      node: {
+        _attributes: {
+          lat,
+          lon: lng,
+          version: "1",
+          changeset,
+        },
+        tag: tags.map(({ key, value }) => ({
+          _attributes: {
+            k: key,
+            v: value,
+          },
+        })),
+      },
+    },
+  };
+  const newNodeResponse = await osm.fetch(`${OSM_BASE_URL}/node/create`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "text/xml",
+    },
+    body: js2xml(data, { compact: true }),
+  });
+  const node = await newNodeResponse.text();
+  return node as string;
+};
+
+const closeChangeset = async (changeset) => {
+  const closeChangesetResponse = await osm.fetch(
+    `${OSM_BASE_URL}/changeset/${changeset}/close`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "text/xml",
+      },
+    }
+  );
+  await closeChangesetResponse.text();
+};
+
+export const submitBikeRack = async (bikeRack: BikeRack) => {
+  const { lat, lng } = bikeRack;
+  const tags = Object.entries(bikeRack.tags)
+    .map(([key, value]) => ({
+      key,
+      value,
+    }))
+    .filter(({ value }) => value); // Remove empty tags
+
+  try {
+    const changeset = await createChangeset("Rack Finder");
+    const node = await createNode({
+      changeset,
+      lat,
+      lng,
+      tags: [
+        {
+          key: "amenity",
+          value: "bicycle_parking",
+        },
+        ...tags,
+      ],
+    });
+    const close = await closeChangeset(changeset);
+    console.log({ changeset, node, close });
+  } catch (err) {
+    console.error(err);
+  }
+};

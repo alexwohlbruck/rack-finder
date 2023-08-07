@@ -1,6 +1,6 @@
 import colors from "tailwindcss/colors";
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   lng: -30.6271504,
   lat: 29.108255,
   zoom: 2,
@@ -8,12 +8,17 @@ const INITIAL_STATE = {
 // TODO: Import palette from tailwind config
 // import tailwindConfig from "../../tailwind.config.cjs";
 // const palette = tailwindConfig.theme.extend.colors;
-const palette = colors.yellow;
+export const palette = colors.yellow;
+export const styles = {
+  light: "mapbox://styles/mapbox/streets-v12",
+  dark: "mapbox://styles/mapbox/dark-v10",
+  satellite: "mapbox://styles/mapbox/satellite-streets-v12",
+};
 
 export const mapConfig = {
   accessToken:
     "pk.eyJ1IjoiYWxleHdvaGxicnVjayIsImEiOiJjbGtxNXhibTYwbGJ0M2RuenUybTg3bDZlIn0.lfZIscTvkJKY9P1cxR1nhQ",
-  style: `mapbox://styles/mapbox/streets-v12`,
+  style: styles.light,
   center: [INITIAL_STATE.lng, INITIAL_STATE.lat],
   zoom: INITIAL_STATE.zoom,
   fadeDuration: 500,
