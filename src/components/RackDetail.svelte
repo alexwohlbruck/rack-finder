@@ -1,0 +1,1 @@
+<div>Rack detail</div>

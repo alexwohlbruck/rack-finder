@@ -7,8 +7,10 @@ const racksStore = writable<{
   racks: {
     [key: string]: Rack;
   };
+  selectedRack: Rack;
 }>({
   racks: {},
+  selectedRack: null,
 });
 
 export function addRack(rack) {
@@ -16,6 +18,13 @@ export function addRack(rack) {
     if (!$data.racks[rack.id]) {
       $data.racks[rack.id] = rack;
     }
+    return $data;
+  });
+}
+
+export function selectRack(rack) {
+  racksStore.update(($data) => {
+    $data.selectedRack = rack;
     return $data;
   });
 }
