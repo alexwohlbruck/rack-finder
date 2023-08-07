@@ -1,7 +1,7 @@
 import { derived, writable } from "svelte/store";
 import { haversine } from "../util";
-import { locationStore } from "./location";
 import type { Rack } from "../types/Rack";
+import { mapStore } from "./map";
 
 const racksStore = writable<{
   racks: {
@@ -29,10 +29,10 @@ export function selectRack(rack) {
   });
 }
 
-const racks = derived([racksStore, locationStore], ([$data, $location]) => {
+const racks = derived([racksStore, mapStore], ([$data, $mapStore]) => {
   return Object.values($data.racks)
     .map((rack) => {
-      const distance = haversine($location, rack);
+      const distance = haversine($mapStore.center, rack);
       return { ...rack, distance };
     })
     .sort((a, b) => a.distance - b.distance);

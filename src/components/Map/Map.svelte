@@ -98,8 +98,8 @@
     });
   }
 
+  // Watch contribute mode and update listeners
   $: contributeMode = $mapStore.contributeMode;
-
   const markerDragStart = () => {
     const { lng, lat } = marker.getLngLat();
     map.panTo([lng, lat]);
@@ -117,7 +117,6 @@
       // map.setStyle(style); // TODO: This doesn't work and clears layers
 
       if (contributeMode) {
-        // Place a marker on the map center, pin the map center to the marker location, allow user to drag the marker'
         marker = new Marker({
           draggable: true,
           color: palette[500],

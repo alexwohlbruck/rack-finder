@@ -46,7 +46,7 @@ export const logout = () => {
   setUser(null);
 };
 
-const init = async () => {
+export const init = async () => {
   // Return auth token to parent window when authentication is complete
   if (window.opener) {
     window.opener.authComplete(window.location.href);
@@ -58,8 +58,6 @@ const init = async () => {
     getOsmUser();
   }
 };
-
-init();
 
 export const getOsmUser = async () => {
   try {
