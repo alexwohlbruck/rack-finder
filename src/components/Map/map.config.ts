@@ -1,5 +1,6 @@
 import colors from "tailwindcss/colors";
 
+export const DEBOUNCE_TIME = 1000;
 export const INITIAL_STATE = {
   lng: -30.6271504,
   lat: 29.108255,
@@ -12,7 +13,7 @@ export const palette = colors.yellow;
 export const styles = {
   light: "mapbox://styles/mapbox/streets-v12",
   dark: "mapbox://styles/mapbox/dark-v10",
-  satellite: "mapbox://styles/mapbox/satellite-streets-v12",
+  satellite: "mapbox://styles/mapbox/satellite-v9",
 };
 
 export const mapConfig = {

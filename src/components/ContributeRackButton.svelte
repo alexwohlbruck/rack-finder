@@ -1,6 +1,15 @@
 <script>
   import Button from "../lib/Button.svelte";
+  import { authenticate, checkAuthenticated } from "../services/osm";
   import { toggleContributeMode } from "../store/map";
+
+  function contribute() {
+    if (checkAuthenticated()) {
+      toggleContributeMode();
+    } else {
+      authenticate();
+    }
+  }
 </script>
 
 <Button
@@ -8,7 +17,7 @@
   pill
   shadow
   size="xl"
-  on:click={() => toggleContributeMode()}
+  on:click={contribute}
 >
   <svg
     class="w-4 h-4 text-gray-800 dark:text-white"

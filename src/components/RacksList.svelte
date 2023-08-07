@@ -1,16 +1,29 @@
 <script>
-  import { A, Listgroup, ListgroupItem, Button } from "flowbite-svelte";
+  import { ListgroupItem, Button, P } from "flowbite-svelte";
   import { racks } from "../store/racks";
+
+  function renderDistance(distanceInMeters) {
+    if (!distanceInMeters) return "";
+
+    const distanceInKm = distanceInMeters / 1000;
+
+    if (distanceInKm < 1) {
+      return `${Math.round(distanceInMeters)} m`;
+    }
+    return `${distanceInKm.toFixed(1)} km`;
+  }
 </script>
 
 <div>
   {#each $racks as rack}
     <ListgroupItem class="border-b">
       <div class="flex items-center">
-        <div class="flex-1 flex flex-col">
-          <span>{rack?.tags.bicycle_parking} style</span>
-          <span>{rack?.tags.capacity} bike capacity</span>
-          <span>{Math.round(rack?.distance / 100) / 10} km away</span>
+        <div class="flex-1 flex gap-4 items-center">
+          <P size="xs" weight="medium">{renderDistance(rack?.distance)}</P>
+          <div class="flex-1 flex flex-col">
+            <P size="xs">{rack?.tags.bicycle_parking} style</P>
+            <P size="xs">{rack?.tags.capacity} bike capacity</P>
+          </div>
         </div>
         <Button color="alternative" size="xs">
           <svg

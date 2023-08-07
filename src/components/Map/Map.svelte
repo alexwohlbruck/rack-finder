@@ -7,6 +7,7 @@
   import { mapStore, syncMapCenter } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
+    DEBOUNCE_TIME,
     clustersCountLayer,
     clustersLayer,
     geolocateControlConfig,
@@ -65,7 +66,7 @@
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         fetchRacks();
-      }, 2000);
+      }, DEBOUNCE_TIME);
     });
 
     map.on("move", () => {

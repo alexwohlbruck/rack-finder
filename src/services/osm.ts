@@ -10,6 +10,7 @@ import { osmAuth } from "osm-auth";
 import { setUser } from "../store/auth";
 import type { BikeRack, Node } from "../types/OSM";
 import { js2xml, xml2js } from "xml-js";
+import { toggleContributeMode } from "../store/map";
 
 const ATTRIBUTION = "Rack Finder by @alexwohlbruck";
 const OSM_BASE_URL = "https://api.openstreetmap.org/api/0.6";
@@ -44,6 +45,7 @@ export const authenticate = async () => {
 export const logout = () => {
   osm.logout();
   setUser(null);
+  toggleContributeMode(false);
 };
 
 export const init = async () => {
