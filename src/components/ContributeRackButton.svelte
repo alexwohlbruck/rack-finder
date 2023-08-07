@@ -4,7 +4,7 @@
 </script>
 
 <Button
-  class="!p-5 bg-primary-400 absolute right-5 bottom-5 z-50"
+  class="!p-5 bg-primary-400 absolute right-5 bottom-5 z-40"
   pill
   shadow
   size="xl"

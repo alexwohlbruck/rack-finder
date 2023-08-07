@@ -100,6 +100,17 @@
 
   $: contributeMode = $mapStore.contributeMode;
 
+  const markerDragStart = () => {
+    const { lng, lat } = marker.getLngLat();
+    map.panTo([lng, lat]);
+    map.dragPan.enable();
+  };
+  const markerDragEnd = () => {
+    map.dragPan.disable();
+  };
+  const mapClick = (e) => {
+    marker.setLngLat(e.lngLat).addTo(map);
+  };
   $: {
     if (map) {
       // const style = map.contributeMode ? styles.satellite : styles.light;
@@ -114,24 +125,11 @@
           .setLngLat([map.getCenter().lng, map.getCenter().lat])
           .addTo(map);
 
-        marker.on("dragend", () => {
-          const { lng, lat } = marker.getLngLat();
-          map.panTo([lng, lat]);
-        });
-
-        marker.on("dragstart", () => {
-          map.dragPan.disable();
-        });
-
-        marker.on("dragend", () => {
-          map.dragPan.enable();
-        });
-
-        map.on("click", (e) => {
-          marker.setLngLat(e.lngLat).addTo(map);
-        });
+        marker.on("dragend", markerDragEnd);
+        marker.on("dragstart", markerDragStart);
+        map.on("click", mapClick);
       } else {
-        map.off("click");
+        map.off("click", mapClick);
         marker?.remove();
       }
     }
