@@ -46,7 +46,7 @@ export type Node = {
 };
 
 // https://wiki.openstreetmap.org/wiki/Key:bicycle_parking
-type RackType =
+export type RackType =
   | "stands"
   | "wall_loops"
   | "safe_loops"

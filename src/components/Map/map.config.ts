@@ -12,8 +12,8 @@ export const INITIAL_STATE = {
 export const palette = colors.yellow;
 export const styles = {
   light: "mapbox://styles/mapbox/streets-v12",
-  dark: "mapbox://styles/mapbox/dark-v10",
-  satellite: "mapbox://styles/mapbox/satellite-v9",
+  dark: "mapbox://styles/mapbox/dark-v11",
+  satellite: "mapbox://styles/mapbox/satellite-streets-v12",
 };
 
 export const mapConfig = {
@@ -32,7 +32,7 @@ export const geolocateControlConfig = {
   trackUserLocation: true,
   showUserHeading: true,
   fitBoundsOptions: {
-    maxZoom: 15,
+    maxZoom: 18,
   },
 };
 

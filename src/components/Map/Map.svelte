@@ -18,6 +18,7 @@
     styles,
     unclusteredPointLayer,
   } from "./map.config";
+  import type { Rack } from "../../types/Rack";
 
   let mapContainer;
   let map;
@@ -53,11 +54,12 @@
 
     map.addControl(geolocateControl);
 
-    map.on("load", async () => {
+    map.on("style.load", async () => {
       map.addSource(racksSourceName, racksLayer);
       map.addLayer(clustersLayer);
       map.addLayer(clustersCountLayer);
       map.addLayer(unclusteredPointLayer);
+      updateRacksLayer($racksStore.racks);
     });
 
     // Use debounce to only load 2s after the last moveend event
@@ -79,13 +81,10 @@
     });
   }
 
-  // Watch racks data update and update map
-  $: {
-    const { racks: all } = $racksStore;
-
+  function updateRacksLayer(racks) {
     map?.getSource("racks")?.setData({
       type: "FeatureCollection",
-      features: Object.values(all).map((rack) => ({
+      features: Object.values(racks).map((rack: Rack) => ({
         type: "Feature",
         geometry: {
           type: "Point",
@@ -98,6 +97,8 @@
       })),
     });
   }
+
+  $: updateRacksLayer($racksStore.racks);
 
   // Watch contribute mode and update listeners
   $: contributeMode = $mapStore.contributeMode;
@@ -114,8 +115,8 @@
   };
   $: {
     if (map) {
-      // const style = map.contributeMode ? styles.satellite : styles.light;
-      // map.setStyle(style); // TODO: This doesn't work and clears layers
+      const style = contributeMode ? styles.satellite : styles.dark;
+      map.setStyle(style);
 
       if (contributeMode) {
         marker = new Marker({

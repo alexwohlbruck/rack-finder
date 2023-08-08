@@ -10,7 +10,9 @@
     <Heading tag="h5">Nearby racks</Heading>
   </div>
 
-  <div class="flex-1 overflow-y-auto overflow-x-hidden border">
+  <div
+    class="flex-1 overflow-y-auto overflow-x-hidden border-t border-gray-200 dark:border-gray-700"
+  >
     <RacksList />
   </div>
 </Card>

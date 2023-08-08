@@ -14,13 +14,13 @@
 
 <Button
   class="!p-5 bg-primary-400 absolute right-5 bottom-5 z-40"
-  pill
+  rounded
   shadow
   size="xl"
   on:click={contribute}
 >
   <svg
-    class="w-4 h-4 text-gray-800 dark:text-white"
+    class="w-4 h-4 text-gray-800"
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

@@ -1,6 +1,7 @@
-<script>
+<script lang="ts">
   import { ListgroupItem, Button, P } from "flowbite-svelte";
   import { racks } from "../store/racks";
+  import { type RackType } from "../types/OSM";
 
   function renderDistance(distanceInMeters) {
     if (!distanceInMeters) return "";
@@ -12,17 +13,51 @@
     }
     return `${distanceInKm.toFixed(1)} km`;
   }
+
+  function capitalize(str) {
+    if (!str || !str.length) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  function displayType(type: RackType) {
+    if (!type) {
+      return "Unknown type";
+    }
+    let friendlyName = type;
+    switch (type) {
+      case "staple":
+        friendlyName = "Staple rack";
+        break;
+      case "wave":
+        friendlyName = "Wave rack";
+        break;
+    }
+    return capitalize(friendlyName);
+  }
+
+  function displayCapacity(capacity) {
+    if (!capacity) {
+      return "Unknown capacity";
+    }
+    return `${capacity} bicycle${capacity !== 1 ? "s" : ""}`;
+  }
 </script>
 
 <div>
   {#each $racks as rack}
-    <ListgroupItem class="border-b">
+    <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
       <div class="flex items-center">
         <div class="flex-1 flex gap-4 items-center">
-          <P size="xs" weight="medium">{renderDistance(rack?.distance)}</P>
+          <P size="sm" weight="medium" class="w-11 text-center">
+            {renderDistance(rack?.distance)}
+          </P>
           <div class="flex-1 flex flex-col">
-            <P size="xs">{rack?.tags.bicycle_parking} style</P>
-            <P size="xs">{rack?.tags.capacity} bike capacity</P>
+            <P size="sm">
+              {displayType(rack?.tags.bicycle_parking)}
+            </P>
+            <P size="sm">
+              {displayCapacity(rack?.tags.capacity)}
+            </P>
           </div>
         </div>
         <Button color="alternative" size="xs">
