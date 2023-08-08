@@ -86,6 +86,16 @@
         fetchRacks();
       }, DEBOUNCE_TIME);
     });
+
+    map.on("move", () => {
+      if (contributeMode) {
+        const center = map.getCenter();
+        marker?.setLngLat({
+          lat: center.lat,
+          lng: center.lng,
+        });
+      }
+    });
   }
 
   function addMapLayers() {
