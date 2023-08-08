@@ -58,11 +58,12 @@
 
     map.addControl(geolocateControl);
 
+    map.on("load", () => {
+      addMapLayers();
+    });
+
     map.on("style.load", async () => {
-      map.addSource(racksSourceName, racksLayer);
-      map.addLayer(clustersLayer);
-      map.addLayer(clustersCountLayer);
-      map.addLayer(unclusteredPointLayer);
+      addMapLayers();
       updateRacksLayer($racksStore.racks);
     });
 
@@ -90,6 +91,13 @@
     });
   }
 
+  function addMapLayers() {
+    map.addSource(racksSourceName, racksLayer);
+    map.addLayer(clustersLayer);
+    map.addLayer(clustersCountLayer);
+    map.addLayer(unclusteredPointLayer);
+  }
+
   function updateRacksLayer(racks) {
     map?.getSource("racks")?.setData({
       type: "FeatureCollection",
@@ -111,7 +119,10 @@
     map.setStyle(style);
   }
 
-  $: updateRacksLayer($racksStore.racks);
+  $: {
+    const racks = $racksStore.racks;
+    updateRacksLayer(racks);
+  }
 
   $: {
     const center = $mapStore.center;
