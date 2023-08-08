@@ -83,7 +83,7 @@
   }
 </script>
 
-<Card padding="md" class="flex flex-1 flex-col gap-4 w-fill w-full">
+<Card padding="md" class="flex flex-1 flex-col gap-4">
   <div class="flex items-start">
     <div class="flex-1">
       <Heading tag="h5">Contribute new bike rack</Heading>
