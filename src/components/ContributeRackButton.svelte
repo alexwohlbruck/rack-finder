@@ -1,7 +1,7 @@
 <script>
   import Button from "../lib/Button.svelte";
   import { authenticate, checkAuthenticated } from "../services/osm";
-  import { toggleContributeMode } from "../store/map";
+  import { toggleContributeMode, mapStore } from "../store/map";
 
   function contribute() {
     if (checkAuthenticated()) {
@@ -20,7 +20,8 @@
   on:click={contribute}
 >
   <svg
-    class="w-4 h-4 text-gray-800"
+    class="icon w-4 h-4 text-gray-800"
+    class:rotate45={$mapStore.contributeMode}
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -35,3 +36,13 @@
     />
   </svg>
 </Button>
+
+<style>
+  .icon {
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform: rotate(0deg);
+  }
+  .rotate45 {
+    transform: rotate(45deg);
+  }
+</style>

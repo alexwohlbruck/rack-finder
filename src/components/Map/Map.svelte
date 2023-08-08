@@ -110,9 +110,6 @@
   const markerDragEnd = () => {
     map.dragPan.disable();
   };
-  const mapClick = (e) => {
-    marker.setLngLat(e.lngLat).addTo(map);
-  };
   $: {
     if (map) {
       const style = contributeMode ? styles.satellite : styles.dark;
@@ -128,9 +125,7 @@
 
         marker.on("dragend", markerDragEnd);
         marker.on("dragstart", markerDragStart);
-        map.on("click", mapClick);
       } else {
-        map.off("click", mapClick);
         marker?.remove();
       }
     }
