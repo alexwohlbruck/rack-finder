@@ -48,7 +48,10 @@
     map = new Map({
       ...mapConfig,
       container: mapContainer,
+      style: getSystemTheme(),
     });
+
+    watchSystemTheme();
 
     geolocateControl = new GeolocateControl(geolocateControlConfig);
     geolocateControl.on("geolocate", onGeolocateSuccess);
@@ -104,6 +107,10 @@
     });
   }
 
+  function setMapStyle(style = getSystemTheme()) {
+    map.setStyle(style);
+  }
+
   $: updateRacksLayer($racksStore.racks);
 
   $: {
@@ -121,8 +128,7 @@
   $: contributeMode = $mapStore.contributeMode;
   $: {
     if (map) {
-      const style = contributeMode ? styles.satellite : styles.dark;
-      map.setStyle(style);
+      setMapStyle(contributeMode ? styles.satellite : getSystemTheme());
 
       if (contributeMode) {
         marker = new Marker({
@@ -140,6 +146,27 @@
   function fetchRacks(center?) {
     center = center || map.getCenter();
     op.fetchRacks(center, 5000);
+  }
+
+  function getSystemTheme() {
+    return !(
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    )
+      ? styles.light
+      : styles.dark;
+  }
+
+  function watchSystemTheme() {
+    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+    darkThemeMq.addListener((e) => {
+      if (contributeMode) return;
+      if (e.matches) {
+        setMapStyle(styles.dark);
+      } else {
+        setMapStyle(styles.light);
+      }
+    });
   }
 </script>
 

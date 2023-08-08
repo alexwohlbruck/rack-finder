@@ -24,7 +24,7 @@
 <main class="h-screen p-2">
   <div class="h-full flex flex-col-reverse md:flex-row md- gap-2 items-stretch">
     <div
-      class="side-panel flex flex-col gap-2 h-1/2 md:h-auto md:w-1/3 lg:w-1/4"
+      class="side-panel flex flex-col gap-2 h-[1/3] md:h-auto md:w-1/3 lg:w-1/4"
     >
       {#if contributeMode}
         <ContributeRackPanel />
