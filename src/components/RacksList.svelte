@@ -41,25 +41,28 @@
     }
     return `${capacity} bicycle${capacity !== 1 ? "s" : ""}`;
   }
+
+  function renderCoverage(coverage) {
+    if (!coverage) {
+      return "";
+    }
+    let friendlyName = coverage;
+    switch (coverage) {
+      case "yes":
+        friendlyName = "Covered";
+        break;
+      case "partial":
+        friendlyName = "Partially covered";
+        break;
+    }
+    return capitalize(friendlyName);
+  }
 </script>
 
 <div>
   {#each $racks as rack}
     <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
-      <div class="flex items-center">
-        <div class="flex-1 flex gap-4 items-center">
-          <P size="sm" weight="medium" class="w-11 text-center">
-            {renderDistance(rack?.distance)}
-          </P>
-          <div class="flex-1 flex flex-col">
-            <P size="sm">
-              {displayType(rack?.tags.bicycle_parking)}
-            </P>
-            <P size="sm">
-              {displayCapacity(rack?.tags.capacity)}
-            </P>
-          </div>
-        </div>
+      <div class="flex gap-3 items-center">
         <Button color="alternative" size="xs">
           <svg
             class="w-4 h-4 text-gray-800 dark:text-white"
@@ -73,6 +76,25 @@
             />
           </svg>
         </Button>
+        <div class="flex-1 flex gap-4 items-center">
+          <div class="flex-1 flex flex-col">
+            <P size="sm">
+              {displayType(rack?.tags.bicycle_parking)}
+            </P>
+            <P size="sm">
+              <span>{displayCapacity(rack?.tags.capacity)}</span>
+              {#if rack?.tags.covered && rack.tags.covered !== "no"}
+                <span>
+                  &bull;
+                  {renderCoverage(rack?.tags.covered)}
+                </span>
+              {/if}
+            </P>
+          </div>
+        </div>
+        <P size="sm" weight="medium" class="w-11 text-center">
+          {renderDistance(rack?.distance)}
+        </P>
       </div>
     </ListgroupItem>
   {/each}
