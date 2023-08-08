@@ -43,6 +43,6 @@
     transform: rotate(0deg);
   }
   .rotate {
-    transform: rotate(225deg);
+    transform: rotate(135deg);
   }
 </style>
