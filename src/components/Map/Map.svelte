@@ -72,22 +72,19 @@
     map.on("moveend", () => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
+        const center = map.getCenter();
+        marker?.setLngLat({
+          lat: center.lat,
+          lng: center.lng,
+        });
+        if (
+          center.lat !== $locationStore.lat ||
+          center.lng !== $locationStore.lng
+        ) {
+          setMapCenter(center);
+        }
         fetchRacks();
       }, DEBOUNCE_TIME);
-    });
-
-    map.on("move", () => {
-      const center = map.getCenter();
-      marker?.setLngLat({
-        lat: center.lat,
-        lng: center.lng,
-      });
-      if (
-        center.lat !== $locationStore.lat ||
-        center.lng !== $locationStore.lng
-      ) {
-        setMapCenter(center);
-      }
     });
   }
 
