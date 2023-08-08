@@ -2,6 +2,10 @@
   import { ListgroupItem, Button, P } from "flowbite-svelte";
   import { racks } from "../store/racks";
   import { type RackType } from "../types/OSM";
+  import StandsIcon from "../lib/icons/Stands.svelte";
+  import RackIcon from "../lib/icons/Rack.svelte";
+  import BollardIcon from "../lib/icons/Bollard.svelte";
+  import WaveIcon from "../lib/icons/Wave.svelte";
 
   function renderDistance(distanceInMeters) {
     if (!distanceInMeters) return "";
@@ -64,17 +68,17 @@
     <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
       <div class="flex gap-3 items-center">
         <Button color="alternative" size="xs">
-          <svg
-            class="w-4 h-4 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 14 20"
-          >
-            <path
-              d="M7 0a7 7 0 0 0-1 13.92V19a1 1 0 1 0 2 0v-5.08A7 7 0 0 0 7 0Zm0 5.5A1.5 1.5 0 0 0 5.5 7a1 1 0 0 1-2 0A3.5 3.5 0 0 1 7 3.5a1 1 0 0 1 0 2Z"
-            />
-          </svg>
+          {#if rack?.tags.bicycle_parking === "stands"}
+            <StandsIcon />
+          {:else if rack?.tags.bicycle_parking === "rack"}
+            <RackIcon />
+          {:else if rack?.tags.bicycle_parking === "bollard"}
+            <BollardIcon />
+          {:else if rack?.tags.bicycle_parking === "wave"}
+            <WaveIcon />
+          {:else}
+            <StandsIcon />
+          {/if}
         </Button>
         <div class="flex-1 flex gap-4 items-center">
           <div class="flex-1 flex flex-col">

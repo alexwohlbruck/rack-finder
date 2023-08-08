@@ -82,10 +82,12 @@
   }
 </script>
 
-<Card class="flex flex-1 flex-col gap-4">
-  <div>
-    <Heading tag="h5">Contribute new rack</Heading>
-    <P>Drag the marker to the location of the rack</P>
+<Card padding="md" class="flex flex-1 flex-col gap-4">
+  <div class="flex">
+    <div>
+      <Heading tag="h5">Contribute new rack</Heading>
+      <P size="sm">Drag the marker to the location of the rack</P>
+    </div>
   </div>
 
   <Label for="type">

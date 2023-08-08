@@ -1,0 +1,19 @@
+<svg
+  class="w-4 h-4 text-gray-800 dark:text-gray-200"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 50 50"
+  style="enable-background:new 0 0 50 50;"
+  xml:space="preserve"
+>
+  <style type="text/css">
+    .st0 {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-miterlimit: 10;
+    }
+  </style>
+  <line class="st0" x1="24.4" y1="46.3" x2="24.4" y2="4.7" />
+  <circle class="st0" cx="24.4" cy="22.9" r="11.5" />
+</svg>
