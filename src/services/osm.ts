@@ -11,6 +11,7 @@ import { setUser } from "../store/auth";
 import type { BikeRack, Node } from "../types/OSM";
 import { js2xml, xml2js } from "xml-js";
 import { toggleContributeMode } from "../store/map";
+import { showToast } from "../store/toast";
 
 const ATTRIBUTION = "Rack Finder by @alexwohlbruck";
 const OSM_BASE_URL = "https://api.openstreetmap.org/api/0.6";
@@ -164,7 +165,7 @@ export const submitBikeRack = async (bikeRack: BikeRack) => {
 
   try {
     const changeset = await createChangeset("Rack Finder");
-    const node = await createNode({
+    await createNode({
       changeset,
       lat,
       lng,
@@ -176,8 +177,8 @@ export const submitBikeRack = async (bikeRack: BikeRack) => {
         ...tags,
       ],
     });
-    const close = await closeChangeset(changeset);
-    console.log({ changeset, node, close });
+    await closeChangeset(changeset);
+    showToast("Thanks! Your contribution will show on the map shortly.");
   } catch (err) {
     console.error(err);
   }

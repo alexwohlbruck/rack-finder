@@ -9,6 +9,7 @@
   import UserPanel from "./components/UserPanel.svelte";
   import ContributeRackButton from "./components/ContributeRackButton.svelte";
   import { mapStore } from "./store/map";
+  import Toast from "./lib/Toast.svelte";
 
   let locateUserOnMap;
   $: contributeMode = $mapStore.contributeMode;
@@ -20,6 +21,7 @@
 
 <LocationPermissionModal on:locateUser={locateUser} />
 <ContributeRackButton />
+<Toast />
 
 <main class="h-screen p-2">
   <div class="h-full flex gap-2 items-stretch">
