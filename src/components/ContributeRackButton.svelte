@@ -21,7 +21,7 @@
 >
   <svg
     class="icon w-4 h-4 text-gray-800"
-    class:rotate45={$mapStore.contributeMode}
+    class:rotate={$mapStore.contributeMode}
     aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -42,7 +42,7 @@
     transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
     transform: rotate(0deg);
   }
-  .rotate45 {
-    transform: rotate(45deg);
+  .rotate {
+    transform: rotate(225deg);
   }
 </style>
