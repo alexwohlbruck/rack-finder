@@ -6,6 +6,7 @@
   import RackIcon from "../lib/icons/Rack.svelte";
   import BollardIcon from "../lib/icons/Bollard.svelte";
   import WaveIcon from "../lib/icons/Wave.svelte";
+  import { setMapCenter } from "../store/map";
 
   function renderDistance(distanceInMeters) {
     if (!distanceInMeters) return "";
@@ -61,13 +62,20 @@
     }
     return capitalize(friendlyName);
   }
+
+  function centerMapOnRack(rack) {
+    setMapCenter({
+      lat: rack.lat,
+      lng: rack.lng,
+    });
+  }
 </script>
 
 <div>
   {#each $racks as rack}
     <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
       <div class="flex gap-3 items-center">
-        <Button color="alternative" size="xs">
+        <Button on:click={() => centerMapOnRack(rack)} outline size="xs">
           {#if rack?.tags.bicycle_parking === "stands"}
             <StandsIcon />
           {:else if rack?.tags.bicycle_parking === "rack"}

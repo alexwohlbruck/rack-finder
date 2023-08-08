@@ -7,7 +7,6 @@
   import { racksStore } from "./store/racks";
   import NearbyRacksPanel from "./components/NearbyRacksPanel.svelte";
   import UserPanel from "./components/UserPanel.svelte";
-  import ContributeRackButton from "./components/ContributeRackButton.svelte";
   import { mapStore } from "./store/map";
   import Toast from "./lib/Toast.svelte";
 
@@ -20,12 +19,13 @@
 </script>
 
 <LocationPermissionModal on:locateUser={locateUser} />
-<ContributeRackButton />
 <Toast />
 
 <main class="h-screen p-2">
-  <div class="h-full flex gap-2 items-stretch">
-    <div class="flex flex-col gap-2 w-1/4">
+  <div class="h-full flex flex-col-reverse md:flex-row md- gap-2 items-stretch">
+    <div
+      class="side-panel flex flex-col gap-2 h-1/2 md:h-auto md:w-1/3 lg:w-1/4"
+    >
       {#if contributeMode}
         <ContributeRackPanel />
       {:else}
@@ -43,3 +43,9 @@
     </Card>
   </div>
 </main>
+
+<style>
+  .side-panel > :global(div) {
+    max-width: none;
+  }
+</style>

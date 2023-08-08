@@ -4,7 +4,7 @@
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
   import { locationStore, updateLocation } from "../../store/location";
-  import { mapStore, syncMapCenter } from "../../store/map";
+  import { mapStore, setMapCenter } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
     DEBOUNCE_TIME,
@@ -19,6 +19,7 @@
     unclusteredPointLayer,
   } from "./map.config";
   import type { Rack } from "../../types/Rack";
+  import ContributeRackButton from "../ContributeRackButton.svelte";
 
   let mapContainer;
   let map;
@@ -77,7 +78,12 @@
         lat: center.lat,
         lng: center.lng,
       });
-      syncMapCenter(center);
+      if (
+        center.lat !== $locationStore.lat ||
+        center.lng !== $locationStore.lng
+      ) {
+        setMapCenter(center);
+      }
     });
   }
 
@@ -100,16 +106,19 @@
 
   $: updateRacksLayer($racksStore.racks);
 
+  $: {
+    const center = $mapStore.center;
+    const currentCenter = map?.getCenter();
+    if (
+      center &&
+      (center.lng != currentCenter?.lng || center.lat != currentCenter?.lat)
+    ) {
+      map?.setCenter([center.lng, center.lat]);
+    }
+  }
+
   // Watch contribute mode and update listeners
   $: contributeMode = $mapStore.contributeMode;
-  const markerDragStart = () => {
-    const { lng, lat } = marker.getLngLat();
-    map.panTo([lng, lat]);
-    map.dragPan.enable();
-  };
-  const markerDragEnd = () => {
-    map.dragPan.disable();
-  };
   $: {
     if (map) {
       const style = contributeMode ? styles.satellite : styles.dark;
@@ -122,9 +131,6 @@
         })
           .setLngLat([map.getCenter().lng, map.getCenter().lat])
           .addTo(map);
-
-        marker.on("dragend", markerDragEnd);
-        marker.on("dragstart", markerDragStart);
       } else {
         marker?.remove();
       }
@@ -138,6 +144,7 @@
 </script>
 
 <div class="relative w-full h-full">
+  <ContributeRackButton />
   <div class="map" bind:this={mapContainer} />
 </div>
 

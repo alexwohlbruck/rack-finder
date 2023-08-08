@@ -18,7 +18,7 @@ export function toggleContributeMode(value?: boolean) {
   });
 }
 
-export function syncMapCenter({ lat, lng }) {
+export function setMapCenter({ lat, lng }) {
   mapStore.update((store) => {
     return {
       ...store,

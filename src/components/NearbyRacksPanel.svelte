@@ -5,13 +5,13 @@
   import Button from "../lib/Button.svelte";
 </script>
 
-<Card padding="none" class="flex flex-col overflow-y-auto overflow-x-hidden">
+<Card padding="none" class="flex flex-col overflow-x-hidden">
   <div class="p-4 flex gap-2 justify-between items-center">
     <Heading tag="h5">Nearby racks</Heading>
   </div>
 
   <div
-    class="flex-1 overflow-y-auto overflow-x-hidden border-t border-gray-200 dark:border-gray-700"
+    class="flex-1 overflow-x-hidden border-t border-gray-200 dark:border-gray-700"
   >
     <RacksList />
   </div>
