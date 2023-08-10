@@ -19,6 +19,7 @@
     clustersCountLayer,
     clustersLayer,
     geolocateControlConfig,
+    iconsLayer,
     mapConfig,
     palette,
     racksLayer,
@@ -30,6 +31,7 @@
   import ContributeRackButton from "../ContributeRackButton.svelte";
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";
+  import bollard from "../../lib/icons/bollard.svg";
 
   let mapContainer;
   let map;
@@ -117,6 +119,21 @@
     map.addLayer(clustersLayer);
     map.addLayer(clustersCountLayer);
     map.addLayer(unclusteredPointLayer);
+    map.addLayer(iconsLayer);
+
+    // load rack icon from src/lib/icons/bollard.svg
+    // const bollardImage = new URL(
+    //   "../../lib/icons/bollard.svg",
+    //   import.meta.url
+    // );
+    // map.loadImage(bollardImage.toString(), (error, image) => {
+    //   if (error) throw error;
+    //   map.addImage("bollard", image);
+    // });
+
+    let img = new Image(20, 20);
+    img.onload = () => map.addImage("bollard", img);
+    img.src = bollard;
   }
 
   function updateRacksLayer(racks) {

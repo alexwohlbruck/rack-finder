@@ -66,7 +66,7 @@ export const racksLayer = {
   },
   cluster: true,
   clusterMaxZoom: 14,
-  clusterRadius: 25,
+  clusterRadius: 100,
 };
 
 export const clustersLayer = {
@@ -103,7 +103,7 @@ export const clustersLayer = {
 export const clustersCountLayer = {
   id: "cluster-count",
   type: "symbol",
-  source: "racks",
+  source: racksSourceName,
   filter: ["has", "point_count"],
   layout: {
     "text-field": "{point_count_abbreviated}",
@@ -118,9 +118,21 @@ export const unclusteredPointLayer = {
   source: racksSourceName,
   filter: ["!", ["has", "point_count"]],
   paint: {
-    "circle-color": palette[600],
-    "circle-radius": 3,
+    "circle-color": palette[100],
+    "circle-radius": 10,
     "circle-stroke-width": 2,
-    "circle-stroke-color": palette[800],
+    "circle-stroke-color": palette[300],
+  },
+};
+
+export const iconsLayer = {
+  id: "icons",
+  type: "symbol",
+  source: racksSourceName,
+  filter: ["!", ["has", "point_count"]],
+  layout: {
+    "icon-image": "bollard",
+    "icon-size": 0.8,
+    "icon-allow-overlap": true,
   },
 };

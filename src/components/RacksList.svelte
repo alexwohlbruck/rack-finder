@@ -2,10 +2,7 @@
   import { ListgroupItem, Button, P } from "flowbite-svelte";
   import { racks } from "../store/racks";
   import { type RackType } from "../types/OSM";
-  import StandsIcon from "../lib/icons/Stands.svelte";
-  import RackIcon from "../lib/icons/Rack.svelte";
-  import BollardIcon from "../lib/icons/Bollard.svelte";
-  import WaveIcon from "../lib/icons/Wave.svelte";
+  import RackIcon from "../lib/icons/RackIcon.svelte";
   import { setMapCenter } from "../store/map";
 
   function renderDistance(distanceInMeters) {
@@ -76,17 +73,7 @@
     <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
       <div class="flex gap-3 items-center">
         <Button on:click={() => centerMapOnRack(rack)} outline size="xs">
-          {#if rack?.tags.bicycle_parking === "stands"}
-            <StandsIcon />
-          {:else if rack?.tags.bicycle_parking === "rack"}
-            <RackIcon />
-          {:else if rack?.tags.bicycle_parking === "bollard"}
-            <BollardIcon />
-          {:else if rack?.tags.bicycle_parking === "wave"}
-            <WaveIcon />
-          {:else}
-            <StandsIcon />
-          {/if}
+          <RackIcon name={rack?.tags.bicycle_parking} />
         </Button>
         <div class="flex-1 flex gap-4 items-center">
           <div class="flex-1 flex flex-col">
