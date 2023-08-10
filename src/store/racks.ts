@@ -1,5 +1,5 @@
 import { derived, writable } from "svelte/store";
-import { haversine } from "../util";
+import * as Comlink from "comlink";
 import type { Rack } from "../types/Rack";
 import { mapStore } from "./map";
 
@@ -13,14 +13,24 @@ const racksStore = writable<{
   selectedRack: null,
 });
 
-export function addRack(rack) {
+export function addRacks(racks: Rack[]) {
   racksStore.update(($data) => {
-    if (!$data.racks[rack.id]) {
-      $data.racks[rack.id] = rack;
-    }
+    const newRacks = racks.filter((rack) => !$data.racks[rack.id]);
+    const racksWithIds = newRacks.reduce((acc, rack) => {
+      acc[rack.id] = rack;
+      return acc;
+    }, {});
+    $data.racks = { ...$data.racks, ...racksWithIds };
     return $data;
   });
 }
+
+// racksStore.update(($data) => {
+//   if (!$data.racks[rack.id]) {
+//     $data.racks[rack.id] = rack;
+//   }
+//   return $data;
+// });
 
 export function selectRack(rack) {
   racksStore.update(($data) => {
@@ -29,13 +39,19 @@ export function selectRack(rack) {
   });
 }
 
-const racks = derived([racksStore, mapStore], ([$data, $mapStore]) => {
-  return Object.values($data.racks)
-    .map((rack) => {
-      const distance = haversine($mapStore.center, rack);
-      return { ...rack, distance };
-    })
-    .sort((a, b) => a.distance - b.distance);
+const racksWorker = Comlink.wrap(
+  new Worker(new URL("../workers/racks.worker.ts", import.meta.url), {
+    type: "module",
+  })
+) as any;
+
+// Use derived store with web worker to calculate distance and sort
+const racks = derived([racksStore, mapStore], async ([$data, $mapStore]) => {
+  const result = await racksWorker.computeDistances(
+    Object.values($data.racks),
+    $mapStore.center
+  );
+  return result;
 });
 
 export { racksStore, racks };

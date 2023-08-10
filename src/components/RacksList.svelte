@@ -72,42 +72,44 @@
 </script>
 
 <div>
-  {#each $racks as rack}
-    <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
-      <div class="flex gap-3 items-center">
-        <Button on:click={() => centerMapOnRack(rack)} outline size="xs">
-          {#if rack?.tags.bicycle_parking === "stands"}
-            <StandsIcon />
-          {:else if rack?.tags.bicycle_parking === "rack"}
-            <RackIcon />
-          {:else if rack?.tags.bicycle_parking === "bollard"}
-            <BollardIcon />
-          {:else if rack?.tags.bicycle_parking === "wave"}
-            <WaveIcon />
-          {:else}
-            <StandsIcon />
-          {/if}
-        </Button>
-        <div class="flex-1 flex gap-4 items-center">
-          <div class="flex-1 flex flex-col">
-            <P size="sm">
-              {displayType(rack?.tags.bicycle_parking)}
-            </P>
-            <P size="sm">
-              <span>{displayCapacity(rack?.tags.capacity)}</span>
-              {#if rack?.tags.covered && rack.tags.covered !== "no"}
-                <span>
-                  &bull;
-                  {renderCoverage(rack?.tags.covered)}
-                </span>
-              {/if}
-            </P>
+  {#await $racks then racks}
+    {#each racks as rack}
+      <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
+        <div class="flex gap-3 items-center">
+          <Button on:click={() => centerMapOnRack(rack)} outline size="xs">
+            {#if rack?.tags.bicycle_parking === "stands"}
+              <StandsIcon />
+            {:else if rack?.tags.bicycle_parking === "rack"}
+              <RackIcon />
+            {:else if rack?.tags.bicycle_parking === "bollard"}
+              <BollardIcon />
+            {:else if rack?.tags.bicycle_parking === "wave"}
+              <WaveIcon />
+            {:else}
+              <StandsIcon />
+            {/if}
+          </Button>
+          <div class="flex-1 flex gap-4 items-center">
+            <div class="flex-1 flex flex-col">
+              <P size="sm">
+                {displayType(rack?.tags.bicycle_parking)}
+              </P>
+              <P size="sm">
+                <span>{displayCapacity(rack?.tags.capacity)}</span>
+                {#if rack?.tags.covered && rack.tags.covered !== "no"}
+                  <span>
+                    &bull;
+                    {renderCoverage(rack?.tags.covered)}
+                  </span>
+                {/if}
+              </P>
+            </div>
           </div>
+          <P size="sm" weight="medium" class="w-11 text-center">
+            {renderDistance(rack?.distance)}
+          </P>
         </div>
-        <P size="sm" weight="medium" class="w-11 text-center">
-          {renderDistance(rack?.distance)}
-        </P>
-      </div>
-    </ListgroupItem>
-  {/each}
+      </ListgroupItem>
+    {/each}
+  {/await}
 </div>
