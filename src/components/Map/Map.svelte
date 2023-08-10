@@ -199,7 +199,7 @@
     center = center || map.getCenter();
     if (tooFarZoom || isAreaLoaded(center)) return;
     console.log("Loading new area");
-    const radius = getViewportRadius() * RACKS_FETCH_OUTER_BOUNDS_RATIO;
+    const radius = RACKS_FETCH_OUTER_BOUNDS_RATIO(getViewportRadius());
     areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
     op.fetchRacks(center, radius);
   }

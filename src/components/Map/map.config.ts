@@ -7,7 +7,7 @@ export const INITIAL_STATE = {
   zoom: 2,
 };
 export const RACKS_LAYER_MAX_ZOOM = 11;
-export const RACKS_FETCH_OUTER_BOUNDS_RATIO = 1.8;
+export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 2.0 * radius + 1000;
 // TODO: Import palette from tailwind config
 // import tailwindConfig from "../../tailwind.config.cjs";
 // const palette = tailwindConfig.theme.extend.colors;
