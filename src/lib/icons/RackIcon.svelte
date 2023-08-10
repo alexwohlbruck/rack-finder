@@ -20,7 +20,10 @@
       svg: icons.bollard,
     },
   ];
-  let icon = svgMap.find((e) => e.name === name) || svgMap[0];
+  let icon;
+  $: {
+    icon = svgMap.find((e) => e.name === name) || svgMap[0];
+  }
 </script>
 
 <img src={icon.svg} alt={icon.name} style={`width: ${size}rem;`} />

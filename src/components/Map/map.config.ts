@@ -24,7 +24,7 @@ export const mapConfig = {
   style: styles.light,
   center: [INITIAL_STATE.lng, INITIAL_STATE.lat],
   zoom: INITIAL_STATE.zoom,
-  fadeDuration: 500,
+  fadeDuration: 200,
 };
 
 export const geolocateControlConfig = {
@@ -66,7 +66,7 @@ export const racksLayer = {
   },
   cluster: true,
   clusterMaxZoom: 14,
-  clusterRadius: 100,
+  clusterRadius: 10,
 };
 
 export const clustersLayer = {
