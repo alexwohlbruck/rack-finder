@@ -1,30 +1,26 @@
 <script>
-  import stands from "./stands.svg";
-  import wave from "./wave.svg";
-  import rack from "./rack.svg";
-  import bollard from "./bollard.svg";
-
+  import { icons } from "./icons";
   export let name = "stands";
   export let size = 1;
-  let icons = [
+  let svgMap = [
     {
       name: "stands",
-      svg: stands,
+      svg: icons.stands,
     },
     {
       name: "wave",
-      svg: wave,
+      svg: icons.wave,
     },
     {
       name: "rack",
-      svg: rack,
+      svg: icons.rack,
     },
     {
       name: "bollard",
-      svg: bollard,
+      svg: icons.bollard,
     },
   ];
-  let icon = icons.find((e) => e.name === name) || icons[0];
+  let icon = svgMap.find((e) => e.name === name) || svgMap[0];
 </script>
 
 <img src={icon.svg} alt={icon.name} style={`width: ${size}rem;`} />

@@ -131,8 +131,8 @@ export const iconsLayer = {
   source: racksSourceName,
   filter: ["!", ["has", "point_count"]],
   layout: {
-    "icon-image": "bollard",
-    "icon-size": 0.8,
+    "icon-size": 0.65,
     "icon-allow-overlap": true,
+    "icon-image": ["get", "icon"],
   },
 };

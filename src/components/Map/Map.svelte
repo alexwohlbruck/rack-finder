@@ -31,7 +31,7 @@
   import ContributeRackButton from "../ContributeRackButton.svelte";
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";
-  import bollard from "../../lib/icons/bollard.svg";
+  import { icons } from "../../lib/icons/icons";
 
   let mapContainer;
   let map;
@@ -114,26 +114,21 @@
     });
   }
 
+  function initIcons() {
+    Object.entries(icons).forEach(([name, path]) => {
+      let img = new Image(20, 20);
+      img.onload = () => map.addImage(name, img);
+      img.src = path;
+    });
+  }
+
   function addMapLayers() {
     map.addSource(racksSourceName, racksLayer);
     map.addLayer(clustersLayer);
     map.addLayer(clustersCountLayer);
     map.addLayer(unclusteredPointLayer);
     map.addLayer(iconsLayer);
-
-    // load rack icon from src/lib/icons/bollard.svg
-    // const bollardImage = new URL(
-    //   "../../lib/icons/bollard.svg",
-    //   import.meta.url
-    // );
-    // map.loadImage(bollardImage.toString(), (error, image) => {
-    //   if (error) throw error;
-    //   map.addImage("bollard", image);
-    // });
-
-    let img = new Image(20, 20);
-    img.onload = () => map.addImage("bollard", img);
-    img.src = bollard;
+    initIcons();
   }
 
   function updateRacksLayer(racks) {
@@ -147,6 +142,7 @@
         },
         properties: {
           id: rack.id,
+          icon: rack.tags.bicycle_parking,
           cluster: true,
         },
       })),
