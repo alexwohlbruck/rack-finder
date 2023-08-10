@@ -8,6 +8,8 @@
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
     DEBOUNCE_TIME,
+    RACKS_FETCH_OUTER_BOUNDS_RATIO,
+    RACKS_LAYER_MAX_ZOOM,
     clustersCountLayer,
     clustersLayer,
     geolocateControlConfig,
@@ -20,6 +22,8 @@
   } from "./map.config";
   import type { Rack } from "../../types/Rack";
   import ContributeRackButton from "../ContributeRackButton.svelte";
+  import { haversine } from "../../util";
+  import type { Position } from "../../types/geolocation";
 
   let mapContainer;
   let map;
@@ -161,9 +165,43 @@
     }
   }
 
-  function fetchRacks(center?) {
+  // Store a list of areas which bike racks have already been fetched
+  const areasLoaded: {
+    lat: number;
+    lng: number;
+    radius: number;
+  }[] = [];
+
+  // Return the radius of the viewport in meters
+  // Effectively the width or height of the map view, whichever is larger
+  function getViewportRadius() {
+    const bounds = map.getBounds();
+    const center = map.getCenter();
+    const ne = bounds.getNorthEast();
+    const sw = bounds.getSouthWest();
+    const neDist = haversine(center, ne);
+    const swDist = haversine(center, sw);
+    return Math.max(neDist, swDist);
+  }
+
+  // Check if the map bounds are within any of the previously loaded areas
+  function isAreaLoaded(center: Position) {
+    const radius = getViewportRadius();
+    return areasLoaded.some((area) => {
+      const dist = haversine(center, area);
+      return dist < area.radius + radius;
+    });
+  }
+
+  function fetchRacks(center?: Position) {
+    if (!map) return;
+    const tooFarZoom = map.getZoom() < RACKS_LAYER_MAX_ZOOM;
     center = center || map.getCenter();
-    op.fetchRacks(center, 5000);
+    if (tooFarZoom || isAreaLoaded(center)) return;
+    console.log("Loading new area");
+    const radius = getViewportRadius() * RACKS_FETCH_OUTER_BOUNDS_RATIO;
+    areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
+    op.fetchRacks(center, radius);
   }
 
   function getSystemTheme() {

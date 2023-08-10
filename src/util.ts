@@ -1,4 +1,6 @@
-export const haversine = (a, b) => {
+import type { Position } from "./types/geolocation";
+
+export const haversine = (a: Position, b: Position) => {
   const R = 6371e3; // metres
   const φ1 = (a.lat * Math.PI) / 180; // φ, λ in radians
   const φ2 = (b.lat * Math.PI) / 180;

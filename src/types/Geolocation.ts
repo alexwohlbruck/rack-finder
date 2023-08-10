@@ -1,6 +1,9 @@
-export type Geolocation = {
+export type Position = {
   lat: number;
   lng: number;
+};
+
+export type Geolocation = Position & {
   accuracy?: number;
   heading?: number | null;
   speed?: number | null;
