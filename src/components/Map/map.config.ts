@@ -1,6 +1,6 @@
 import colors from "tailwindcss/colors";
 
-export const DEBOUNCE_TIME = 1000;
+export const DEBOUNCE_TIME = 300;
 export const INITIAL_STATE = {
   lng: -30.6271504,
   lat: 29.108255,
