@@ -66,7 +66,7 @@ export const racksLayer = {
   },
   cluster: true,
   clusterMaxZoom: 14,
-  clusterRadius: 10,
+  clusterRadius: 20,
 };
 
 export const clustersLayer = {
