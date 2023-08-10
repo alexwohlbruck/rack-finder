@@ -69,8 +69,8 @@
 
     navigationControl = new NavigationControl();
 
-    map.addControl(geolocateControl, "bottom-left");
-    map.addControl(navigationControl, "bottom-left");
+    map.addControl(navigationControl);
+    map.addControl(geolocateControl);
 
     map.on("load", () => {
       addMapLayers();
