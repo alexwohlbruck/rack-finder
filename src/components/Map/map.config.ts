@@ -38,6 +38,12 @@ export const geolocateControlConfig = {
   },
 };
 
+export const navigationControlConfig = {
+  showCompass: true,
+  showZoom: true,
+  visualizePitch: true,
+};
+
 export const racksSourceName = "racks";
 
 export const racksLayer = {

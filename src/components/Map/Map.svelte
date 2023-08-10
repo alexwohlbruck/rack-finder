@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { Map, Marker, Popup, GeolocateControl } from "mapbox-gl";
+  import {
+    Map,
+    Marker,
+    Popup,
+    GeolocateControl,
+    NavigationControl,
+  } from "mapbox-gl";
   import { onMount, onDestroy } from "svelte";
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
@@ -28,6 +34,7 @@
   let mapContainer;
   let map;
   let geolocateControl;
+  let navigationControl;
   let marker;
 
   onMount(() => {
@@ -60,7 +67,10 @@
     geolocateControl = new GeolocateControl(geolocateControlConfig);
     geolocateControl.on("geolocate", onGeolocateSuccess);
 
-    map.addControl(geolocateControl);
+    navigationControl = new NavigationControl();
+
+    map.addControl(geolocateControl, "bottom-left");
+    map.addControl(navigationControl, "bottom-left");
 
     map.on("load", () => {
       addMapLayers();
