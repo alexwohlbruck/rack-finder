@@ -1,10 +1,5 @@
-<svg
-  class="w-4 h-4 text-gray-800 dark:text-gray-200"
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="2 2 45 45"
-  style="enable-background:new 0 0 50 50;"
-  xml:space="preserve"
->
+<svg class="w-4 h-4"
+  xmlns="http://www.w3.org/2000/svg" viewBox="2 2 45 45" style="enable-background:new 0 0 50 50;" xml:space="preserve">
   <style type="text/css">
     .st0 {
       fill: none;
@@ -14,14 +9,8 @@
       stroke-miterlimit: 10;
     }
   </style>
-  <path
-    class="st0"
-    d="M3.7,35.3c2.3,1.7,8.8,6.1,11.8,6.5s5.9-2.3,2-8.4s-7.1-21.7-7.1-21.7"
-  />
-  <path
-    class="st0"
-    d="M36.3,7.9c0,0,3.3,13.6,7.2,19.7s1.1,8.7-2,8.4c-3-0.4-11.3-3.6-13.6-5.2"
-  />
+  <path class="st0" d="M3.7,35.3c2.3,1.7,8.8,6.1,11.8,6.5s5.9-2.3,2-8.4s-7.1-21.7-7.1-21.7" />
+  <path class="st0" d="M36.3,7.9c0,0,3.3,13.6,7.2,19.7s1.1,8.7-2,8.4c-3-0.4-11.3-3.6-13.6-5.2" />
   <line class="st0" x1="7" y1="37.6" x2="32.6" y2="33.1" />
   <line class="st0" x1="10.6" y1="12.7" x2="36.7" y2="9.6" />
   <line class="st0" x1="15.7" y1="12.1" x2="15.3" y2="36.1" />

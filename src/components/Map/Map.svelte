@@ -31,7 +31,7 @@
   import ContributeRackButton from "../ContributeRackButton.svelte";
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";
-  import { icons } from "../../lib/icons/icons";
+  import { asSvg as icons } from "../../lib/icons/icons";
 
   let mapContainer;
   let map;
