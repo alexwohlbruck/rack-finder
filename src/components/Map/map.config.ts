@@ -133,6 +133,6 @@ export const iconsLayer = {
   layout: {
     "icon-size": 0.65,
     "icon-allow-overlap": true,
-    "icon-image": ["get", "icon"],
+    "icon-image": ["coalesce", ["get", "icon"], "stands"],
   },
 };
