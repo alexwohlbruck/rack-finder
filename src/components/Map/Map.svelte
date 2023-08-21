@@ -16,6 +16,7 @@
     DEBOUNCE_TIME,
     RACKS_FETCH_OUTER_BOUNDS_RATIO,
     RACKS_LAYER_MAX_ZOOM,
+    buildingsLayer,
     clustersCountLayer,
     clustersLayer,
     geolocateControlConfig,
@@ -128,6 +129,7 @@
     map.addLayer(clustersCountLayer);
     map.addLayer(unclusteredPointLayer);
     map.addLayer(iconsLayer);
+    map.addLayer(buildingsLayer);
     initIcons();
   }
 
