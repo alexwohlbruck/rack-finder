@@ -68,7 +68,11 @@
   }
 </script>
 
-<div>
+{#if !$racks.length}
+  <div class="h-full flex items-center justify-center">
+    <P size="sm">Nothing near here!</P>
+  </div>
+{:else}
   {#each $racks as rack}
     <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
       <div class="flex gap-3 items-center">
@@ -97,4 +101,4 @@
       </div>
     </ListgroupItem>
   {/each}
-</div>
+{/if}

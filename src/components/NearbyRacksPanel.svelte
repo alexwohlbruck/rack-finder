@@ -5,7 +5,7 @@
   import Button from "../lib/Button.svelte";
 </script>
 
-<Card padding="none" class="flex flex-col overflow-x-hidden">
+<Card padding="none" class="flex-1 flex flex-col overflow-x-hidden">
   <div class="p-4 flex gap-2 justify-between items-center">
     <Heading tag="h5">Nearby racks</Heading>
   </div>
