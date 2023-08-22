@@ -24,14 +24,14 @@
 
   function renderCapacity(capacity) {
     if (!capacity) {
-      return "Unknown capacity";
+      return null;
     }
     return `${capacity} bicycle${capacity !== 1 ? "s" : ""}`;
   }
 
   function renderCoverage(coverage) {
     if (!coverage) {
-      return "";
+      return null;
     }
     let friendlyName = coverage;
     switch (coverage) {
@@ -41,8 +41,16 @@
       case "partial":
         friendlyName = "Partially covered";
         break;
+      case "no":
+        return null;
     }
     return capitalize(friendlyName);
+  }
+
+  function renderDetails(tags) {
+    const capacity = renderCapacity(tags.capacity);
+    const coverage = renderCoverage(tags.covered);
+    return [capacity, coverage].filter(Boolean).join(" • ");
   }
 
   function centerMapOnRack(rack) {
@@ -67,17 +75,11 @@
           </Button>
           <div class="flex-1 flex gap-4 items-center">
             <div class="flex-1 flex flex-col">
-              <P size="sm">
+              <P size="sm" weight="medium">
                 {renderType(rack?.tags.bicycle_parking)}
               </P>
               <P size="sm">
-                <span>{renderCapacity(rack?.tags.capacity)}</span>
-                {#if rack?.tags.covered && rack.tags.covered !== "no"}
-                  <span>
-                    &bull;
-                    {renderCoverage(rack?.tags.covered)}
-                  </span>
-                {/if}
+                {renderDetails(rack?.tags)}
               </P>
             </div>
           </div>
