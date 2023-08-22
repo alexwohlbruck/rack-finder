@@ -8,7 +8,7 @@ export default defineConfig({
     svelte(),
     svelteSVG({
       svgoConfig: {},
-      requireSuffix: false,
+      requireSuffix: true,
     }),
   ],
 });

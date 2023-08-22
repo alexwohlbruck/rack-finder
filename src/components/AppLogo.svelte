@@ -1,5 +1,5 @@
 <script>
-  import { Avatar, Button, Card, P } from "flowbite-svelte";
+  import { Avatar, Card, P } from "flowbite-svelte";
   import logo from "../lib/icons/rack-finder.svg";
   import AppInfoModal from "./AppInfoModal.svelte";
 
