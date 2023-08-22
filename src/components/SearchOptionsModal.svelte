@@ -21,6 +21,11 @@
   $: sort = $racksStore.sort;
   $: filter = $racksStore.filter;
 
+  // Auto update
+  $: {
+    setOptions({ sort, filter });
+  }
+
   let filterOptions = {
     type: RackTypes.map((type) => ({
       value: type,
@@ -35,11 +40,6 @@
 
   function toggleSortDirection() {
     sort.direction = sort.direction === "asc" ? "desc" : "asc";
-  }
-
-  function applyOptions() {
-    setOptions({ sort, filter });
-    open = false;
   }
 </script>
 
@@ -106,7 +106,7 @@
   </div>
 
   <div class="flex justify-end">
-    <Button on:click={applyOptions}>Apply</Button>
+    <Button on:click={() => (open = false)}>Done</Button>
   </div>
 </Modal>
 
