@@ -18,6 +18,7 @@ export const haversine = (a: Position, b: Position) => {
 };
 
 export const renderDistance = (distanceInMeters) => {
+  if (distanceInMeters === 0) return "0 m";
   if (!distanceInMeters) return "";
 
   const distanceInKm = distanceInMeters / 1000;

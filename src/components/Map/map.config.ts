@@ -6,7 +6,7 @@ export const INITIAL_STATE = {
   lat: 29.108255,
   zoom: 2,
 };
-export const RACKS_LAYER_MAX_ZOOM = 11;
+export const RACKS_LAYER_MAX_ZOOM = 13;
 export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 2.0 * radius + 1000;
 // TODO: Import palette from tailwind config
 // import tailwindConfig from "../../tailwind.config.cjs";

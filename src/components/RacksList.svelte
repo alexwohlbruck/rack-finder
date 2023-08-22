@@ -70,7 +70,12 @@
     {#each $racks as rack}
       <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
         <div class="flex gap-3 items-center">
-          <Button on:click={() => centerMapOnRack(rack)} outline size="xs">
+          <Button
+            on:click={() => centerMapOnRack(rack)}
+            outline
+            size="xs"
+            class="!w-9 !h-9 !p-0"
+          >
             <RackIcon name={rack?.tags.bicycle_parking} />
           </Button>
           <div class="flex-1 flex gap-4 items-center">

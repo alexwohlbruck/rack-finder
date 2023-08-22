@@ -10,7 +10,7 @@
 <SearchOptionsModal bind:open={searchOptionsModal} />
 
 <Card padding="none" class="flex-1 flex flex-col overflow-x-hidden">
-  <div class="p-4 flex gap-2 justify-between items-center">
+  <div class="p-3 flex gap-2 justify-between items-center">
     <div>
       <Heading tag="h6">Nearby racks</Heading>
       <P size="xs" weight="medium"
