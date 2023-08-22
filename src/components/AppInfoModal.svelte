@@ -1,9 +1,9 @@
 <script>
   import { A, Button, Heading, Modal, P } from "flowbite-svelte";
-  export let open = false;
+  export let open;
 </script>
 
-<Modal bind:open autoclose>
+<Modal bind:open autoclose outsideclose>
   <Heading tag="h5">About Rack Finder</Heading>
   <P>
     Rack Finder uses

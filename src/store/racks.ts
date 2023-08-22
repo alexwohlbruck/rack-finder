@@ -39,7 +39,7 @@ const racksStore = writable<{
     type: [...RackTypes].sort(),
     covered: [...RackCoverages],
     minCapacity: 0,
-    maxDistance: 10001,
+    maxDistance: 1000,
   },
 });
 

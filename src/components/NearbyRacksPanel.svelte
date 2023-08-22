@@ -15,7 +15,7 @@
   import Button from "../lib/Button.svelte";
   import { RackTypes } from "../types/Rack";
   import { renderDistance } from "../util";
-  import { racksStore, setOptions } from "../store/racks";
+  import { racks, racksStore, setOptions } from "../store/racks";
 
   function camelcaseToWords(str) {
     const spaces = str.split("_").join(" ");
@@ -50,7 +50,7 @@
   }
 </script>
 
-<Modal bind:open={optionsModal}>
+<Modal bind:open={optionsModal} outsideclose>
   <Heading tag="h5">Sort and filter</Heading>
 
   <Label for="sortBy">Sort by</Label>
@@ -119,50 +119,35 @@
 
 <Card padding="none" class="flex-1 flex flex-col overflow-x-hidden">
   <div class="p-4 flex gap-2 justify-between items-center">
-    <Heading tag="h5">Nearby racks</Heading>
-    <ButtonGroup>
-      <FlowbiteButton
-        on:click={() => (optionsModal = true)}
-        outline
-        color="primary"
+    <div>
+      <Heading tag="h6">Nearby racks</Heading>
+      <P size="xs" weight="medium"
+        >{$racks.length} matching result{$racks.length !== 1 ? "s" : ""}</P
       >
-        <svg
-          class="w-4 h-4 mr-2"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 18"
-        >
-          <path
-            d="M18.85 1.1A1.99 1.99 0 0 0 17.063 0H2.937a2 2 0 0 0-1.566 3.242L6.99 9.868 7 14a1 1 0 0 0 .4.8l4 3A1 1 0 0 0 13 17l.01-7.134 5.66-6.676a1.99 1.99 0 0 0 .18-2.09Z"
-          />
-        </svg>
-        Filter
-      </FlowbiteButton>
-
-      <FlowbiteButton
-        on:click={() => (optionsModal = true)}
-        outline
-        color="primary"
+    </div>
+    <FlowbiteButton
+      on:click={() => (optionsModal = true)}
+      outline
+      color="primary"
+      size="xs"
+    >
+      <svg
+        class="w-4 h-4 mr-2"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
       >
-        <svg
-          class="w-4 h-4 mr-2"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 16 20"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
-          />
-        </svg>
-        Sort
-      </FlowbiteButton>
-    </ButtonGroup>
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7.75 4H19M7.75 4a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 4h2.25m13.5 6H19m-2.25 0a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 10h11.25m-4.5 6H19M7.75 16a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 16h2.25"
+        />
+      </svg>
+      Sort/Filter
+    </FlowbiteButton>
   </div>
 
   <div

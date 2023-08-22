@@ -6,7 +6,7 @@
   import RackDetail from "./components/RackDetail.svelte";
   import { racksStore } from "./store/racks";
   import NearbyRacksPanel from "./components/NearbyRacksPanel.svelte";
-  import UserPanel from "./components/UserPanel.svelte";
+  import ProfilePanel from "./components/ProfilePanel.svelte";
   import { mapStore } from "./store/map";
   import Toast from "./lib/Toast.svelte";
   import AppLogo from "./components/AppLogo.svelte";
@@ -38,7 +38,7 @@
       {/if}
       <div class="flex gap-2">
         <AppLogo />
-        <UserPanel />
+        <ProfilePanel />
       </div>
     </div>
 

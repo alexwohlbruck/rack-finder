@@ -8,10 +8,10 @@
 
 <AppInfoModal bind:open={appInfoModalOpen} />
 
-<Card class="flex flex-row items-center gap-2 !p-3">
+<Card class="flex flex-row items-center gap-2 !p-2">
   <button on:click={() => (appInfoModalOpen = true)}>
     <Avatar
-      class="bg-primary-300 border-2 border-primary-400 shadow-md shadow-primary-600/40 !w-14 !h-14 p-3"
+      class="bg-primary-300 border-2 border-primary-400 shadow-md shadow-primary-600/40 !w-12 !h-12 p-2"
       rounded
     >
       <img src={logo} alt="Rack Finder Logo" />
