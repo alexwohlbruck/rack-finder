@@ -21,7 +21,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "flowbite": "^1.8.0",
-    "flowbite-svelte": "^0.40.2",
+    "flowbite-svelte": "^0.44.4",
     "mapbox-gl": "^2.15.0",
     "osm-auth": "^2.2.0",
     "stream": "^0.0.2",

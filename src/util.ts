@@ -16,3 +16,19 @@ export const haversine = (a: Position, b: Position) => {
   const d = R * c; // in metres
   return d;
 };
+
+export const renderDistance = (distanceInMeters) => {
+  if (!distanceInMeters) return "";
+
+  const distanceInKm = distanceInMeters / 1000;
+
+  if (distanceInKm < 1) {
+    return `${Math.round(distanceInMeters)} m`;
+  }
+  return `${distanceInKm.toFixed(1)} km`;
+};
+
+export const capitalize = (str) => {
+  if (!str || !str.length) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
