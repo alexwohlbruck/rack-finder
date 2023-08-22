@@ -32,3 +32,8 @@ export const capitalize = (str) => {
   if (!str || !str.length) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const camelcaseToWords = (str) => {
+  const spaces = str.split("_").join(" ");
+  return spaces.charAt(0).toUpperCase() + spaces.slice(1);
+};
