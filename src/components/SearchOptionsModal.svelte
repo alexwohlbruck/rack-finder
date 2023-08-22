@@ -73,9 +73,9 @@
     </Select>
   </ButtonGroup>
 
-  <Label for="covered">Rack type</Label>
+  <Label for="covered">Hide rack types</Label>
   <MultiSelect
-    bind:value={filter.type}
+    bind:value={filter.ignoreType}
     id="covered"
     items={filterOptions.type}
     class="!mt-2"
@@ -110,8 +110,12 @@
   </div>
 </Modal>
 
-<style>
+<style lang="scss">
+  // Idk wtf happened with this dropdown, simple style fix
   :global(div[role="listbox"] .absolute) {
     z-index: 1;
+    @media (prefers-color-scheme: light) {
+      background-color: white;
+    }
   }
 </style>

@@ -15,7 +15,7 @@ export type SortOptions = {
 };
 
 export type FilterOptions = {
-  type: RackType[];
+  ignoreType: RackType[];
   covered: RackCoverage[];
   minCapacity: number;
   maxDistance: number;
@@ -36,7 +36,7 @@ const racksStore = writable<{
     direction: "asc",
   },
   filter: {
-    type: [...RackTypes].sort(),
+    ignoreType: [],
     covered: [...RackCoverages],
     minCapacity: 0,
     maxDistance: 1000,
@@ -81,7 +81,7 @@ const racks = derived([racksStore, mapStore], ([$data, $mapStore]) => {
     })
     .filter((rack) => {
       const {
-        type: typeSelection,
+        ignoreType,
         covered: coveredSelection,
         minCapacity,
         maxDistance,
@@ -91,7 +91,7 @@ const racks = derived([racksStore, mapStore], ([$data, $mapStore]) => {
 
       const { bicycle_parking: type, covered } = rack.tags;
 
-      if (type && typeSelection.length && !typeSelection.includes(type)) {
+      if (ignoreType && ignoreType.length && ignoreType.includes(type)) {
         return false;
       }
       if (
