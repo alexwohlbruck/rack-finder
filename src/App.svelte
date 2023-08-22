@@ -9,6 +9,7 @@
   import UserPanel from "./components/UserPanel.svelte";
   import { mapStore } from "./store/map";
   import Toast from "./lib/Toast.svelte";
+  import AppLogo from "./components/AppLogo.svelte";
 
   let locateUserOnMap;
   $: contributeMode = $mapStore.contributeMode;
@@ -35,7 +36,10 @@
       {#if $racksStore.selectedRack}
         <RackDetail />
       {/if}
-      <UserPanel />
+      <div class="flex gap-2">
+        <AppLogo />
+        <UserPanel />
+      </div>
     </div>
 
     <Card padding="none" class="flex-auto max-w-none overflow-hidden">
