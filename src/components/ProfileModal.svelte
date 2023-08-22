@@ -1,7 +1,17 @@
 <script>
-  import { A, Avatar, Heading, Label, Modal, P, Select } from "flowbite-svelte";
+  import {
+    A,
+    Avatar,
+    Button,
+    Heading,
+    Label,
+    Modal,
+    P,
+    Select,
+  } from "flowbite-svelte";
   import { authStore } from "../store/auth";
   import Profile from "./Profile.svelte";
+  import { logout } from "../services/osm";
   export let open;
 
   $: me = $authStore.me;
@@ -25,10 +35,15 @@
   };
 </script>
 
-<Modal bind:open autoclose outsideclose>
+<Modal bind:open outsideclose>
   <!-- <Heading tag="h5">My account</Heading> -->
   {#if me}
-    <Profile {me} size="lg" />
+    <div class="flex items-center">
+      <div class="flex-1">
+        <Profile {me} size="lg" />
+      </div>
+      <Button size="sm" outline class="mr-7" on:click={logout}>Sign out</Button>
+    </div>
   {/if}
 
   <Heading tag="h6">Preferences</Heading>
