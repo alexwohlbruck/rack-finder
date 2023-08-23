@@ -15,6 +15,6 @@
     ],
     "theme_color": "#fce047",
     "background_color": "#fce047",
-    "start_url": "https://rackfinder.netlify.app",
+    "start_url": "/",
     "display": "standalone"
 }
