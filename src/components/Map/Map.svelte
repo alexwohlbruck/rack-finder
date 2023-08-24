@@ -50,8 +50,7 @@
 
   function onGeolocateSuccess(e) {
     updateLocation(e);
-    console.log($locationStore);
-    fetchRacks(true, $locationStore);
+    fetchRacks(true, e.coords);
   }
 
   function initMap() {
