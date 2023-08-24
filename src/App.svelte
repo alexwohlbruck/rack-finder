@@ -52,4 +52,8 @@
   .side-panel > :global(div) {
     max-width: none;
   }
+
+  :global([role="dialog"]) {
+    outline: none !important;
+  }
 </style>

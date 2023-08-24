@@ -7,6 +7,8 @@
   } from "../services/geolocation";
   import { createEventDispatcher, onMount } from "svelte";
 
+  export let open = false;
+
   onMount(async () => {
     await checkLocationPermissionStatus();
   });
@@ -18,14 +20,28 @@
   const dispatch = createEventDispatcher();
 
   function locateUser() {
-    dispatch("locateUser");
+    setTimeout(() => {
+      dispatch("locateUser");
+    }, 0);
   }
 
   async function checkLocationPermissionStatus() {
     status = (await getLocationPermissionStatus()) as LocationPermissionStatus;
     if (status === "granted") {
-      await getCurrentLocation();
-      setTimeout(locateUser, 0);
+      open = false;
+      try {
+        await getCurrentLocation();
+        locateUser();
+      } catch (e) {
+        status = "denied";
+        open = true;
+      }
+    }
+    if (status === "denied") {
+      open = true;
+    }
+    if (status === "prompt") {
+      open = true;
     }
   }
 
@@ -39,7 +55,7 @@
   }
 </script>
 
-<Modal bind:open={locationUnavailable} size="xs" permanent>
+<Modal bind:open size="xs" permanent>
   <div class="flex flex-col gap-5 items-center">
     <svg
       class="mx-auto w-14 h-14 dark:text-gray-200 dark:text-white"
