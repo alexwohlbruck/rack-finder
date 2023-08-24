@@ -11,4 +11,7 @@ export default defineConfig({
       requireSuffix: true,
     }),
   ],
+  server: {
+    host: true,
+  }
 });
