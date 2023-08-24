@@ -1,6 +1,7 @@
 import colors from "tailwindcss/colors";
 
 export const DEBOUNCE_TIME = 300;
+export const DEFAULT_FETCH_RADIUS = 5000;
 export const INITIAL_STATE = {
   lng: -30.6271504,
   lat: 29.108255,
@@ -55,7 +56,7 @@ export const racksLayer = {
         type: "Feature",
         geometry: {
           type: "Point",
-          coordinates: [-80.843124, 35.227085],
+          coordinates: [],
         },
         properties: {
           id: "1",

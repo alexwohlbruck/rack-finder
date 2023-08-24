@@ -4,6 +4,8 @@ import { writable } from "svelte/store";
 
 export const locationStore = writable<any>({});
 
+export type LocationPermissionStatus = "granted" | "denied" | "prompt";
+
 export async function getCurrentLocation() {
   return new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(
@@ -19,7 +21,12 @@ export async function getCurrentLocation() {
   );
 }
 
-export async function getLocationPermissionStatus() {
+export async function getLocationPermissionStatus(): Promise<LocationPermissionStatus> {
+  if (!navigator.permissions) {
+    return new Promise((resolve, reject) => {
+      resolve("prompt");
+    });
+  }
   return new Promise((resolve, reject) =>
     navigator.permissions
       .query({ name: "geolocation" })

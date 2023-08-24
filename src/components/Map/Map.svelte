@@ -1,19 +1,15 @@
 <script lang="ts">
-  import {
-    Map,
-    Marker,
-    Popup,
-    GeolocateControl,
-    NavigationControl,
-  } from "mapbox-gl";
+  import { Map, Marker, GeolocateControl, NavigationControl } from "mapbox-gl";
   import { onMount, onDestroy } from "svelte";
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
+  import { prefsStore } from "../../store/prefs";
   import { locationStore, updateLocation } from "../../store/location";
   import { mapStore, setMapCenter } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
     DEBOUNCE_TIME,
+    DEFAULT_FETCH_RADIUS,
     RACKS_FETCH_OUTER_BOUNDS_RATIO,
     RACKS_LAYER_MAX_ZOOM,
     buildingsLayer,
@@ -36,6 +32,7 @@
 
   let mapContainer;
   let map;
+  let mapLoaded = false;
   let geolocateControl;
   let navigationControl;
   let marker;
@@ -47,15 +44,14 @@
     map?.remove();
   });
 
-  export function locateUser() {
-    geolocateControl.trigger();
-    if ($locationStore) {
-      fetchRacks($locationStore);
-    }
+  function locateUser() {
+    geolocateControl?.trigger();
   }
 
   function onGeolocateSuccess(e) {
     updateLocation(e);
+    console.log($locationStore);
+    fetchRacks(true, $locationStore);
   }
 
   function initMap() {
@@ -76,6 +72,7 @@
     map.addControl(geolocateControl);
 
     map.on("load", () => {
+      mapLoaded = true;
       addMapLayers();
     });
 
@@ -156,6 +153,12 @@
   }
 
   $: {
+    if (mapLoaded && $prefsStore.onboardingCompleted) {
+      locateUser();
+    }
+  }
+
+  $: {
     const racks = $racksStore.racks;
     updateRacksLayer(racks);
   }
@@ -218,12 +221,14 @@
     });
   }
 
-  function fetchRacks(center?: Position) {
+  function fetchRacks(ignoreZoom = false, center?: Position) {
     if (!map) return;
-    const tooFarZoom = map.getZoom() < RACKS_LAYER_MAX_ZOOM;
+    const tooFarZoom = !ignoreZoom && map.getZoom() < RACKS_LAYER_MAX_ZOOM;
     center = center || map.getCenter();
     if (tooFarZoom || isAreaLoaded(center)) return;
-    const radius = RACKS_FETCH_OUTER_BOUNDS_RATIO(getViewportRadius());
+    const radius = ignoreZoom
+      ? DEFAULT_FETCH_RADIUS
+      : RACKS_FETCH_OUTER_BOUNDS_RATIO(getViewportRadius());
     areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
     op.fetchRacks(center, radius);
   }

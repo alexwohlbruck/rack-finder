@@ -2,8 +2,8 @@ import type { Geolocation } from "../types/Geolocation";
 import { writable } from "svelte/store";
 
 const locationStore = writable({
-  lat: 35.2271,
-  lng: -80.8431,
+  lat: 0,
+  lng: 0,
   accuracy: 0,
   heading: null,
   speed: null,

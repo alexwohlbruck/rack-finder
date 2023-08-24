@@ -1,20 +1,15 @@
-<script>
-  import { Avatar, Card, P } from "flowbite-svelte";
+<script lang="ts">
+  import { Avatar } from "flowbite-svelte";
   import logo from "../lib/icons/rack-finder.svg";
-  import AppInfoModal from "./AppInfoModal.svelte";
 
-  let appInfoModalOpen = false;
+  export let size: "md" | "lg" = "md";
+  $: sizeNum = size === "md" ? 12 : 20;
 </script>
 
-<AppInfoModal bind:open={appInfoModalOpen} />
-
-<Card class="flex flex-row items-center gap-2 !p-2">
-  <button on:click={() => (appInfoModalOpen = true)}>
-    <Avatar
-      class="bg-primary-300 dark:bg-primary-300 border-2 border-primary-400 shadow-md shadow-primary-600/40 !w-12 !h-12 p-2"
-      rounded
-    >
-      <img src={logo} alt="Rack Finder Logo" />
-    </Avatar>
-  </button>
-</Card>
+<Avatar
+  {...$$props}
+  class={`w-${sizeNum} h-${sizeNum} p-2 bg-primary-300 dark:bg-primary-300 border-2 border-primary-400 shadow-md shadow-primary-600/40 ${$$props.class}`}
+  rounded
+>
+  <img src={logo} alt="Rack Finder Logo" />
+</Avatar>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Card } from "flowbite-svelte";
   import Map from "./components/Map/Map.svelte";
-  import LocationPermissionModal from "./components/LocationPermissionModal.svelte";
+  import OnboardingModal from "./components/OnboardingModal.svelte";
   import ContributeRackPanel from "./components/ContributeRackPanel.svelte";
   import RackDetail from "./components/RackDetail.svelte";
   import { racksStore } from "./store/racks";
@@ -9,17 +9,12 @@
   import ProfilePanel from "./components/ProfilePanel.svelte";
   import { mapStore } from "./store/map";
   import Toast from "./lib/Toast.svelte";
-  import AppLogo from "./components/AppLogo.svelte";
+  import AppLogoPanel from "./components/AppLogoPanel.svelte";
 
-  let locateUserOnMap;
   $: contributeMode = $mapStore.contributeMode;
-
-  function locateUser() {
-    locateUserOnMap();
-  }
 </script>
 
-<LocationPermissionModal on:locateUser={locateUser} />
+<OnboardingModal />
 <Toast />
 
 <main class="h-screen p-2">
@@ -37,13 +32,13 @@
         <RackDetail />
       {/if}
       <div class="flex gap-2">
-        <AppLogo />
+        <AppLogoPanel />
         <ProfilePanel />
       </div>
     </div>
 
     <Card padding="none" class="flex-auto max-w-none overflow-hidden">
-      <Map bind:locateUser={locateUserOnMap} />
+      <Map />
     </Card>
   </div>
 </main>

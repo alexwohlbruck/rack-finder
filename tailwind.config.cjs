@@ -33,6 +33,11 @@ const config = {
       },
     },
   },
+
+  safelist: [
+    'w-20',
+    'h-20',
+  ],
 };
 
 // module.exports = config;
