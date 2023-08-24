@@ -27,6 +27,7 @@
 
   async function checkLocationPermissionStatus() {
     status = (await getLocationPermissionStatus()) as LocationPermissionStatus;
+    alert(status);
     if (status === "granted") {
       open = false;
       try {
