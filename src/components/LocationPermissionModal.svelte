@@ -27,8 +27,20 @@
 
   async function checkLocationPermissionStatus() {
     status = (await getLocationPermissionStatus()) as LocationPermissionStatus;
-    alert(status);
-    if (status === "granted") {
+
+    // Safari is fucking stupid and returns "prompt" even when user has granted permission.
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    if (isSafari && status === "prompt") {
+      const result = await getCurrentLocation();
+      if (result) {
+        open = false;
+        status = "granted";
+      } else {
+        open = true;
+        status = "prompt";
+      }
+    } else if (status === "granted") {
       open = false;
       try {
         await getCurrentLocation();
@@ -37,11 +49,7 @@
         status = "denied";
         open = true;
       }
-    }
-    if (status === "denied") {
-      open = true;
-    }
-    if (status === "prompt") {
+    } else if (status === "denied" || status === "prompt") {
       open = true;
     }
   }
