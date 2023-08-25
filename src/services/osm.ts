@@ -189,7 +189,7 @@ export const submitBikeRack = async (bikeRack: BikeRack) => {
 
   try {
     const changeset = await createChangeset(
-      `Add ${bikeRack.tags.bicycle_parking} bike rack}`
+      `Add ${bikeRack.tags.bicycle_parking} bike rack`
     );
     await createNode({
       changeset,
