@@ -17,7 +17,7 @@
 <OnboardingModal />
 <Toast />
 
-<main class="h-screen p-2">
+<main class="h-[100dvh] p-2">
   <div class="h-full flex flex-col-reverse md:flex-row md- gap-2 items-stretch">
     <div
       class="side-panel flex flex-col gap-2 h-3/5 md:h-auto md:w-2/5 lg:w-1/3 md:max-w-[30rem]"
