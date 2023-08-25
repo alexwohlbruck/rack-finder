@@ -4,7 +4,7 @@
 
   export let steps: any[] = [];
 
-  let currentStep = 1;
+  let currentStep = 0;
   $: indicators = steps.map((step, i) => {
     return {
       completed: i < currentStep,
