@@ -17,7 +17,7 @@
 <OnboardingModal />
 <Toast />
 
-<main class="h-[100dvh] p-2">
+<main class="h-[100dvh]">
   <div class="h-full flex flex-col-reverse md:flex-row md- gap-2 items-stretch">
     <div
       class="side-panel flex flex-col gap-2 h-3/5 md:h-auto md:w-2/5 lg:w-1/3 md:max-w-[30rem]"
@@ -44,6 +44,15 @@
 </main>
 
 <style>
+  @supports (padding: max(0px)) {
+    main {
+      padding-top: max(0.5rem, env(safe-area-inset-top));
+      padding-left: max(0.5rem, env(safe-area-inset-left));
+      padding-right: max(0.5rem, env(safe-area-inset-right));
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
+  }
+
   .side-panel > :global(div) {
     max-width: none;
   }
