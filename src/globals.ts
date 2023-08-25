@@ -1,1 +1,1 @@
-export const APP_URL = "https://rack-finder.app";
+export const APP_URL = "https://rackfinder.app";
