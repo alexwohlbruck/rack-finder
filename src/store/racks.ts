@@ -38,7 +38,7 @@ const racksStore = writable<{
   filter: {
     ignoreType: [],
     covered: [...RackCoverages],
-    minCapacity: 0,
+    minCapacity: 1,
     maxDistance: 1000,
   },
 });

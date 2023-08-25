@@ -12,14 +12,24 @@ export const op = async (query: string) => {
 export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
   const query = `
     [out:json];
-    node["amenity"="bicycle_parking"](around:${radius}, ${lat}, ${lng});
-    out;
+    (
+      node["amenity"="bicycle_parking"](around:${radius}, ${lat}, ${lng});
+      way["amenity"="bicycle_parking"](around:${radius}, ${lat}, ${lng});
+    );
+    out center;
   `;
   const { elements } = await op(query);
   elements.forEach((element) => {
+    let { lat, lon: lng } = element;
+    if (element.type === "way") {
+      const { center } = element;
+      lat = center.lat;
+      lng = center.lon;
+    }
     const payload = {
       ...element,
-      lng: element.lon,
+      lat,
+      lng,
     };
     addRack(payload);
   });
