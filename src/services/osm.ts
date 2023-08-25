@@ -12,6 +12,7 @@ import type { BikeRack, Node } from "../types/OSM";
 import { js2xml, xml2js } from "xml-js";
 import { toggleContributeMode } from "../store/map";
 import { showToast } from "../store/toast";
+import { APP_URL } from "../globals";
 
 const ATTRIBUTION = "Rack Finder by @alexwohlbruck";
 const OSM_BASE_URL = "https://api.openstreetmap.org/api/0.6";
@@ -74,25 +75,48 @@ export const getOsmUser = async () => {
   }
 };
 
-const createChangeset = async (comment) => {
+const createChangeset = async (comment, requestReview = false) => {
+  const tags = [
+    {
+      _attributes: {
+        k: "created_by",
+        v: ATTRIBUTION,
+      },
+    },
+    {
+      _attributes: {
+        k: "comment",
+        v: comment,
+      },
+    },
+    {
+      _attributes: {
+        k: "locale",
+        v: navigator.language, // TODO: Allow user to change language
+      },
+    },
+    {
+      _attributes: {
+        k: "host",
+        v: APP_URL,
+      },
+    },
+  ];
+
+  if (requestReview) {
+    tags.push({
+      _attributes: {
+        k: "review_requested",
+        v: "yes",
+      },
+    });
+  }
+
   const data = {
     _declaration,
     osm: {
       changeset: {
-        tag: [
-          {
-            _attributes: {
-              k: "created_by",
-              v: ATTRIBUTION,
-            },
-          },
-          {
-            _attributes: {
-              k: "comment",
-              v: comment,
-            },
-          },
-        ],
+        tag: tags,
       },
     },
   };
@@ -164,7 +188,9 @@ export const submitBikeRack = async (bikeRack: BikeRack) => {
     .filter(({ value }) => value); // Remove empty tags
 
   try {
-    const changeset = await createChangeset("Rack Finder");
+    const changeset = await createChangeset(
+      `Add ${bikeRack.tags.bicycle_parking} bike rack}`
+    );
     await createNode({
       changeset,
       lat,
