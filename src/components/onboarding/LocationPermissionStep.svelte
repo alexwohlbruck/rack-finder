@@ -8,6 +8,7 @@
   } from "../../services/geolocation";
   import { createEventDispatcher } from "svelte";
   import { completeOnboarding } from "../../store/prefs";
+  import { Icon } from "flowbite-svelte-icons";
 
   let status: LocationPermissionStatus = "prompt";
   const dispatch = createEventDispatcher();
@@ -33,17 +34,7 @@
 </script>
 
 <div class="flex flex-col gap-5 items-center">
-  <svg
-    class="mx-auto w-14 h-14 dark:text-gray-200 dark:text-white"
-    aria-hidden="true"
-    xmlns="http://www.w3.org/2000/svg"
-    fill="currentColor"
-    viewBox="0 0 14 20"
-  >
-    <path
-      d="M7 0a7 7 0 0 0-1 13.92V19a1 1 0 1 0 2 0v-5.08A7 7 0 0 0 7 0Zm0 5.5A1.5 1.5 0 0 0 5.5 7a1 1 0 0 1-2 0A3.5 3.5 0 0 1 7 3.5a1 1 0 0 1 0 2Z"
-    />
-  </svg>
+  <Icon name="map-pin-solid" class="w-12 h-12 text-sky-500" />
   <div class="flex flex-col gap-2">
     <Heading tag="h5" class="text-center">
       Share your location to get started

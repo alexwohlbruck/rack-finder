@@ -4,12 +4,20 @@
   import LocationPermissionStep from "./onboarding/LocationPermissionStep.svelte";
   import WelcomeStep from "./onboarding/WelcomeStep.svelte";
   import { prefsStore } from "../store/prefs";
-  import InformationStep from "./onboarding/InformationStep.svelte";
+  import ContributeInstructionStep from "./onboarding/ContributeInstructionStep.svelte";
+  import MapInstructionStep from "./onboarding/MapInstructionStep.svelte";
 
   let open = false;
   $: open = !$prefsStore.onboardingCompleted;
 </script>
 
 <Modal bind:open size="xs" permanent>
-  <Stepper steps={[WelcomeStep, InformationStep, LocationPermissionStep]} />
+  <Stepper
+    steps={[
+      WelcomeStep,
+      MapInstructionStep,
+      ContributeInstructionStep,
+      LocationPermissionStep,
+    ]}
+  />
 </Modal>
