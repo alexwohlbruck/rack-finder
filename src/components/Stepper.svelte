@@ -4,7 +4,7 @@
 
   export let steps: any[] = [];
 
-  let currentStep = 0;
+  let currentStep = 1;
   $: indicators = steps.map((step, i) => {
     return {
       completed: i < currentStep,
@@ -35,7 +35,7 @@
       </Button>
     </div>
 
-    <div class="flex-1">
+    <div class="flex-1 mx-2">
       {#each steps as component, i}
         {#if i === currentStep}
           <svelte:component this={component} />
