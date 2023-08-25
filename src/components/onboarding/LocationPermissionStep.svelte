@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Alert, P } from "flowbite-svelte";
+  import { Alert, Heading, P } from "flowbite-svelte";
   import Button from "../../lib/Button.svelte";
   import {
     getCurrentLocation,
@@ -44,12 +44,10 @@
       d="M7 0a7 7 0 0 0-1 13.92V19a1 1 0 1 0 2 0v-5.08A7 7 0 0 0 7 0Zm0 5.5A1.5 1.5 0 0 0 5.5 7a1 1 0 0 1-2 0A3.5 3.5 0 0 1 7 3.5a1 1 0 0 1 0 2Z"
     />
   </svg>
-  <div class="flex flex-col gap-1">
-    <h3
-      class="text-center text-lg font-normal text-gray-500 dark:text-gray-400"
-    >
-      Grant access to your location to get started
-    </h3>
+  <div class="flex flex-col gap-2">
+    <Heading tag="h5" class="text-center">
+      Share your location to get started
+    </Heading>
     <P size="sm" class="text-center">
       Your location data will not be uploaded or shared with anyone. It is kept
       locally on your device.
@@ -63,7 +61,7 @@
     </Alert>
   {:else}
     <div class="flex gap-2">
-      <Button on:click={requestLocation}>Grant permission</Button>
+      <Button size="sm" on:click={requestLocation}>Grant permission</Button>
     </div>
   {/if}
 </div>
