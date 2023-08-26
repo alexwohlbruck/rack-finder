@@ -14,6 +14,13 @@ import { toggleContributeMode } from "../store/map";
 import { showToast } from "../store/toast";
 import { APP_URL } from "../globals";
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const isIOS =
+  (/iPad|iPhone|iPod/.test(navigator.platform) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) &&
+  !window.MSStream;
+const useSinglePageAuth = isSafari || isIOS;
+
 const ATTRIBUTION = "Rack Finder by @alexwohlbruck";
 const OSM_BASE_URL = "https://api.openstreetmap.org/api/0.6";
 const REDIRECT_PATH = `${window.location.origin}${window.location.pathname}`;
@@ -29,6 +36,7 @@ const osm = osmAuth({
   redirect_uri: REDIRECT_PATH,
   scope: "write_api read_prefs",
   auto: true,
+  singlepage: useSinglePageAuth,
 });
 
 export const checkAuthenticated = () => {
@@ -51,6 +59,17 @@ export const logout = () => {
 };
 
 export const init = async () => {
+  // Single page auth method, check code and authenticate
+  if (
+    useSinglePageAuth &&
+    window.location.search
+      .slice(1)
+      .split("&")
+      .some((p) => p.startsWith("code="))
+  ) {
+    await authenticate();
+  }
+
   // Return auth token to parent window when authentication is complete
   if (window.opener) {
     window.opener.authComplete(window.location.href);
