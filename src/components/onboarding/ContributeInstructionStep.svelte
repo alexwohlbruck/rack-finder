@@ -19,7 +19,5 @@
 
   <P size="xs" weight="semibold" class="text-center opacity-70">
     *Any contributions you make are owned by you via your OpenStreetMap account.
-    <DropdownDivider class="my-3" />
-    Note: This isn't working on Safari/iPhone right now. Bare with me. 🥲
   </P>
 </div>
