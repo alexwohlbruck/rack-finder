@@ -1,5 +1,5 @@
 <script>
-  import { DropdownDivider, Heading, P } from "flowbite-svelte";
+  import { Heading, P } from "flowbite-svelte";
   import Button from "../../lib/Button.svelte";
   import { Icon } from "flowbite-svelte-icons";
 </script>

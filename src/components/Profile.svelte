@@ -20,7 +20,7 @@
     alt={me?.display_name}
     rounded
     border
-    class={`shadow-md ${
+    class={`avatar shadow-md ${
       size === "lg" ? "!w-14 !h-14 !min-w-fit" : "!w-10 !h-10 !min-w-fit"
     }`}
   />
@@ -44,7 +44,7 @@
         >
           {me?.changesets.count}
           {#if size === "lg"}
-            OpenStreetMap
+            OSM
           {/if}
           contribution{me?.changesets.count !== 1 ? "s" : ""}
         </A>
@@ -52,3 +52,9 @@
     {/if}
   </div>
 </div>
+
+<style>
+  :global(.avatar) {
+    aspect-ratio: 1;
+  }
+</style>
