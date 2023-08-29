@@ -1,6 +1,8 @@
 import { writable } from "svelte/store";
 import { INITIAL_STATE } from "../components/Map/map.config";
+import type { Position } from "../types/geolocation";
 
+// TODO: this is redundant - prefs store also has last map center. Remove later?
 const mapStore = writable({
   contributeMode: false,
   center: {
@@ -18,7 +20,7 @@ export function toggleContributeMode(value?: boolean) {
   });
 }
 
-export function setMapCenter({ lat, lng }) {
+export function setMapCenter({ lat, lng }: Position) {
   mapStore.update((store) => {
     return {
       ...store,

@@ -3,7 +3,7 @@
   import { onMount, onDestroy } from "svelte";
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
-  import { prefsStore } from "../../store/prefs";
+  import { prefsStore, setLastLocation } from "../../store/prefs";
   import { locationStore, updateLocation } from "../../store/location";
   import { mapStore, setMapCenter } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
@@ -86,6 +86,7 @@
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         const center = map.getCenter();
+        const zoom = map.getZoom();
         marker?.setLngLat({
           lat: center.lat,
           lng: center.lng,
@@ -95,6 +96,7 @@
           center.lng !== $locationStore.lng
         ) {
           setMapCenter(center);
+          setLastLocation(center.lat, center.lng, zoom);
         }
         fetchRacks();
       }, DEBOUNCE_TIME);
@@ -151,8 +153,9 @@
     map.setStyle(style);
   }
 
+  $: onboardingCompleted = $prefsStore.onboardingCompleted;
   $: {
-    if (mapLoaded && $prefsStore.onboardingCompleted) {
+    if (mapLoaded && onboardingCompleted) {
       locateUser();
     }
   }

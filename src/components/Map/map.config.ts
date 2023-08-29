@@ -1,11 +1,14 @@
 import colors from "tailwindcss/colors";
+import { getLocalStorage } from "../../localStorage";
+
+const prefs = getLocalStorage("prefs");
 
 export const DEBOUNCE_TIME = 300;
 export const DEFAULT_FETCH_RADIUS = 5000;
 export const INITIAL_STATE = {
-  lng: -30.6271504,
-  lat: 29.108255,
-  zoom: 1,
+  lng: prefs?.lastLocation?.lng || 0,
+  lat: prefs?.lastLocation?.lat || 0,
+  zoom: prefs?.lastLocation?.zoom || 0,
 };
 export const RACKS_LAYER_MAX_ZOOM = 13;
 export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 2.0 * radius + 2000;
