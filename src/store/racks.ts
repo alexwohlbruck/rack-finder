@@ -1,14 +1,12 @@
 import { derived, writable } from "svelte/store";
 import { haversine } from "../util";
 import {
-  RackTypes,
   type Rack,
   type RackCoverage,
   type RackType,
   RackCoverages,
 } from "../types/rack";
 import { mapStore } from "./map";
-import type { BikeRack } from "../types/osm";
 
 export type SortOptions = {
   by: "distance" | "capacity";
