@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import { type OSMUser } from "../types/OSM";
+import { type OSMUser } from "../types/osm";
 
 type AuthStore = {
   me: OSMUser | null;

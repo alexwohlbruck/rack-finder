@@ -6,8 +6,9 @@ import {
   type RackCoverage,
   type RackType,
   RackCoverages,
-} from "../types/Rack";
+} from "../types/rack";
 import { mapStore } from "./map";
+import type { BikeRack } from "../types/osm";
 
 export type SortOptions = {
   by: "distance" | "capacity";
@@ -23,7 +24,7 @@ export type FilterOptions = {
 
 const racksStore = writable<{
   racks: {
-    [key: string]: Rack;
+    [key: number]: Rack;
   };
   sort: SortOptions;
   filter: FilterOptions;
@@ -43,7 +44,7 @@ const racksStore = writable<{
   },
 });
 
-export function addRack(rack) {
+export function addRack(rack: Rack) {
   racksStore.update(($data) => {
     if (!$data.racks[rack.id]) {
       $data.racks[rack.id] = rack;

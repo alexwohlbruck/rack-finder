@@ -11,7 +11,7 @@
     P,
     Range,
   } from "flowbite-svelte";
-  import { RackTypes } from "../types/Rack";
+  import { RackTypes } from "../types/rack";
   import { camelcaseToWords, renderDistance } from "../util";
   import Button from "../lib/Button.svelte";
 

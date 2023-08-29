@@ -24,7 +24,7 @@
     styles,
     unclusteredPointLayer,
   } from "./map.config";
-  import type { Rack } from "../../types/Rack";
+  import type { Rack } from "../../types/rack";
   import ContributeRackButton from "../ContributeRackButton.svelte";
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";

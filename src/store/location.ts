@@ -1,4 +1,4 @@
-import type { Geolocation } from "../types/Geolocation";
+import type { Geolocation } from "../types/geolocation";
 import { writable } from "svelte/store";
 
 const locationStore = writable({

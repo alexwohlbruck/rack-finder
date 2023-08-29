@@ -8,11 +8,13 @@
 
 import { osmAuth } from "osm-auth";
 import { setUser } from "../store/auth";
-import type { BikeRack, Node } from "../types/OSM";
+import type { BikeRack, Node } from "../types/osm";
 import { js2xml, xml2js } from "xml-js";
 import { toggleContributeMode } from "../store/map";
 import { showToast } from "../store/toast";
 import { APP_URL } from "../globals";
+import { addRack } from "../store/racks";
+import type { Rack } from "../types/rack";
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isIOS =
@@ -197,7 +199,7 @@ const closeChangeset = async (changeset) => {
   await closeChangesetResponse.text();
 };
 
-export const submitBikeRack = async (bikeRack: BikeRack) => {
+export const submitBikeRack = async (bikeRack: Rack) => {
   const { lat, lng } = bikeRack;
   const tags = Object.entries(bikeRack.tags)
     .map(([key, value]) => ({
@@ -223,6 +225,7 @@ export const submitBikeRack = async (bikeRack: BikeRack) => {
       ],
     });
     await closeChangeset(changeset);
+    addRack(bikeRack);
     showToast("Thanks! Your contribution will show on the map shortly.");
   } catch (err) {
     console.error(err);

@@ -1,16 +1,16 @@
 <script lang="ts">
   import { ListgroupItem, Button, P } from "flowbite-svelte";
   import { racks } from "../store/racks";
-  import { type RackType } from "../types/OSM";
+  import { type RackType } from "../types/rack";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import { setMapCenter } from "../store/map";
   import { capitalize, renderDistance } from "../util";
 
-  function renderType(type: RackType) {
+  function renderType(type: RackType): string {
     if (!type) {
       return "Unknown type";
     }
-    let friendlyName = type;
+    let friendlyName: string = type;
     switch (type) {
       case "staple":
         friendlyName = "Staple rack";

@@ -14,7 +14,7 @@
 
   import { submitBikeRack } from "../services/osm";
   import { get } from "svelte/store";
-  import type { BikeRackTags } from "../types/OSM";
+  import type { BikeRackTags } from "../types/osm";
 
   let loading = false;
 

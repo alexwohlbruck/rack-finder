@@ -30,8 +30,18 @@ export const RackCoverages = ["yes", "no", "partial"] as const;
 export type RackType = (typeof RackTypes)[number];
 export type RackCoverage = (typeof RackCoverages)[number];
 
+// https://wiki.openstreetmap.org/wiki/Key:bicycle_parking
+
+type Covered = "yes" | "no" | "partial";
+
+export type BikeRackTags = {
+  bicycle_parking: RackType;
+  capacity?: number;
+  covered?: Covered;
+};
+
 export type Rack = {
-  id: number;
+  id?: number;
   lat: number;
   lng: number;
   tags: {
