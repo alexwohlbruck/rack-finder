@@ -21,7 +21,7 @@ const defaultPrefs: {
   prefs: {
     theme: "auto",
     language: "en-US",
-    units: "metric",
+    units: "auto",
   },
   visits: 0,
   onboardingCompleted: false,
