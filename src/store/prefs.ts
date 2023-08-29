@@ -34,7 +34,7 @@ export const preferredUnits = derived([prefsStore], ([$data]) => {
   const value = $data?.prefs?.units;
   if (value === "auto") {
     const country = navigator.language.split("-")[1];
-    const imperialCountries = ["US"]; // TODO: Find the other countries that use imperial
+    const imperialCountries = ["US", "LR", "MM"];
     if (imperialCountries.includes(country)) return "imperial";
     return "metric";
   }
