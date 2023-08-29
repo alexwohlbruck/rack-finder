@@ -77,7 +77,7 @@
 
     map.on("style.load", async () => {
       addMapLayers();
-      updateRacksLayer($racksStore.racks);
+      updateRacksLayer($racksStore);
     });
 
     // Use debounce to only load 2s after the last moveend event
@@ -160,7 +160,7 @@
   }
 
   $: {
-    const racks = $racksStore.racks;
+    const racks = $racksStore;
     updateRacksLayer(racks);
   }
 

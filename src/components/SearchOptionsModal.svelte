@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { racksStore, setOptions } from "../store/racks";
+  import { searchOptionsStore, setOptions } from "../store/racks";
   import {
     ButtonGroup,
     Heading,
@@ -18,8 +18,8 @@
   export let open;
   let sort, filter;
 
-  $: sort = $racksStore.sort;
-  $: filter = $racksStore.filter;
+  $: sort = $searchOptionsStore.sort;
+  $: filter = $searchOptionsStore.filter;
 
   // Auto update
   $: {

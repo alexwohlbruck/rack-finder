@@ -2,6 +2,9 @@ import { writable } from "svelte/store";
 import type { Position } from "./types/geolocation";
 
 export const haversine = (a: Position, b: Position) => {
+  if (!(a?.lat && a?.lng && b?.lat && b?.lng)) {
+    return 0;
+  }
   const R = 6371e3; // metres
   const φ1 = (a.lat * Math.PI) / 180; // φ, λ in radians
   const φ2 = (b.lat * Math.PI) / 180;
@@ -40,9 +43,9 @@ export const camelcaseToWords = (str) => {
   return spaces.charAt(0).toUpperCase() + spaces.slice(1);
 };
 
-export const syncedWritable = (name: string, initialData: any) => {
+export const syncedWritable = <T>(name: string, initialData: T) => {
   const storedValue = JSON.parse(localStorage.getItem(name) || "{}");
-  const store = writable({
+  const store = writable<T>({
     ...initialData,
     ...storedValue,
   });

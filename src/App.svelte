@@ -4,7 +4,7 @@
   import OnboardingModal from "./components/OnboardingModal.svelte";
   import ContributeRackPanel from "./components/ContributeRackPanel.svelte";
   import RackDetail from "./components/RackDetail.svelte";
-  import { racksStore } from "./store/racks";
+  import { searchOptionsStore } from "./store/racks";
   import NearbyRacksPanel from "./components/NearbyRacksPanel.svelte";
   import ProfilePanel from "./components/ProfilePanel.svelte";
   import { mapStore } from "./store/map";
@@ -28,7 +28,7 @@
         <NearbyRacksPanel />
       {/if}
 
-      {#if $racksStore.selectedRack}
+      {#if $searchOptionsStore.selectedRack}
         <RackDetail />
       {/if}
       <div class="flex gap-2">

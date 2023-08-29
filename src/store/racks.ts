@@ -1,5 +1,5 @@
 import { derived, writable } from "svelte/store";
-import { haversine } from "../util";
+import { haversine, syncedWritable } from "../util";
 import {
   type Rack,
   type RackCoverage,
@@ -20,15 +20,15 @@ export type FilterOptions = {
   maxDistance: number;
 };
 
-const racksStore = writable<{
-  racks: {
-    [key: number]: Rack;
-  };
+const racksStore = syncedWritable<{
+  [key: number]: Rack;
+}>("racks", {});
+
+const searchOptionsStore = syncedWritable<{
   sort: SortOptions;
   filter: FilterOptions;
   selectedRack: Rack;
-}>({
-  racks: {},
+}>("searchOptionsStore", {
   selectedRack: null,
   sort: {
     by: "distance",
@@ -44,15 +44,15 @@ const racksStore = writable<{
 
 export function addRack(rack: Rack) {
   racksStore.update(($data) => {
-    if (!$data.racks[rack.id]) {
-      $data.racks[rack.id] = rack;
+    if (!$data[rack.id]) {
+      $data[rack.id] = rack;
     }
     return $data;
   });
 }
 
 export function selectRack(rack) {
-  racksStore.update(($data) => {
+  searchOptionsStore.update(($data) => {
     $data.selectedRack = rack;
     return $data;
   });
@@ -65,71 +65,74 @@ export function setOptions({
   sort: SortOptions;
   filter: FilterOptions;
 }) {
-  racksStore.update(($data) => {
+  searchOptionsStore.update(($data) => {
     $data.sort = sort;
     $data.filter = filter;
     return $data;
   });
 }
 
-const racks = derived([racksStore, mapStore], ([$data, $mapStore]) => {
-  return Object.values($data.racks)
-    .map((rack) => {
-      const distance = haversine($mapStore.center, rack);
-      return { ...rack, distance };
-    })
-    .filter((rack) => {
-      const {
-        ignoreType,
-        covered: coveredSelection,
-        minCapacity,
-        maxDistance,
-      } = $data.filter;
-      const capacity = parseInt(rack.tags?.capacity, null);
-      const { distance } = rack;
+const racks = derived(
+  [racksStore, mapStore, searchOptionsStore],
+  ([$racksStore, $mapStore, $searchOptionsStore]) => {
+    return Object.values($racksStore)
+      .map((rack) => {
+        const distance = haversine($mapStore.center, rack);
+        return { ...rack, distance };
+      })
+      .filter((rack) => {
+        const {
+          ignoreType,
+          covered: coveredSelection,
+          minCapacity,
+          maxDistance,
+        } = $searchOptionsStore.filter;
+        const capacity = parseInt(rack.tags?.capacity, null);
+        const { distance } = rack;
 
-      const { bicycle_parking: type, covered } = rack.tags;
+        const { bicycle_parking: type, covered } = rack.tags;
 
-      if (ignoreType && ignoreType.length && ignoreType.includes(type)) {
-        return false;
-      }
-      if (
-        covered &&
-        coveredSelection.length &&
-        !coveredSelection.includes(covered)
-      ) {
-        return false;
-      }
-      if (capacity && minCapacity && capacity < minCapacity) {
-        return false;
-      }
-      if (
-        distance &&
-        maxDistance &&
-        maxDistance < 10000 &&
-        distance > maxDistance
-      ) {
-        return false;
-      }
-      return true;
-    })
-    .sort((a, b) => {
-      const { by, direction } = $data.sort;
-      if (by === "distance") {
-        if (direction === "asc") {
-          return a.distance - b.distance;
+        if (ignoreType && ignoreType.length && ignoreType.includes(type)) {
+          return false;
         }
-        return b.distance - a.distance;
-      }
-      if (by === "capacity") {
-        const aCapacity = parseInt(a.tags?.capacity, null) || 0;
-        const bCapacity = parseInt(b.tags?.capacity, null) || 0;
-        if (direction === "asc") {
-          return aCapacity - bCapacity;
+        if (
+          covered &&
+          coveredSelection.length &&
+          !coveredSelection.includes(covered)
+        ) {
+          return false;
         }
-        return bCapacity - aCapacity;
-      }
-    });
-});
+        if (capacity && minCapacity && capacity < minCapacity) {
+          return false;
+        }
+        if (
+          distance &&
+          maxDistance &&
+          maxDistance < 10000 &&
+          distance > maxDistance
+        ) {
+          return false;
+        }
+        return true;
+      })
+      .sort((a, b) => {
+        const { by, direction } = $searchOptionsStore.sort;
+        if (by === "distance") {
+          if (direction === "asc") {
+            return a.distance - b.distance;
+          }
+          return b.distance - a.distance;
+        }
+        if (by === "capacity") {
+          const aCapacity = parseInt(a.tags?.capacity, null) || 0;
+          const bCapacity = parseInt(b.tags?.capacity, null) || 0;
+          if (direction === "asc") {
+            return aCapacity - bCapacity;
+          }
+          return bCapacity - aCapacity;
+        }
+      });
+  }
+);
 
-export { racksStore, racks };
+export { racksStore, searchOptionsStore, racks };
