@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
 import type { Position } from "./types/geolocation";
+import type { Units } from "./store/prefs";
 
 export const haversine = (a: Position, b: Position) => {
   if (!(a?.lat && a?.lng && b?.lat && b?.lng)) {
@@ -21,16 +22,32 @@ export const haversine = (a: Position, b: Position) => {
   return d;
 };
 
-export const renderDistance = (distanceInMeters) => {
-  if (distanceInMeters === 0) return "0 m";
+export const metersToFeet = (meters: number) => {
+  // TODO: Find the actual conversion. I have no internet access right now.
+  return meters / 3.2;
+};
+
+export const renderDistance = (
+  distanceInMeters: number,
+  preferredUnits: Units = "metric"
+) => {
+  const isMetric = preferredUnits === "metric";
+  const shortUnit = isMetric ? "m" : "ft";
+  const longUnit = isMetric ? "km" : "mi";
+  const longUnitValue = isMetric ? 1000 : 5280;
+
+  if (distanceInMeters === 0) return `0 ${shortUnit}`;
   if (!distanceInMeters) return "";
 
-  const distanceInKm = distanceInMeters / 1000;
+  const shortDistance = isMetric
+    ? distanceInMeters
+    : metersToFeet(distanceInMeters);
 
-  if (distanceInKm < 1) {
-    return `${Math.round(distanceInMeters)} m`;
+  const longDistance = shortDistance / longUnitValue;
+  if (longDistance < 1) {
+    return `${Math.round(shortDistance)} ${shortUnit}`;
   }
-  return `${distanceInKm.toFixed(1)} km`;
+  return `${longDistance.toFixed(1)} ${longUnit}`;
 };
 
 export const capitalize = (str) => {

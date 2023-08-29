@@ -5,6 +5,7 @@
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import { setMapCenter } from "../store/map";
   import { capitalize, renderDistance } from "../util";
+  import { preferredUnits } from "../store/prefs";
 
   function renderType(type: RackType): string {
     if (!type) {
@@ -89,7 +90,7 @@
             </div>
           </div>
           <P size="sm" weight="medium" class="w-11 text-center">
-            {renderDistance(rack?.distance)}
+            {renderDistance(rack?.distance, $preferredUnits)}
           </P>
         </div>
       </ListgroupItem>

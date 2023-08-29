@@ -1,20 +1,17 @@
 <script>
-  import {
-    A,
-    Avatar,
-    Button,
-    Heading,
-    Label,
-    Modal,
-    P,
-    Select,
-  } from "flowbite-svelte";
+  import { Button, Heading, Label, Modal, Select } from "flowbite-svelte";
   import { authStore } from "../store/auth";
+  import { prefsStore, setPrefs } from "../store/prefs";
   import Profile from "./Profile.svelte";
   import { logout } from "../services/osm";
   export let open;
 
   $: me = $authStore.me;
+  $: prefs = $prefsStore.prefs;
+
+  $: {
+    setPrefs(prefs);
+  }
 
   const unitsOptions = [
     { name: "Automatic", value: "auto" },
@@ -27,16 +24,9 @@
     { name: "Light", value: "light" },
     { name: "Dark", value: "dark" },
   ];
-
-  const preferences = {
-    units: "auto",
-    language: "en-US",
-    theme: "auto",
-  };
 </script>
 
 <Modal bind:open outsideclose>
-  <!-- <Heading tag="h5">My account</Heading> -->
   {#if me}
     <div class="flex items-center">
       <div class="flex-1">
@@ -51,19 +41,14 @@
   <div class="flex flex-col gap-3 !mt-2">
     <Label>
       Measurement system
-      <Select
-        class="mt-2"
-        items={unitsOptions}
-        bind:value={preferences.units}
-        disabled
-      />
+      <Select class="mt-2" items={unitsOptions} bind:value={prefs.units} />
     </Label>
     <Label>
       Language
       <Select
         class="mt-2"
         items={languageOptions}
-        bind:value={preferences.language}
+        bind:value={prefs.language}
         disabled
       />
     </Label>
@@ -72,7 +57,7 @@
       <Select
         class="mt-2"
         items={themeOptions}
-        bind:value={preferences.theme}
+        bind:value={prefs.theme}
         disabled
       />
     </Label>

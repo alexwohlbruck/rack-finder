@@ -22,11 +22,11 @@ export function toggleContributeMode(value?: boolean) {
   });
 }
 
-export function setMapCenter({ lat, lng }: Position, zoom: number) {
+export function setMapCenter({ lat, lng }: Position, zoom?: number) {
   mapStore.update((store) => {
     return {
       ...store,
-      zoom,
+      zoom: zoom ?? store.zoom,
       center: {
         lat,
         lng,

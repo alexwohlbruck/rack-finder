@@ -14,12 +14,14 @@
   import { RackTypes } from "../types/rack";
   import { camelcaseToWords, renderDistance } from "../util";
   import Button from "../lib/Button.svelte";
+  import { preferredUnits } from "../store/prefs";
 
   export let open;
-  let sort, filter;
-
   $: sort = $searchOptionsStore.sort;
   $: filter = $searchOptionsStore.filter;
+  $: maxDistance =
+    $preferredUnits === "metric" ? 10001 : Math.floor(52800 * 3.2) + 1; // TODO: Get 1 mile in meters
+  $: minDistance = $preferredUnits === "metric" ? 10 : 32;
 
   // Auto update
   $: {
@@ -98,11 +100,16 @@
   <Label>Maximum distance</Label>
   <div class="flex gap-3 items-center !mt-2">
     <P class="w-14">
-      {filter.maxDistance === 10001
+      {filter.maxDistance === maxDistance
         ? "Any"
-        : renderDistance(filter.maxDistance)}
+        : renderDistance(filter.maxDistance, $preferredUnits)}
     </P>
-    <Range bind:value={filter.maxDistance} id="range2" min="10" max="10001" />
+    <Range
+      bind:value={filter.maxDistance}
+      id="range2"
+      min={minDistance}
+      max={maxDistance}
+    />
   </div>
 
   <div class="flex justify-end">
