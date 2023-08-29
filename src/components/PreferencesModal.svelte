@@ -43,8 +43,9 @@
       Measurement system
       <Select class="mt-2" items={unitsOptions} bind:value={prefs.units} />
     </Label>
+
     <Label>
-      Language
+      Language (Coming soon)
       <Select
         class="mt-2"
         items={languageOptions}
@@ -52,8 +53,9 @@
         disabled
       />
     </Label>
+
     <Label>
-      Theme
+      Theme (Coming soon)
       <Select
         class="mt-2"
         items={themeOptions}
