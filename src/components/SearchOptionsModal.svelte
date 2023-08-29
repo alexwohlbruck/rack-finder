@@ -19,8 +19,7 @@
   export let open;
   $: sort = $searchOptionsStore.sort;
   $: filter = $searchOptionsStore.filter;
-  $: maxDistance =
-    $preferredUnits === "metric" ? 10001 : Math.floor(52800 * 3.2) + 1; // TODO: Get 1 mile in meters
+  $: maxDistance = $preferredUnits === "metric" ? 10001 : 1610; // 1 mi in m
   $: minDistance = $preferredUnits === "metric" ? 10 : 32;
 
   // Auto update
