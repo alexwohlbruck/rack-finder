@@ -1,7 +1,9 @@
 import { addRack } from "../store/racks";
 import type { Geolocation } from "../types/geolocation";
+import devData from "./south-end-data.json";
+import config from "../config";
 
-const baseUrl = "https://overpass-api.de/api/interpreter";
+const { useDevData, overpassUrl: baseUrl } = config;
 
 export const op = async (query: string) => {
   const response = await fetch(`${baseUrl}?data=${encodeURIComponent(query)}`);
@@ -18,7 +20,8 @@ export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
     );
     out center;
   `;
-  const { elements } = await op(query);
+  const { elements } = useDevData ? devData : await op(query);
+
   elements.forEach((element) => {
     let { lat, lon: lng } = element;
     if (element.type === "way") {
