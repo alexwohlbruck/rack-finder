@@ -49,8 +49,10 @@
   }
 
   function onGeolocateSuccess(e) {
-    updateLocation(e);
-    fetchRacks(true, e.coords);
+    const { latitude: lat, longitude: lng } = e.coords;
+    const position = { lat, lng };
+    updateLocation(position);
+    fetchRacks(true, position);
   }
 
   function initMap() {

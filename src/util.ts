@@ -23,8 +23,7 @@ export const haversine = (a: Position, b: Position) => {
 };
 
 export const metersToFeet = (meters: number) => {
-  // TODO: Find the actual conversion. I have no internet access right now.
-  return meters / 3.2;
+  return meters / 3.28084;
 };
 
 export const renderDistance = (
