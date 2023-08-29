@@ -1,16 +1,19 @@
 <script lang="ts">
   import { ListgroupItem, Button, P } from "flowbite-svelte";
   import { racks } from "../store/racks";
-  import { type RackType } from "../types/rack";
+  import {
+    type RackCoverage,
+    type RackPrivate,
+    type RackTraffic,
+    type RackType,
+  } from "../types/rack";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import { setMapCenter } from "../store/map";
   import { capitalize, renderDistance } from "../util";
   import { preferredUnits } from "../store/prefs";
 
   function renderType(type: RackType): string {
-    if (!type) {
-      return "Unknown type";
-    }
+    if (!type) return "Unknown type";
     let friendlyName: string = type;
     switch (type) {
       case "staple":
@@ -23,18 +26,16 @@
     return capitalize(friendlyName);
   }
 
-  function renderCapacity(capacity) {
+  function renderCapacity(capacity: number) {
     if (!capacity) {
       return null;
     }
     return `${capacity} bicycle${capacity !== 1 ? "s" : ""}`;
   }
 
-  function renderCoverage(coverage) {
-    if (!coverage) {
-      return null;
-    }
-    let friendlyName = coverage;
+  function renderCoverage(coverage: RackCoverage) {
+    if (!coverage) return null;
+    let friendlyName: string = coverage;
     switch (coverage) {
       case "yes":
         friendlyName = "Covered";
@@ -48,10 +49,24 @@
     return capitalize(friendlyName);
   }
 
+  function renderTraffic(traffic: RackTraffic) {
+    if (!traffic) return null;
+    if ((traffic = "none")) return "No foot traffic";
+    return `${capitalize(traffic)} foot traffic`;
+  }
+
+  function renderPrivacy(isPrivate: RackPrivate) {
+    if (!isPrivate || isPrivate === "no") return null;
+    if (isPrivate === "Permissive") return "Permissive access";
+    return capitalize(isPrivate);
+  }
+
   function renderDetails(tags) {
     const capacity = renderCapacity(tags.capacity);
     const coverage = renderCoverage(tags.covered);
-    return [capacity, coverage].filter(Boolean).join(" • ");
+    const traffic = renderTraffic(tags.traffic);
+    const privacy = renderPrivacy(tags.private);
+    return [privacy, traffic, coverage, capacity].filter(Boolean).join(" • ");
   }
 
   function centerMapOnRack(rack) {

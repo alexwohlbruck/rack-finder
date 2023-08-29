@@ -29,26 +29,25 @@ export const RackCoverages = ["yes", "no", "partial"] as const;
 
 export type RackType = (typeof RackTypes)[number];
 export type RackCoverage = (typeof RackCoverages)[number];
+export type RackPrivate = "yes" | "no" | "permissive";
+export type RackTraffic = "high" | "medium" | "low" | "none";
 
 // https://wiki.openstreetmap.org/wiki/Key:bicycle_parking
 
-type Covered = "yes" | "no" | "partial";
-
 export type BikeRackTags = {
   bicycle_parking: RackType;
-  capacity?: number;
-  covered?: Covered;
+  capacity: number;
+  covered?: RackCoverage;
+  private?: RackPrivate;
+  traffic?: RackTraffic;
 };
 
 export type Rack = {
   id?: number;
   lat: number;
   lng: number;
-  tags: {
+  tags: BikeRackTags & {
     amenity?: string;
-    bicycle_parking?: RackType;
-    capacity?: string;
-    covered?: RackCoverage;
     fee?: string;
     lit?: string;
     operator?: string;

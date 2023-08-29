@@ -14,10 +14,11 @@
 
   import { submitBikeRack } from "../services/osm";
   import { get } from "svelte/store";
-  import type { BikeRackTags } from "../types/osm";
+  import type { BikeRackTags } from "../types/rack";
 
   let loading = false;
 
+  // TODO: Get this from type defs
   const rackTypeOptions = [
     {
       value: "stands",
@@ -48,6 +49,20 @@
       name: "Two tier",
     },
   ];
+  const privacyOptions = [
+    {
+      value: "no",
+      name: "Public",
+    },
+    {
+      value: "permissive",
+      name: "Permissive (Needs key/code access or must be customer)",
+    },
+    {
+      value: "yes",
+      name: "Private (Private residence or business)",
+    },
+  ];
   const coverageOptions = [
     {
       value: "no",
@@ -62,11 +77,29 @@
       name: "Partially covered",
     },
   ];
+  const trafficOptions = [
+    {
+      value: "high",
+      name: "High traffic (Public square, ped path, etc)",
+    },
+    {
+      value: "medium",
+      name: "Medium traffic (Nearby a high traffic area, but not directly visible)",
+    },
+    {
+      value: "low",
+      name: "Low traffic (Side of building, parking lot, etc)",
+    },
+    {
+      value: "none",
+      name: "No traffic (Back of building, alleyway, etc)",
+    },
+  ];
 
   const form: BikeRackTags = {
     bicycle_parking: "stands",
     capacity: 2,
-    covered: "no",
+    private: "no",
   };
 
   async function submit() {
@@ -134,14 +167,19 @@
     />
   </Label>
 
+  <Label for="private">
+    <div class="mb-1">Publicity</div>
+    <Select bind:value={form.private} id="private" items={privacyOptions} />
+  </Label>
+
   <Label for="covered">
     <div class="mb-1">Rain cover</div>
-    <Select
-      bind:value={form.covered}
-      id="covered"
-      items={coverageOptions}
-      required
-    />
+    <Select bind:value={form.covered} id="covered" items={coverageOptions} />
+  </Label>
+
+  <Label for="traffic">
+    <div class="mb-1">Foot traffic</div>
+    <Select bind:value={form.traffic} id="traffic" items={trafficOptions} />
   </Label>
 
   <div class="flex-1" />
