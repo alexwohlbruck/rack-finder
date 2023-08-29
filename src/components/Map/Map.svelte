@@ -3,7 +3,7 @@
   import { onMount, onDestroy } from "svelte";
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
-  import { prefsStore, setLastLocation } from "../../store/prefs";
+  import { prefsStore } from "../../store/prefs";
   import { locationStore, updateLocation } from "../../store/location";
   import { mapStore, setMapCenter } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
@@ -95,8 +95,7 @@
           center.lat !== $locationStore.lat ||
           center.lng !== $locationStore.lng
         ) {
-          setMapCenter(center);
-          setLastLocation(center.lat, center.lng, zoom);
+          setMapCenter(center, zoom);
         }
         fetchRacks();
       }, DEBOUNCE_TIME);

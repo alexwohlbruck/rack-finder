@@ -1,14 +1,15 @@
 import colors from "tailwindcss/colors";
 import { getLocalStorage } from "../../localStorage";
+import { mapStore } from "../../store/map";
 
-const prefs = getLocalStorage("prefs");
+const mapStore = getLocalStorage("map");
 
 export const DEBOUNCE_TIME = 300;
 export const DEFAULT_FETCH_RADIUS = 5000;
 export const INITIAL_STATE = {
-  lng: prefs?.lastLocation?.lng || 0,
-  lat: prefs?.lastLocation?.lat || 0,
-  zoom: prefs?.lastLocation?.zoom || 0,
+  lng: mapStore?.center?.lng || 0,
+  lat: mapStore?.center?.lat || 0,
+  zoom: mapStore?.zoom || 0,
 };
 export const RACKS_LAYER_MAX_ZOOM = 13;
 export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 2.0 * radius + 2000;
