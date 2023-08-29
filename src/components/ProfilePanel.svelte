@@ -2,14 +2,14 @@
   import { A, Avatar, Button, ButtonGroup, Card, P } from "flowbite-svelte";
   import { authStore } from "../store/auth";
   import { authenticate, logout } from "../services/osm";
-  import ProfileModal from "./ProfileModal.svelte";
+  import PreferencesModal from "./PreferencesModal.svelte";
   import Profile from "./Profile.svelte";
 
   $: me = $authStore.me;
   let profilePanelOpen = false;
 </script>
 
-<ProfileModal bind:open={profilePanelOpen} />
+<PreferencesModal bind:open={profilePanelOpen} />
 
 <Card class="flex flex-1 max-w-none flex-row items-center gap-2 !p-3">
   <div class="flex flex-row items-center gap-2 flex-1">
