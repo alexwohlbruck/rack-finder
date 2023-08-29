@@ -1,5 +1,4 @@
-import { createEventDispatcher } from "svelte";
-import { writable } from "svelte/store";
+import { syncedWritable } from "../util";
 
 const defaultPrefs: {
   theme: "auto" | "light" | "dark";
@@ -27,16 +26,7 @@ const defaultPrefs: {
   },
 };
 
-const storedPrefs = JSON.parse(localStorage.getItem("prefs") || "{}");
-
-export const prefsStore = writable({
-  ...defaultPrefs,
-  ...storedPrefs,
-});
-
-prefsStore.subscribe((value) => {
-  localStorage.setItem("prefs", JSON.stringify(value));
-});
+export const prefsStore = syncedWritable("prefs", defaultPrefs);
 
 export const incrementVisits = () => {
   prefsStore.update(($data) => {

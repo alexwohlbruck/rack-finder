@@ -1,3 +1,4 @@
+import { writable } from "svelte/store";
 import type { Position } from "./types/geolocation";
 
 export const haversine = (a: Position, b: Position) => {
@@ -37,4 +38,16 @@ export const capitalize = (str) => {
 export const camelcaseToWords = (str) => {
   const spaces = str.split("_").join(" ");
   return spaces.charAt(0).toUpperCase() + spaces.slice(1);
+};
+
+export const syncedWritable = (name: string, initialData: any) => {
+  const storedValue = JSON.parse(localStorage.getItem(name) || "{}");
+  const store = writable({
+    ...initialData,
+    ...storedValue,
+  });
+  store.subscribe((value) => {
+    localStorage.setItem(name, JSON.stringify(value));
+  });
+  return store;
 };
