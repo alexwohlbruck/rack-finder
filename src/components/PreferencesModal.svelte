@@ -4,6 +4,7 @@
   import { prefsStore, setPrefs } from "../store/prefs";
   import Profile from "./Profile.svelte";
   import { logout } from "../services/osm";
+  import { i18n } from "../i18n";
   export let open;
 
   $: me = $authStore.me;
@@ -12,13 +13,19 @@
   $: {
     setPrefs(prefs);
   }
+  $: {
+    $i18n.changeLanguage(prefs.language);
+  }
 
   const unitsOptions = [
     { name: "Automatic", value: "auto" },
     { name: "Metric units", value: "metric" },
     { name: "Imperial units", value: "imperial" },
   ];
-  const languageOptions = [{ name: "English", value: "en-US" }];
+  const languageOptions = [
+    { name: "English", value: "en-US" },
+    { name: "Spanish", value: "es-MX" },
+  ];
   const themeOptions = [
     { name: "Automatic", value: "auto" },
     { name: "Light", value: "light" },
@@ -45,12 +52,11 @@
     </Label>
 
     <Label>
-      Language (Coming soon)
+      Language
       <Select
         class="mt-2"
         items={languageOptions}
         bind:value={prefs.language}
-        disabled
       />
     </Label>
 

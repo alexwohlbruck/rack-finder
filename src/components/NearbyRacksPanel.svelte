@@ -3,6 +3,7 @@
   import RacksList from "./RacksList.svelte";
   import { racks } from "../store/racks";
   import SearchOptionsModal from "./SearchOptionsModal.svelte";
+  import { t } from "../i18n";
 
   let searchOptionsModal = false;
 </script>
@@ -12,10 +13,10 @@
 <Card padding="none" class="flex-1 flex flex-col overflow-x-hidden">
   <div class="p-3 flex gap-2 justify-between items-center">
     <div>
-      <Heading tag="h6">Nearby racks</Heading>
-      <P size="xs" weight="medium"
-        >{$racks.length} matching result{$racks.length !== 1 ? "s" : ""}</P
-      >
+      <Heading tag="h6">{$t("nearbyRacks")}</Heading>
+      <P size="xs" weight="medium">
+        {$t("matchingResults", { count: $racks.length })}
+      </P>
     </div>
     <FlowbiteButton
       on:click={() => (searchOptionsModal = true)}

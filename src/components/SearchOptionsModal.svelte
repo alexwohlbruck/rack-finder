@@ -17,7 +17,7 @@
     Range,
   } from "flowbite-svelte";
   import { RackTypes } from "../types/rack";
-  import { camelcaseToWords, renderDistance } from "../util";
+  import { snakeToWords, renderDistance } from "../util";
   import Button from "../lib/Button.svelte";
   import { preferredUnits } from "../store/prefs";
 
@@ -38,7 +38,7 @@
   let filterOptions = {
     type: RackTypes.map((type) => ({
       value: type,
-      name: camelcaseToWords(type),
+      name: snakeToWords(type),
     })),
     covered: [
       { value: "yes", name: "Covered" },

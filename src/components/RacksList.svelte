@@ -9,21 +9,21 @@
   } from "../types/rack";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import { setMapCenter } from "../store/map";
-  import { capitalize, renderDistance } from "../util";
+  import { capitalize, renderDistance, friendlyName } from "../util";
   import { preferredUnits } from "../store/prefs";
 
   function renderType(type: RackType): string {
     if (!type) return "Unknown type";
-    let friendlyName: string = type;
+    let name: string = type;
     switch (type) {
       case "staple":
-        friendlyName = "Staple rack";
+        name = "Staple rack";
         break;
       case "wave":
-        friendlyName = "Wave rack";
+        name = "Wave rack";
         break;
     }
-    return capitalize(friendlyName);
+    return friendlyName(name);
   }
 
   function renderCapacity(capacity: number) {

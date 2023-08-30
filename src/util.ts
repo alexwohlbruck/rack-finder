@@ -49,14 +49,20 @@ export const renderDistance = (
   return `${longDistance.toFixed(1)} ${longUnit}`;
 };
 
-export const capitalize = (str) => {
+export const capitalize = (str: string): string => {
   if (!str || !str.length) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export const camelcaseToWords = (str) => {
+export const snakeToWords = (str: string): string => {
+  if (!str || !str.length) return "";
   const spaces = str.split("_").join(" ");
   return spaces.charAt(0).toUpperCase() + spaces.slice(1);
+};
+
+export const friendlyName = (str: string) => {
+  if (!str || !str.length) return "";
+  return capitalize(snakeToWords(str));
 };
 
 export const syncedWritable = <T>(name: string, initialData: T) => {
