@@ -4,6 +4,7 @@
   import { authenticate, logout } from "../services/osm";
   import PreferencesModal from "./PreferencesModal.svelte";
   import Profile from "./Profile.svelte";
+  import { t } from "../i18n";
 
   $: me = $authStore.me;
   let profilePanelOpen = false;
@@ -42,9 +43,9 @@
         </svg>
       </Button>
     {:else}
-      <Button size="xs" color="primary" outline on:click={authenticate}
-        >Sign in</Button
-      >
+      <Button size="xs" color="primary" outline on:click={authenticate}>
+        {$t("auth.signIn")}
+      </Button>
     {/if}
     <Button
       size="xs"

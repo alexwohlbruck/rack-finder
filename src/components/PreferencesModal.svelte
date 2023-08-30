@@ -5,6 +5,8 @@
   import Profile from "./Profile.svelte";
   import { logout } from "../services/osm";
   import { i18n } from "../i18n";
+  import { t } from "../i18n";
+
   export let open;
 
   $: me = $authStore.me;
@@ -39,20 +41,22 @@
       <div class="flex-1">
         <Profile {me} size="lg" />
       </div>
-      <Button size="sm" outline class="mr-7" on:click={logout}>Sign out</Button>
+      <Button size="sm" outline class="mr-7" on:click={logout}
+        >{$t("auth.signOut")}</Button
+      >
     </div>
   {/if}
 
-  <Heading tag="h6">Preferences</Heading>
+  <Heading tag="h6">{$t("preferencesModal.preferences")}</Heading>
 
   <div class="flex flex-col gap-3 !mt-2">
     <Label>
-      Measurement system
+      {$t("preferencesModal.measurementSystem")}
       <Select class="mt-2" items={unitsOptions} bind:value={prefs.units} />
     </Label>
 
     <Label>
-      Language
+      {$t("preferencesModal.language")}
       <Select
         class="mt-2"
         items={languageOptions}
@@ -61,7 +65,7 @@
     </Label>
 
     <Label>
-      Theme (Coming soon)
+      {$t("preferencesModal.theme")}
       <Select
         class="mt-2"
         items={themeOptions}

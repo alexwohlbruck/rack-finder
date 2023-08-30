@@ -11,6 +11,7 @@
   import { setMapCenter } from "../store/map";
   import { capitalize, renderDistance, friendlyName } from "../util";
   import { preferredUnits } from "../store/prefs";
+  import { t } from "../i18n";
 
   function renderType(type: RackType): string {
     if (!type) return "Unknown type";
@@ -26,11 +27,9 @@
     return friendlyName(name);
   }
 
-  function renderCapacity(capacity: number) {
-    if (!capacity) {
-      return null;
-    }
-    return `${capacity} bicycle${capacity !== 1 ? "s" : ""}`;
+  function renderCapacity(capacity: string) {
+    if (!capacity) return null;
+    return $t("racksList.capacity", { count: parseInt(capacity) });
   }
 
   function renderCoverage(coverage: RackCoverage) {

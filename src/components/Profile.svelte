@@ -1,6 +1,7 @@
 <script lang="ts">
   import { A, Avatar, P } from "flowbite-svelte";
   import type { OSMUser } from "../types/osm";
+  import { t } from "../i18n";
 
   export let me: OSMUser;
   export let size: any = "sm";
@@ -31,7 +32,7 @@
           {me?.display_name}
         </A>
       {:else}
-        Not signed in
+        {$t("auth.notSignedIn")}
       {/if}
     </P>
     {#if me}
@@ -42,11 +43,10 @@
           target="_blank"
           class="text-ellipsis whitespace-nowrap"
         >
-          {me?.changesets.count}
-          {#if size === "lg"}
-            OSM
-          {/if}
-          contribution{me?.changesets.count !== 1 ? "s" : ""}
+          {$t("preferencesModal.contributions", {
+            count: me?.changesets.count,
+            context: size === "lg" ? "long" : "short",
+          })}
         </A>
       </P>
     {/if}

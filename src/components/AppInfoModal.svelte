@@ -1,29 +1,32 @@
 <script>
-  import { A, Button, Heading, Modal, P } from "flowbite-svelte";
+  import { A, Heading, Modal, P } from "flowbite-svelte";
+  import { t } from "../i18n";
   export let open;
 </script>
 
 <Modal bind:open autoclose outsideclose>
-  <Heading tag="h5">About Rack Finder</Heading>
+  <Heading tag="h5">{$t("infoModal.title")}</Heading>
   <P>
-    Rack Finder uses
-    <A href="https://openstreetmap.org/" target="_blank">OpenStreetMap</A>
-    data to find bicycle parking nearby you.
+    {$t("infoModal.uses")}
+    <A href="https://openstreetmap.org/" target="_blank"
+      >{$t("infoModal.osm")}</A
+    >
+    {$t("infoModal.data")}
   </P>
   <P
-    >This app is 100% free to use and open source. None of your data will be
-    tracked, stored or sold, with the exception of any public contributions you
-    make via your OpenStreetMap
-    <A href="https://openstreetmap.org/dashboard" target="_blank">account</A>.
-    These contributions are public and open source, and will be attributed to
-    you licensed under the the
+    >{$t("infoModal.free")}
+    {$t("infoModal.osm")}
+    <A href="https://openstreetmap.org/dashboard" target="_blank">
+      {$t("infoModal.account")}
+    </A>. {$t("infoModal.contributionsOpenSource")}
+    {$t("infoModal.osm")}
     <A href="https://www.openstreetmap.org/copyright" target="_blank">
-      ODbL license
+      {$t("infoModal.license")}
     </A>.
   </P>
-  <P>Happy cycling! 🚲🚲</P>
+  <P>{$t("infoModal.happyCycling")}</P>
   <P size="sm" align="center">
-    Made with 💛 by
+    {$t("infoModal.madeBy")}
     <A href="https://alex.wohlbruck.com" target="_blank">Alex Wohlbruck</A>.
   </P>
 </Modal>

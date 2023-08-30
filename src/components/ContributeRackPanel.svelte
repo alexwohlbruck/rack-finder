@@ -15,6 +15,7 @@
   import { submitBikeRack } from "../services/osm";
   import { get } from "svelte/store";
   import type { BikeRackTags } from "../types/rack";
+  import { t } from "../i18n";
 
   let loading = false;
 
@@ -119,8 +120,8 @@
 <Card padding="md" class="flex flex-1 flex-col gap-4">
   <div class="flex items-start">
     <div class="flex-1">
-      <Heading tag="h5">Contribute new bike rack</Heading>
-      <P size="sm">Drag the marker to the location of the rack</P>
+      <Heading tag="h5">{$t("contributeRackPanel.title")}</Heading>
+      <P size="sm">{$t("contributeRackPanel.instruction")}</P>
     </div>
     <FlowbiteButton
       size="xs"
@@ -147,17 +148,18 @@
   </div>
 
   <Label for="type">
-    <div class="mb-1">Type</div>
+    <div class="mb-1">{$t("rack.attributes.type")}</div>
     <Select
       bind:value={form.bicycle_parking}
       id="type"
       items={rackTypeOptions}
       required
+      placeholder={$t("common.chooseOption")}
     />
   </Label>
 
   <Label for="capacity">
-    <div class="mb-1">Capacity</div>
+    <div class="mb-1">{$t("rack.attributes.capacity")}}</div>
     <Input
       bind:value={form.capacity}
       id="capacity"
@@ -168,18 +170,33 @@
   </Label>
 
   <Label for="private">
-    <div class="mb-1">Publicity</div>
-    <Select bind:value={form.private} id="private" items={privacyOptions} />
+    <div class="mb-1">{$t("rack.attributes.private")}}</div>
+    <Select
+      bind:value={form.private}
+      id="private"
+      items={privacyOptions}
+      placeholder={$t("common.chooseOption")}
+    />
   </Label>
 
   <Label for="covered">
-    <div class="mb-1">Rain cover</div>
-    <Select bind:value={form.covered} id="covered" items={coverageOptions} />
+    <div class="mb-1">{$t("rack.attributes.covered")}}</div>
+    <Select
+      bind:value={form.covered}
+      id="covered"
+      items={coverageOptions}
+      placeholder={$t("common.chooseOption")}
+    />
   </Label>
 
   <Label for="traffic">
-    <div class="mb-1">Foot traffic</div>
-    <Select bind:value={form.traffic} id="traffic" items={trafficOptions} />
+    <div class="mb-1">{$t("rack.attributes.traffic")}}</div>
+    <Select
+      bind:value={form.traffic}
+      id="traffic"
+      items={trafficOptions}
+      placeholder={$t("common.chooseOption")}
+    />
   </Label>
 
   <div class="flex-1" />
@@ -187,6 +204,6 @@
     {#if loading}
       <Spinner class="mr-3" size="5" color="gray" />
     {/if}
-    Add to map
+    {$t("contributeRackPanel.addToMap")}
   </Button>
 </Card>

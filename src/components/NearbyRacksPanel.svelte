@@ -13,9 +13,9 @@
 <Card padding="none" class="flex-1 flex flex-col overflow-x-hidden">
   <div class="p-3 flex gap-2 justify-between items-center">
     <div>
-      <Heading tag="h6">{$t("nearbyRacks")}</Heading>
+      <Heading tag="h6">{$t("nearbyRacksPanel.title")}</Heading>
       <P size="xs" weight="medium">
-        {$t("matchingResults", { count: $racks.length })}
+        {$t("nearbyRacksPanel.matchingResults", { count: $racks.length })}
       </P>
     </div>
     <FlowbiteButton
@@ -39,7 +39,7 @@
           d="M7.75 4H19M7.75 4a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 4h2.25m13.5 6H19m-2.25 0a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 10h11.25m-4.5 6H19M7.75 16a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 16h2.25"
         />
       </svg>
-      Sort/Filter
+      {$t("nearbyRacksPanel.sortFilter")}
     </FlowbiteButton>
   </div>
 

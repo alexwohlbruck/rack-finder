@@ -20,6 +20,7 @@
   import { snakeToWords, renderDistance } from "../util";
   import Button from "../lib/Button.svelte";
   import { preferredUnits } from "../store/prefs";
+  import { t } from "../i18n";
 
   export let open;
   $: sort = $searchOptionsStore.sort;
@@ -53,9 +54,9 @@
 </script>
 
 <Modal bind:open outsideclose>
-  <Heading tag="h5">Sort and filter</Heading>
+  <Heading tag="h5">{$t("searchOptionsModal.sortAndFilter")}</Heading>
 
-  <Label for="sortBy">Sort by</Label>
+  <Label for="sortBy">{$t("searchOptionsModal.sortBy")}</Label>
 
   <ButtonGroup class="w-full !mt-0">
     <FlowbiteButton class="w-10 !p-0 mt-2" on:click={toggleSortDirection}>
@@ -82,7 +83,7 @@
     </Select>
   </ButtonGroup>
 
-  <Label for="covered">Hide rack types</Label>
+  <Label for="covered">{$t("searchOptionsModal.hideRackTypes")}</Label>
   <MultiSelect
     bind:value={filter.ignoreType}
     id="covered"
@@ -90,7 +91,7 @@
     class="!mt-2"
   />
 
-  <Label for="covered">Rain coverage</Label>
+  <Label for="covered">{$t("searchOptionsModal.rainCoverage")}</Label>
   <MultiSelect
     bind:value={filter.covered}
     id="covered"
@@ -98,13 +99,13 @@
     class="!mt-2"
   />
 
-  <Label>Minimum capacity</Label>
+  <Label>{$t("searchOptionsModal.minCapacity")}</Label>
   <div class="flex gap-3 items-center !mt-2">
     <P>{filter.minCapacity}</P>
     <Range bind:value={filter.minCapacity} id="range1" min="1" max="100" />
   </div>
 
-  <Label>Maximum distance</Label>
+  <Label>{$t("searchOptionsModal.maxDistance")}</Label>
   <div class="flex gap-3 items-center !mt-2">
     <P class="w-14">
       {filter.maxDistance === maxDistance
@@ -120,7 +121,7 @@
   </div>
 
   <div class="flex justify-end">
-    <Button on:click={() => (open = false)}>Done</Button>
+    <Button on:click={() => (open = false)}>{$t("common.done")}</Button>
   </div>
 </Modal>
 
