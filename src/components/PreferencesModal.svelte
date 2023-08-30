@@ -33,6 +33,10 @@
     { name: "Automatic", value: "auto" },
     { name: "English", value: "en-US" },
     { name: "Español", value: "es-ES" },
+    { name: "Français", value: "fr-FR" },
+    // { name: "Italiano", value: "it-IT" },
+    // { name: "Nederlands", value: "nl-NL" },
+    // { name: "Português", value: "pt-PT" },
   ];
   const themeOptions = [
     { name: "Automatic", value: "auto" },
