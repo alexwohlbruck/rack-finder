@@ -159,7 +159,7 @@
   </Label>
 
   <Label for="capacity">
-    <div class="mb-1">{$t("rack.attributes.capacity")}}</div>
+    <div class="mb-1">{$t("rack.attributes.capacity")}</div>
     <Input
       bind:value={form.capacity}
       id="capacity"
@@ -170,7 +170,7 @@
   </Label>
 
   <Label for="private">
-    <div class="mb-1">{$t("rack.attributes.private")}}</div>
+    <div class="mb-1">{$t("rack.attributes.private")}</div>
     <Select
       bind:value={form.private}
       id="private"
@@ -180,7 +180,7 @@
   </Label>
 
   <Label for="covered">
-    <div class="mb-1">{$t("rack.attributes.covered")}}</div>
+    <div class="mb-1">{$t("rack.attributes.covered")}</div>
     <Select
       bind:value={form.covered}
       id="covered"
@@ -190,7 +190,7 @@
   </Label>
 
   <Label for="traffic">
-    <div class="mb-1">{$t("rack.attributes.traffic")}}</div>
+    <div class="mb-1">{$t("rack.attributes.traffic")}</div>
     <Select
       bind:value={form.traffic}
       id="traffic"
