@@ -2,9 +2,9 @@ import { derived } from "svelte/store";
 import { syncedWritable } from "../util";
 
 export type Units = "metric" | "imperial";
-type UnitsOption = "auto" | Units;
-type ThemeOption = "auto" | "light" | "dark";
-type LanguageOption = "auto" | "en-US";
+export type UnitsOption = "auto" | Units;
+export type ThemeOption = "auto" | "light" | "dark";
+export type LanguageOption = "auto" | "en-US";
 
 export type Preferences = {
   theme: ThemeOption;
@@ -20,7 +20,7 @@ const defaultPrefs: {
 } = {
   prefs: {
     theme: "auto",
-    language: "en-US",
+    language: "auto",
     units: "auto",
   },
   visits: 0,

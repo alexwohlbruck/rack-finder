@@ -39,6 +39,7 @@ const osm = osmAuth({
   scope: "write_api read_prefs",
   auto: true,
   singlepage: useSinglePageAuth,
+  locale: "fr",
 });
 
 export const checkAuthenticated = () => {

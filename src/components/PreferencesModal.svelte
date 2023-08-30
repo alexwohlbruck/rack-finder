@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { Button, Heading, Label, Modal, Select } from "flowbite-svelte";
   import { authStore } from "../store/auth";
   import { prefsStore, setPrefs } from "../store/prefs";
@@ -6,6 +6,7 @@
   import { logout } from "../services/osm";
   import { i18n } from "../i18n";
   import { t } from "../i18n";
+  import type { LanguageOption } from "../store/prefs";
 
   export let open;
 
@@ -16,7 +17,11 @@
     setPrefs(prefs);
   }
   $: {
-    $i18n.changeLanguage(prefs.language);
+    let language = prefs.language;
+    if (prefs.language === "auto") {
+      language = (navigator.language as LanguageOption) || "en-US";
+    }
+    $i18n.changeLanguage(language);
   }
 
   const unitsOptions = [
@@ -25,8 +30,9 @@
     { name: "Imperial units", value: "imperial" },
   ];
   const languageOptions = [
+    { name: "Automatic", value: "auto" },
     { name: "English", value: "en-US" },
-    { name: "Spanish", value: "es-MX" },
+    { name: "Español", value: "es-ES" },
   ];
   const themeOptions = [
     { name: "Automatic", value: "auto" },

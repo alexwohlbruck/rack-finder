@@ -1,15 +1,9 @@
 import i18next from "i18next";
 import { createI18nStore } from "svelte-i18next";
 import { derived } from "svelte/store";
-import LanguageDetector from "i18next-browser-languagedetector";
+import { getLocalStorage } from "./localStorage";
 
-i18next.use(LanguageDetector).init({
-  detection: {
-    order: ["querystring", "localStorage", "navigator"],
-    caches: ["localStorage"],
-    lookupQuerystring: "lng",
-    lookupLocalStorage: "locale",
-  },
+i18next.init({
   fallbackLng: "en",
   resources: {
     en: {
