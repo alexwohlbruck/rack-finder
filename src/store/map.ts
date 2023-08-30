@@ -3,7 +3,6 @@ import { INITIAL_STATE } from "../components/Map/map.config";
 import type { Position } from "../types/geolocation";
 import { syncedWritable } from "../util";
 
-// TODO: this is redundant - prefs store also has last map center. Remove later?
 const mapStore = syncedWritable("map", {
   contributeMode: false,
   zoom: 1,

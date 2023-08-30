@@ -7,6 +7,7 @@ import {
   RackCoverages,
 } from "../types/rack";
 import { mapStore } from "./map";
+import { prefsStore } from "./prefs";
 
 export type SortOptions = {
   by: "distance" | "capacity";
@@ -19,6 +20,9 @@ export type FilterOptions = {
   minCapacity: number;
   maxDistance: number;
 };
+
+export const MAX_DISTANCE_METRIC = 10000;
+export const MAX_DISTANCE_IMPERIAL = 16093; // 10 mi in meters
 
 const racksStore = syncedWritable<{
   [key: number]: Rack;
@@ -73,8 +77,8 @@ export function setOptions({
 }
 
 const racks = derived(
-  [racksStore, mapStore, searchOptionsStore],
-  ([$racksStore, $mapStore, $searchOptionsStore]) => {
+  [racksStore, mapStore, searchOptionsStore, prefsStore],
+  ([$racksStore, $mapStore, $searchOptionsStore, $prefsStore]) => {
     return Object.values($racksStore)
       .map((rack) => {
         const distance = haversine($mapStore.center, rack);
@@ -105,10 +109,12 @@ const racks = derived(
         if (capacity && minCapacity && capacity < minCapacity) {
           return false;
         }
+        const isMetric = $prefsStore.prefs.units === "metric";
         if (
           distance &&
           maxDistance &&
-          maxDistance < 10000 &&
+          maxDistance <
+            (isMetric ? MAX_DISTANCE_METRIC : MAX_DISTANCE_IMPERIAL) &&
           distance > maxDistance
         ) {
           return false;

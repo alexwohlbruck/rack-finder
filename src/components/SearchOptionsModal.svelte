@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { searchOptionsStore, setOptions } from "../store/racks";
+  import {
+    MAX_DISTANCE_IMPERIAL,
+    MAX_DISTANCE_METRIC,
+    searchOptionsStore,
+    setOptions,
+  } from "../store/racks";
   import {
     ButtonGroup,
     Heading,
@@ -19,7 +24,10 @@
   export let open;
   $: sort = $searchOptionsStore.sort;
   $: filter = $searchOptionsStore.filter;
-  $: maxDistance = $preferredUnits === "metric" ? 10001 : 1610; // 1 mi in m
+  $: maxDistance =
+    $preferredUnits === "metric"
+      ? MAX_DISTANCE_METRIC + 1
+      : MAX_DISTANCE_IMPERIAL + 1;
   $: minDistance = $preferredUnits === "metric" ? 10 : 32;
 
   // Auto update

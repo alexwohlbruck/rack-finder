@@ -23,7 +23,7 @@ export const haversine = (a: Position, b: Position) => {
 };
 
 export const metersToFeet = (meters: number) => {
-  return meters / 3.28084;
+  return meters * 3.28084;
 };
 
 export const renderDistance = (
