@@ -227,6 +227,7 @@ export const submitBikeRack = async (bikeRack: Rack) => {
     });
     await closeChangeset(changeset);
     addRack(bikeRack);
+    // TODO: Translate
     showToast("Thanks! Your contribution will show on the map shortly.");
   } catch (err) {
     console.error(err);

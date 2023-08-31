@@ -7,7 +7,6 @@
   <Toast
     color="green"
     class="max-w-md absolute z-50 bottom-5 left-1/2 transform -translate-x-1/2"
-    style={`transform: translateY(calc(-${i * 100}% - ${i * 0.5}rem))`}
   >
     <svelte:fragment slot="icon">
       <svg
