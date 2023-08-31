@@ -1,6 +1,6 @@
 <script>
   import { A, Heading, Modal, P } from "flowbite-svelte";
-  import { t } from "../i18n";
+  import { t } from "../i18n/index";
   export let open;
 </script>
 

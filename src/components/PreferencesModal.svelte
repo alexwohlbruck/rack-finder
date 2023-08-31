@@ -4,7 +4,7 @@
   import { prefsStore, setPrefs } from "../store/prefs";
   import Profile from "./Profile.svelte";
   import { logout } from "../services/osm";
-  import { t, i18n } from "../i18n";
+  import { t, i18n } from "../i18n/index";
   import type { LanguageOption } from "../store/prefs";
 
   export let open;

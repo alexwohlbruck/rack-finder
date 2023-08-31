@@ -1,7 +1,7 @@
 <script lang="ts">
   import { A, Avatar, P } from "flowbite-svelte";
   import type { OSMUser } from "../types/osm";
-  import { t } from "../i18n";
+  import { t } from "../i18n/index";
 
   export let me: OSMUser;
   export let size: any = "sm";

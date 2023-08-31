@@ -4,7 +4,7 @@
   import { authenticate, logout } from "../services/osm";
   import PreferencesModal from "./PreferencesModal.svelte";
   import Profile from "./Profile.svelte";
-  import { t } from "../i18n";
+  import { t } from "../i18n/index";
 
   $: me = $authStore.me;
   let profilePanelOpen = false;

@@ -20,7 +20,7 @@
   import { snakeToWords, renderDistance } from "../util";
   import Button from "../lib/Button.svelte";
   import { preferredUnits } from "../store/prefs";
-  import { t } from "../i18n";
+  import { t } from "../i18n/index";
 
   export let open;
   $: sort = $searchOptionsStore.sort;

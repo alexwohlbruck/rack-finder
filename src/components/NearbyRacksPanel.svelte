@@ -3,7 +3,7 @@
   import RacksList from "./RacksList.svelte";
   import { racks } from "../store/racks";
   import SearchOptionsModal from "./SearchOptionsModal.svelte";
-  import { t } from "../i18n";
+  import { t } from "../i18n/index";
 
   let searchOptionsModal = false;
 </script>

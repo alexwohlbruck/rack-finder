@@ -11,7 +11,7 @@
   import { setMapCenter } from "../store/map";
   import { capitalize, renderDistance, friendlyName } from "../util";
   import { preferredUnits } from "../store/prefs";
-  import { t } from "../i18n";
+  import { t } from "../i18n/index";
 
   function renderType(type: RackType): string {
     if (!type) return "Unknown type";

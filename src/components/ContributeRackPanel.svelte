@@ -15,7 +15,7 @@
   import { submitBikeRack } from "../services/osm";
   import { get } from "svelte/store";
   import type { BikeRackTags } from "../types/rack";
-  import { t } from "../i18n";
+  import { t } from "../i18n/index";
 
   let loading = false;
 
