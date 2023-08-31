@@ -1,0 +1,7 @@
+<svg class="w-4 h-4"
+	xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+	<path fill="currentColor" d="M20.1,10.2c-6.9,0-12.5,5.6-12.5,12.5V49H14V22.7c0-3.4,2.8-6.2,6.2-6.2s6.2,2.8,6.2,6.2V49h6.3V22.7
+		C32.6,15.8,27,10.2,20.1,10.2z"/>
+	<path fill="currentColor" d="M29.5,0.8C22.6,0.8,17,6.4,17,13.3v26.3h6.3V13.3c0-3.4,2.8-6.2,6.2-6.2s6.2,2.8,6.2,6.2v26.3H42V13.3
+		C42,6.4,36.3,0.8,29.5,0.8z"/>
+</svg>

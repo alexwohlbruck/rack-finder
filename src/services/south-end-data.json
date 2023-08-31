@@ -13,7 +13,7 @@
       "lon": -80.8396061,
       "tags": {
         "amenity": "bicycle_parking",
-        "bicycle_parking": "stands",
+        "bicycle_parking": "staple",
         "capacity": "2"
       }
     },
@@ -23,7 +23,8 @@
       "lat": 35.2263528,
       "lon": -80.8445300,
       "tags": {
-        "amenity": "bicycle_parking"
+        "amenity": "bicycle_parking",
+        "bicycle_parking": "stands"
       }
     },
     {
@@ -59,7 +60,7 @@
       "lon": -80.8584711,
       "tags": {
         "amenity": "bicycle_parking",
-        "bicycle_parking": "stands",
+        "bicycle_parking": "bollard",
         "capacity": "6",
         "covered": "no"
       }
@@ -100,7 +101,7 @@
       "tags": {
         "access": "yes",
         "amenity": "bicycle_parking",
-        "bicycle_parking": "stands",
+        "bicycle_parking": "anchors",
         "capacity": "6",
         "operator": "Craft Tasting Room"
       }
@@ -113,7 +114,7 @@
       "tags": {
         "access": "yes",
         "amenity": "bicycle_parking",
-        "bicycle_parking": "stands",
+        "bicycle_parking": "anchors",
         "capacity": "6",
         "covered": "no",
         "fee": "no"

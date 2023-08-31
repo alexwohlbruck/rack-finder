@@ -1,0 +1,13 @@
+<svg class="w-4 h-4"
+	xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+	<style type="text/css">
+	.st0{stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-miterlimit:10;}
+	.st2{fill:currentColor}
+	</style>
+	<path class="st2" d="M5.4,43.1v0.6c0,0.3,0.2,0.6,0.5,0.8l6.5,3.4C12.6,48,12.8,48,13,48l27.2-6.5c0.4-0.1,0.7-0.5,0.7-0.9v-0.5
+	c0-0.4-0.3-0.8-0.6-0.9l-6.6-2c-0.1,0-0.3,0-0.4,0L6.1,42.2C5.7,42.3,5.4,42.7,5.4,43.1z"/>
+	<line class="st0" x1="20" y1="41.7" x2="35.5" y2="3.8"/>
+	<path class="st1" d="M33.8,8.1c0,0,3.6,0.6,5.7,1.3c1.6,0.5,2.3,1.5,1.8,3.6c-0.5,2.1-1.6,6.3-2,7.6c-0.4,1.4-1.1,4-4.6,3.4
+	c-2.8-0.5-6.9-1-6.9-1"/>
+</svg>
