@@ -4,8 +4,7 @@
   import { prefsStore, setPrefs } from "../store/prefs";
   import Profile from "./Profile.svelte";
   import { logout } from "../services/osm";
-  import { i18n } from "../i18n";
-  import { t } from "../i18n";
+  import { t, i18n } from "../i18n";
   import type { LanguageOption } from "../store/prefs";
 
   export let open;
@@ -25,9 +24,15 @@
   }
 
   const unitsOptions = [
-    { name: "Automatic", value: "auto" },
-    { name: "Metric units", value: "metric" },
-    { name: "Imperial units", value: "imperial" },
+    { name: $t("preferencesModal.auto"), value: "auto" },
+    {
+      name: $t("preferencesModal.measurementSystemOptions.metric"),
+      value: "metric",
+    },
+    {
+      name: $t("preferencesModal.measurementSystemOptions.imperial"),
+      value: "imperial",
+    },
   ];
   const languageOptions = [
     { name: "Automatic", value: "auto" },
@@ -39,9 +44,9 @@
     // { name: "Português", value: "pt-PT" },
   ];
   const themeOptions = [
-    { name: "Automatic", value: "auto" },
-    { name: "Light", value: "light" },
-    { name: "Dark", value: "dark" },
+    { name: $t("preferencesModal.auto"), value: "auto" },
+    { name: $t("preferencesModal.themeOptions.light"), value: "light" },
+    { name: $t("preferencesModal.themeOptions.dark"), value: "dark" },
   ];
 </script>
 

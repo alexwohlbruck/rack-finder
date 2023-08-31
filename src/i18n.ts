@@ -31,11 +31,54 @@ i18next.init({
         rack: {
           attributes: {
             type: "Type",
+            distance: "Distance",
             capacity: "Capacity",
             private: "Publicity",
             covered: "Rain coverage",
             traffic: "Foot traffic",
             // TODO: Options for each of these attributes
+          },
+          type: {
+            stands: "Stands",
+            wave: "Wave rack",
+            staple: "Staple rack",
+            bollard: "Bollard",
+            rack: "Rack",
+            wall_loops: "Wall loops",
+            building: "Building",
+            "two-tier": "Two tier",
+            wide_stands: "Wide stands",
+            safe_loops: "Safe loops",
+            anchors: "Anchor",
+            lockers: "Lockers",
+            ground_slots: "Ground slots",
+            informal: "Informal bike parking",
+            streetpod: "Street pod",
+            crossbar: "Crossbar",
+            floor: "Designated area",
+            handlebar_holder: "Handlebar holder",
+            tree: "Bike tree",
+            lean_and_stick: "Lean and stick",
+            saddle_holder: "Saddle holder",
+            arcadia: "Arcadia",
+            shed: "Bike shed",
+            rope: "Rope",
+          },
+          covered: {
+            yes: "Covered",
+            partial: "Partially covered",
+            no: "Exposed",
+          },
+          traffic: {
+            none: "No foot traffic",
+            low: "Low foot traffic",
+            medium: "Medium foot traffic",
+            high: "High foot traffic",
+          },
+          private: {
+            yes: "Private",
+            no: "Public",
+            permissive: "Permissive access",
           },
         },
         contributeRackPanel: {
@@ -46,11 +89,8 @@ i18next.init({
         searchOptionsModal: {
           sortAndFilter: "Sort and filter",
           sortBy: "Sort by",
-          // TODO: sort by options
           hideRackTypes: "Hide rack types",
-          // TODO: rack type options
           rainCoverage: "Rain coverage",
-          // TODO: rain coverage options
           minCapacity: "Minimum capacity",
           maxDistance: "Maximum distance",
         },
@@ -60,12 +100,18 @@ i18next.init({
           contributions_long_one: "{{count}} OSM contribution",
           contributions_long_other: "{{count}} OSM contributions",
           preferences: "Preferences",
+          auto: "Automatic",
           measurementSystem: "Measurement system",
-          // TODO: measurement system options
+          measurementSystemOptions: {
+            metric: "Metric units",
+            imperial: "Imperial units",
+          },
           language: "Language",
-          // TODO: language options
           theme: "Theme (Coming soon)",
-          // TODO: theme options
+          themeOptions: {
+            light: "Light",
+            dark: "Dark",
+          },
         },
         infoModal: {
           title: "About Rack Finder",

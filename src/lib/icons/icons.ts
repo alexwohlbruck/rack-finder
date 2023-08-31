@@ -15,7 +15,6 @@ import BollardComponent from "./bollard.svg?c";
 import StapleComponent from "./staple.svg?c";
 import AnchorsComponent from "./anchors.svg?c";
 
-// TODO: Camel case? Snake? Dashes?
 // TODO: Get these from rack types def
 const iconNames = [
   "stands",

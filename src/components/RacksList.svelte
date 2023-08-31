@@ -15,16 +15,8 @@
 
   function renderType(type: RackType): string {
     if (!type) return "Unknown type";
-    let name: string = type;
-    switch (type) {
-      case "staple":
-        name = "Staple rack";
-        break;
-      case "wave":
-        name = "Wave rack";
-        break;
-    }
-    return friendlyName(name);
+    // TODO: Add fallback for unknown types
+    return $t(`rack.type.${type}`);
   }
 
   function renderCapacity(capacity: string) {
@@ -34,30 +26,17 @@
 
   function renderCoverage(coverage: RackCoverage) {
     if (!coverage) return null;
-    let friendlyName: string = coverage;
-    switch (coverage) {
-      case "yes":
-        friendlyName = "Covered";
-        break;
-      case "partial":
-        friendlyName = "Partially covered";
-        break;
-      case "no":
-        return null;
-    }
-    return capitalize(friendlyName);
+    return $t(`rack.covered.${coverage}`);
   }
 
   function renderTraffic(traffic: RackTraffic) {
     if (!traffic) return null;
-    if ((traffic = "none")) return "No foot traffic";
-    return `${capitalize(traffic)} foot traffic`;
+    return $t(`rack.traffic.${traffic}`);
   }
 
-  function renderPrivacy(isPrivate: RackPrivate) {
-    if (!isPrivate || isPrivate === "no") return null;
-    if (isPrivate === "Permissive") return "Permissive access";
-    return capitalize(isPrivate);
+  function renderPrivacy(_private: RackPrivate) {
+    if (!_private || _private === "no") return null;
+    return $t(`rack.private.${_private}`);
   }
 
   function renderDetails(tags) {

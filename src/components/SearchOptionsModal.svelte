@@ -39,12 +39,13 @@
   let filterOptions = {
     type: RackTypes.map((type) => ({
       value: type,
-      name: snakeToWords(type),
+      // TODO: Fallback to friendlyName/snakeToWords
+      name: $t(`rack.type.${type}`),
     })),
     covered: [
-      { value: "yes", name: "Covered" },
-      { value: "partial", name: "Partially covered" },
-      { value: "no", name: "Exposed" },
+      { value: "yes", name: $t("rack.covered.yes") },
+      { value: "partial", name: $t("rack.covered.partial") },
+      { value: "no", name: $t("rack.covered.no") },
     ],
   };
 
@@ -78,8 +79,8 @@
       </svg>
     </FlowbiteButton>
     <Select bind:value={sort.by} id="sortBy" class="!mt-2 rounded-l-none">
-      <option value="distance">Distance</option>
-      <option value="capacity">Capacity</option>
+      <option value="distance">{$t("rack.attributes.distance")}</option>
+      <option value="capacity">{$t("rack.attributes.capacity")}</option>
     </Select>
   </ButtonGroup>
 
