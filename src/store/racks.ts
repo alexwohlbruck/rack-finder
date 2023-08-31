@@ -55,6 +55,19 @@ export function addRack(rack: Rack) {
   });
 }
 
+export function addRacks(racks: Rack[]) {
+  const racksIdMap = racks.reduce((acc, rack) => {
+    acc[rack.id] = rack;
+    return acc;
+  }, {});
+  racksStore.update(($data) => {
+    return {
+      ...$data,
+      ...racksIdMap,
+    };
+  });
+}
+
 export function selectRack(rack) {
   searchOptionsStore.update(($data) => {
     $data.selectedRack = rack;
