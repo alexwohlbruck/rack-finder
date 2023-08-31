@@ -18,17 +18,15 @@ export default {
     racksList: {
       capacity_one: "{{count}} bicycle",
       capacity_other: "{{count}} bicycles",
-      // TODO: Type, rain coverage, traffic, privacy
     },
     rack: {
       attributes: {
         type: "Type",
-        distance: "Distance",
         capacity: "Capacity",
+        distance: "Distance",
         private: "Publicity",
         covered: "Rain coverage",
         traffic: "Foot traffic",
-        // TODO: Options for each of these attributes
       },
       type: {
         stands: "Stands",

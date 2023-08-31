@@ -23,9 +23,53 @@ export default {
       attributes: {
         type: "Type",
         capacity: "Capacité",
+        distance: "", // TODO:
         private: "Publicité",
         covered: "Couverture de pluie",
         traffic: "Trafic piétonnier",
+      },
+      // TODO: all these
+      type: {
+        stands: "Stands",
+        wave: "Wave rack",
+        staple: "Staple rack",
+        bollard: "Bollard",
+        rack: "Rack",
+        wall_loops: "Wall loops",
+        building: "Building",
+        "two-tier": "Two tier",
+        wide_stands: "Wide stands",
+        safe_loops: "Safe loops",
+        anchors: "Anchor",
+        lockers: "Lockers",
+        ground_slots: "Ground slots",
+        informal: "Informal bike parking",
+        streetpod: "Street pod",
+        crossbar: "Crossbar",
+        floor: "Designated area",
+        handlebar_holder: "Handlebar holder",
+        tree: "Bike tree",
+        lean_and_stick: "Lean and stick",
+        saddle_holder: "Saddle holder",
+        arcadia: "Arcadia",
+        shed: "Bike shed",
+        rope: "Rope",
+      },
+      covered: {
+        yes: "Covered",
+        partial: "Partially covered",
+        no: "Exposed",
+      },
+      traffic: {
+        none: "No foot traffic",
+        low: "Low foot traffic",
+        medium: "Medium foot traffic",
+        high: "High foot traffic",
+      },
+      private: {
+        yes: "Private",
+        no: "Public",
+        permissive: "Permissive access",
       },
     },
     contributeRackPanel: {
@@ -47,9 +91,20 @@ export default {
       contributions_long_one: "{{count}} contribution OSM",
       contributions_long_other: "{{count}} contributions OSM",
       preferences: "Préférences",
+      auto: "Automatic", // TODO:
       measurementSystem: "Système de mesure",
+      // TODO:
+      measurementSystemOptions: {
+        metric: "",
+        imperial: "",
+      },
       language: "Langue",
       theme: "Thème (Prochainement)",
+      // TODO:
+      themeOptions: {
+        light: "",
+        dark: "",
+      },
     },
     infoModal: {
       title: "À propos de Rack Finder",
