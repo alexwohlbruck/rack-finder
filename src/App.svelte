@@ -10,8 +10,8 @@
   import { mapStore } from "./store/map";
   import Toast from "./lib/Toast.svelte";
   import AppLogoPanel from "./components/AppLogoPanel.svelte";
-
-  $: contributeMode = $mapStore.contributeMode;
+  import Router from "svelte-spa-router";
+  import { routes } from "./router";
 </script>
 
 <OnboardingModal />
@@ -22,11 +22,7 @@
     <div
       class="side-panel flex flex-col gap-2 h-3/5 md:h-auto md:w-2/5 lg:w-1/3 md:max-w-[30rem]"
     >
-      {#if contributeMode}
-        <ContributeRackPanel />
-      {:else}
-        <NearbyRacksPanel />
-      {/if}
+      <Router {routes} />
 
       {#if $searchOptionsStore.selectedRack}
         <RackDetail />

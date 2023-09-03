@@ -116,5 +116,9 @@ export default {
       happyCycling: "Happy cycling! 🚲🚲",
       madeBy: "Made with 💛 by",
     },
+    toast: {
+      contributeConfirmation:
+        "Thanks! Your contribution will show on the map shortly.",
+    },
   },
 };

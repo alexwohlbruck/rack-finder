@@ -8,13 +8,14 @@
 
 import { osmAuth } from "osm-auth";
 import { setUser } from "../store/auth";
-import type { BikeRack, Node } from "../types/osm";
+import type { Node } from "../types/osm";
 import { js2xml, xml2js } from "xml-js";
-import { toggleContributeMode } from "../store/map";
 import { showToast } from "../store/toast";
 import { APP_URL } from "../globals";
 import { addRack } from "../store/racks";
 import type { Rack } from "../types/rack";
+import i18next from "i18next";
+import { push } from "svelte-spa-router";
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isIOS =
@@ -58,7 +59,7 @@ export const authenticate = async () => {
 export const logout = () => {
   osm.logout();
   setUser(null);
-  toggleContributeMode(false);
+  push("/");
 };
 
 export const init = async () => {
@@ -227,8 +228,8 @@ export const submitBikeRack = async (bikeRack: Rack) => {
     });
     await closeChangeset(changeset);
     addRack(bikeRack);
-    // TODO: Translate
-    showToast("Thanks! Your contribution will show on the map shortly.");
+    // TODO: I haven't tested this works
+    showToast(i18next.t("toast.contributeConfirmation"));
   } catch (err) {
     console.error(err);
   }

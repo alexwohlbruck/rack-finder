@@ -5,7 +5,7 @@ import waveIcon from "./wave.svg";
 import rackIcon from "./rack.svg";
 import bollardIcon from "./bollard.svg";
 import stapleIcon from "./staple.svg";
-import anchorsIcon from "./anchors.svg";
+import wallLoopsIcon from "./wall_loops.svg";
 
 import StandsComponent from "./stands.svg?c";
 import StandsMultiComponent from "./stands_multi.svg?c";
@@ -13,7 +13,7 @@ import WaveComponent from "./wave.svg?c";
 import RackComponent from "./rack.svg?c";
 import BollardComponent from "./bollard.svg?c";
 import StapleComponent from "./staple.svg?c";
-import AnchorsComponent from "./anchors.svg?c";
+import WallLoopsComponent from "./wall_loops.svg?c";
 
 // TODO: Get these from rack types def
 const iconNames = [
@@ -23,7 +23,7 @@ const iconNames = [
   "rack",
   "bollard",
   "staple",
-  "anchors",
+  "wall_loops",
 ] as const;
 export type IconName = (typeof iconNames)[number];
 
@@ -36,7 +36,7 @@ const components: {
   rack: RackComponent,
   bollard: BollardComponent,
   staple: StapleComponent,
-  anchors: AnchorsComponent,
+  wall_loops: WallLoopsComponent,
 };
 
 const svgs: {
@@ -48,7 +48,7 @@ const svgs: {
   rack: rackIcon,
   bollard: bollardIcon,
   staple: stapleIcon,
-  anchors: anchorsIcon,
+  wall_loops: wallLoopsIcon,
 };
 
 export const asComponent = components;

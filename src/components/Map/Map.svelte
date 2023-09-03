@@ -29,6 +29,7 @@
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";
   import { asSvg as icons } from "../../lib/icons/icons";
+  import { location } from "svelte-spa-router";
 
   let mapContainer;
   let map;
@@ -178,7 +179,7 @@
   }
 
   // Watch contribute mode and update listeners
-  $: contributeMode = $mapStore.contributeMode;
+  $: contributeMode = $location === "/contribute";
   $: {
     if (map) {
       setMapStyle(contributeMode ? styles.satellite : getSystemTheme());

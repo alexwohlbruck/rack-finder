@@ -2,11 +2,14 @@
   import { Icon } from "flowbite-svelte-icons";
   import Button from "../lib/Button.svelte";
   import { authenticate, checkAuthenticated } from "../services/osm";
-  import { toggleContributeMode, mapStore } from "../store/map";
+  import { push } from "svelte-spa-router";
+  import { location } from "svelte-spa-router";
+
+  $: contributeMode = $location === "/contribute";
 
   function contribute() {
     if (checkAuthenticated()) {
-      toggleContributeMode();
+      push(contributeMode ? "/" : "/contribute");
     } else {
       authenticate();
     }
@@ -20,7 +23,9 @@
   size="xl"
   on:click={contribute}
 >
-  <Icon name="plus-solid" class="w-4 h-4 text-gray-800" />
+  <span class="icon" class:rotate={contributeMode}>
+    <Icon name="plus-solid" class="w-4 h-4 text-gray-800 outline-none" />
+  </span>
 </Button>
 
 <style>

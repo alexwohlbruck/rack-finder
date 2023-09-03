@@ -10,12 +10,13 @@
     Button as FlowbiteButton,
   } from "flowbite-svelte";
   import Button from "../lib/Button.svelte";
-  import { mapStore, toggleContributeMode } from "../store/map";
+  import { mapStore } from "../store/map";
 
   import { submitBikeRack } from "../services/osm";
   import { get } from "svelte/store";
   import type { BikeRackTags } from "../types/rack";
   import { t } from "../i18n/index";
+  import { push } from "svelte-spa-router";
 
   let loading = false;
 
@@ -103,6 +104,10 @@
     private: "no",
   };
 
+  function returnToHome() {
+    push("/");
+  }
+
   async function submit() {
     const mapCenter = get(mapStore).center;
     const payload = {
@@ -112,7 +117,7 @@
     };
     loading = true;
     await submitBikeRack(payload);
-    toggleContributeMode(false);
+    returnToHome();
     loading = false;
   }
 </script>
@@ -123,12 +128,7 @@
       <Heading tag="h5">{$t("contributeRackPanel.title")}</Heading>
       <P size="sm">{$t("contributeRackPanel.instruction")}</P>
     </div>
-    <FlowbiteButton
-      size="xs"
-      outline
-      class="py-3"
-      on:click={() => toggleContributeMode(false)}
-    >
+    <FlowbiteButton size="xs" outline class="py-3" on:click={returnToHome}>
       <svg
         class="w-3 h-3 text-gray-800 dark:text-white"
         aria-hidden="true"
