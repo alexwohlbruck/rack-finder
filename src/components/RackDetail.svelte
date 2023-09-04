@@ -39,7 +39,7 @@
     }
   }
   $: location = address
-    ? `${address.road}, ${address.suburb}, ${address.city}`
+    ? `${address.road}, ${address.city}`
     : `${rack?.lat}, ${rack?.lng}`;
   let directionsUrl;
   $: {
