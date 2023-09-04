@@ -135,7 +135,7 @@
     <div class="flex-1" />
     <Button outline size="sm" href={directionsUrl} target="_blank">
       <Icon name="map-pin-alt-solid" class="w-4 h-4 mr-2" />
-      <span>Navigate</span>
+      <span>{$t("rackDetail.navigate")}</span>
     </Button>
   </div>
 </Card>

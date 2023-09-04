@@ -71,6 +71,7 @@ export default {
     },
     rackDetail: {
       location: "Près de {{location}}",
+      navigate: "Naviguer",
     },
     contributeRackPanel: {
       title: "Contribuer à un nouveau rack à vélos",

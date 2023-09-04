@@ -71,6 +71,7 @@ export default {
     },
     rackDetail: {
       location: "Cerca de {{location}}",
+      navigate: "Navegar",
     },
     contributeRackPanel: {
       title: "Contribuir nuevo estacionamiento",
