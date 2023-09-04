@@ -2,6 +2,7 @@
 
 import { writable } from "svelte/store";
 
+// TODO: Remove this in favor of location store in src/store/location.ts
 export const locationStore = writable<any>({});
 
 export type LocationPermissionStatus = "granted" | "denied" | "prompt";

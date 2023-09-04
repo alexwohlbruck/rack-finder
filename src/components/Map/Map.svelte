@@ -4,7 +4,7 @@
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
   import { prefsStore } from "../../store/prefs";
-  import { locationStore, updateLocation } from "../../store/location";
+  import { updateLocation } from "../../store/location";
   import { mapStore, setMapCenter } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
@@ -21,15 +21,20 @@
     palette,
     racksLayer,
     racksSourceName,
+    routeLayer,
+    routeSource,
+    routeSourceName,
     styles,
     unclusteredPointLayer,
   } from "./map.config";
   import type { Rack } from "../../types/rack";
   import ContributeRackButton from "../ContributeRackButton.svelte";
   import { haversine } from "../../util";
+  import { locationStore } from "../../store/location";
   import type { Position } from "../../types/geolocation";
   import { asSvg as icons, type IconName } from "../../lib/icons/icons";
   import { location } from "svelte-spa-router";
+  import { routeStore } from "../../store/route";
 
   let mapContainer;
   let map;
@@ -125,16 +130,18 @@
 
   function addMapLayers() {
     map.addSource(racksSourceName, racksLayer);
+    map.addSource(routeSourceName, routeSource);
     map.addLayer(clustersLayer);
     map.addLayer(clustersCountLayer);
     map.addLayer(unclusteredPointLayer);
     map.addLayer(iconsLayer);
     map.addLayer(buildingsLayer);
+    map.addLayer(routeLayer);
     initIcons();
   }
 
   function updateRacksLayer(racks) {
-    map?.getSource("racks")?.setData({
+    map?.getSource(racksSourceName)?.setData({
       type: "FeatureCollection",
       features: Object.values(racks).map((rack: Rack) => {
         let icon: IconName | string = rack.tags.bicycle_parking;
@@ -182,6 +189,24 @@
     ) {
       map?.flyTo({
         center: [center.lng, center.lat],
+      });
+    }
+  }
+
+  $: {
+    const { route } = $routeStore;
+    if (route) {
+      map?.getSource(routeSourceName)?.setData({
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "LineString",
+              coordinates: route.features[0].geometry.coordinates,
+            },
+          },
+        ],
       });
     }
   }

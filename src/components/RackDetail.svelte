@@ -18,6 +18,8 @@
   import { Icon } from "flowbite-svelte-icons";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import config from "../config";
+  import { locationStore } from "../store/location";
+  import { getRoute } from "../services/ors";
 
   export let params: {
     id?: string;
@@ -34,11 +36,14 @@
   ];
 
   $: rack = $racksStore[params.id];
-  $: type = $t(rack?.tags.bicycle_parking);
   $: tags = rack?.tags;
   $: {
     if (rack) {
       lookupAddress(rack);
+      console.log(locationStore);
+      if ($locationStore?.lat && $locationStore?.lng) {
+        getRoute($locationStore, rack);
+      }
     }
   }
   $: location = address

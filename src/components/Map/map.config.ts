@@ -14,6 +14,9 @@ export const INITIAL_STATE = {
 export const RACKS_LAYER_MAX_ZOOM = 13;
 export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 2.0 * radius + 2000;
 
+export const racksSourceName = "racks";
+export const routeSourceName = "route";
+
 // TODO: Import palette from tailwind config
 // import tailwindConfig from "../../tailwind.config.cjs";
 // const palette = tailwindConfig.theme.extend.colors;
@@ -49,8 +52,6 @@ export const navigationControlConfig = {
   showZoom: true,
   visualizePitch: true,
 };
-
-export const racksSourceName = "racks";
 
 export const racksLayer = {
   type: "geojson",
@@ -171,5 +172,31 @@ export const buildingsLayer = {
       ["get", "min_height"],
     ],
     "fill-extrusion-opacity": 0.6,
+  },
+};
+
+export const routeSource = {
+  type: "geojson",
+  data: {
+    type: "Feature",
+    properties: {},
+    geometry: {
+      type: "LineString",
+      coordinates: [],
+    },
+  },
+};
+
+export const routeLayer = {
+  id: "route",
+  type: "line",
+  source: routeSourceName,
+  layout: {
+    "line-join": "round",
+    "line-cap": "round",
+  },
+  paint: {
+    "line-color": "#0074D9",
+    "line-width": 5,
   },
 };
