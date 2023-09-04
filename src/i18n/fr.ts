@@ -15,10 +15,6 @@ export default {
       matchingResults_other: "{{count}} résultats correspondants",
       sortFilter: "Trier / filtrer",
     },
-    racksList: {
-      capacity_one: "{{count}} vélo",
-      capacity_other: "{{count}} vélos",
-    },
     rack: {
       attributes: {
         type: "Type",
@@ -54,6 +50,8 @@ export default {
         shed: "Abri à vélos",
         rope: "Corde",
       },
+      capacity_one: "{{count}} vélo",
+      capacity_other: "{{count}} vélos",
       covered: {
         yes: "Couvert",
         partial: "Partiellement couvert",
@@ -70,6 +68,9 @@ export default {
         no: "Public",
         permissive: "Accès permissif",
       },
+    },
+    rackDetail: {
+      location: "Près de {{location}}",
     },
     contributeRackPanel: {
       title: "Contribuer à un nouveau rack à vélos",

@@ -15,10 +15,6 @@ export default {
       matchingResults_other: "{{count}} resultados coincidentes",
       sortFilter: "Ordenar / filtrar",
     },
-    racksList: {
-      capacity_one: "{{count}} bicicleta",
-      capacity_other: "{{count}} bicicletas",
-    },
     rack: {
       attributes: {
         type: "Tipo",
@@ -54,6 +50,8 @@ export default {
         shed: "Cobertizo de bicicletas",
         rope: "Cuerda",
       },
+      capacity_one: "{{count}} bicicleta",
+      capacity_other: "{{count}} bicicletas",
       covered: {
         yes: "Cubierto",
         partial: "Parcialmente cubierto",
@@ -70,6 +68,9 @@ export default {
         no: "Público",
         permissive: "Acceso permisivo",
       },
+    },
+    rackDetail: {
+      location: "Cerca de {{location}}",
     },
     contributeRackPanel: {
       title: "Contribuir nuevo estacionamiento",

@@ -22,11 +22,8 @@
     <div
       class="side-panel flex flex-col gap-2 h-3/5 md:h-auto md:w-2/5 lg:w-1/3 md:max-w-[30rem]"
     >
-      <Router {routes} />
+      <Router {routes} restoreScrollState={true} />
 
-      {#if $searchOptionsStore.selectedRack}
-        <RackDetail />
-      {/if}
       <div class="flex gap-2">
         <AppLogoPanel />
         <ProfilePanel />

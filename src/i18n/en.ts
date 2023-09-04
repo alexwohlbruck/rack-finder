@@ -15,10 +15,7 @@ export default {
       matchingResults_other: "{{count}} matching results",
       sortFilter: "Sort / filter",
     },
-    racksList: {
-      capacity_one: "{{count}} bicycle",
-      capacity_other: "{{count}} bicycles",
-    },
+    racksList: {},
     rack: {
       attributes: {
         type: "Type",
@@ -54,6 +51,8 @@ export default {
         shed: "Bike shed",
         rope: "Rope",
       },
+      capacity_one: "{{count}} bicycle",
+      capacity_other: "{{count}} bicycles",
       covered: {
         yes: "Covered",
         partial: "Partially covered",
@@ -70,6 +69,9 @@ export default {
         no: "Public",
         permissive: "Permissive access",
       },
+    },
+    rackDetail: {
+      location: "Near {{location}}",
     },
     contributeRackPanel: {
       title: "Contribute new bike rack",

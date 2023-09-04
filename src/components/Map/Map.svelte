@@ -28,7 +28,7 @@
   import ContributeRackButton from "../ContributeRackButton.svelte";
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";
-  import { asSvg as icons } from "../../lib/icons/icons";
+  import { asSvg as icons, type IconName } from "../../lib/icons/icons";
   import { location } from "svelte-spa-router";
 
   let mapContainer;
@@ -136,18 +136,24 @@
   function updateRacksLayer(racks) {
     map?.getSource("racks")?.setData({
       type: "FeatureCollection",
-      features: Object.values(racks).map((rack: Rack) => ({
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [rack.lng, rack.lat],
-        },
-        properties: {
-          id: rack.id,
-          icon: rack.tags.bicycle_parking,
-          cluster: true,
-        },
-      })),
+      features: Object.values(racks).map((rack: Rack) => {
+        let icon: IconName | string = rack.tags.bicycle_parking;
+        if (icon === "stands" && rack.tags.capacity > 2) {
+          icon = "stands_multi";
+        }
+        return {
+          type: "Feature",
+          geometry: {
+            type: "Point",
+            coordinates: [rack.lng, rack.lat],
+          },
+          properties: {
+            id: rack.id,
+            icon,
+            cluster: true,
+          },
+        };
+      }),
     });
   }
 
@@ -174,7 +180,10 @@
       center &&
       (center.lng != currentCenter?.lng || center.lat != currentCenter?.lat)
     ) {
-      map?.setCenter([center.lng, center.lat]);
+      map?.flyTo({
+        center: [center.lng, center.lat],
+        speed: 0.8,
+      });
     }
   }
 

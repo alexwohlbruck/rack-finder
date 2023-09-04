@@ -21,7 +21,7 @@
 
   function renderCapacity(capacity: string) {
     if (!capacity) return null;
-    return $t("racksList.capacity", { count: parseInt(capacity) });
+    return $t("rack.capacity", { count: parseInt(capacity) });
   }
 
   function renderCoverage(coverage: RackCoverage) {
@@ -60,32 +60,35 @@
     <P size="sm">Nothing nearby!</P>
   </div>
 {:else}
-  <div>
-    {#each $racks as rack}
-      <ListgroupItem class="border-b border-gray-200 dark:border-gray-700">
-        <div class="flex gap-3 items-center">
-          <Button
-            on:click={() => centerMapOnRack(rack)}
-            outline
-            size="xs"
-            class="!w-9 !h-9 !p-0"
-          >
-            <RackIcon name={rack?.tags.bicycle_parking} />
-          </Button>
-          <div class="flex-1 flex gap-4 items-center">
-            <div class="flex-1 flex flex-col">
-              <P size="sm" weight="medium">
-                {renderType(rack?.tags.bicycle_parking)}
-              </P>
-              <P size="sm">
-                {renderDetails(rack?.tags)}
-              </P>
+  <div class="flex flex-col">
+    {#each $racks as rack, i}
+      <ListgroupItem
+        key={rack.id}
+        class="flex items-center border-b border-gray-200 dark:border-gray-700"
+      >
+        <a href={`#/racks/${rack.id}`} class="w-full">
+          <div class="flex gap-3 items-center">
+            <div class="py-2 mr-1">
+              <RackIcon
+                name={rack?.tags.bicycle_parking}
+                capacity={rack?.tags.capacity}
+              />
             </div>
+            <div class="flex-1 flex gap-4 items-center">
+              <div class="flex-1 flex flex-col">
+                <P size="sm" weight="medium">
+                  {renderType(rack?.tags.bicycle_parking)}
+                </P>
+                <P size="sm">
+                  {renderDetails(rack?.tags)}
+                </P>
+              </div>
+            </div>
+            <P size="sm" weight="medium" class="w-11 text-center">
+              {renderDistance(rack?.distance, $preferredUnits)}
+            </P>
           </div>
-          <P size="sm" weight="medium" class="w-11 text-center">
-            {renderDistance(rack?.distance, $preferredUnits)}
-          </P>
-        </div>
+        </a>
       </ListgroupItem>
     {/each}
   </div>
