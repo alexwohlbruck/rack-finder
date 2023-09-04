@@ -182,7 +182,6 @@
     ) {
       map?.flyTo({
         center: [center.lng, center.lat],
-        speed: 0.8,
       });
     }
   }

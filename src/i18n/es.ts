@@ -72,6 +72,8 @@ export default {
     rackDetail: {
       location: "Cerca de {{location}}",
       navigate: "Navegar",
+      attribution: "Contribuido por",
+      creator: "Creador de Rack Finder",
     },
     contributeRackPanel: {
       title: "Contribuir nuevo estacionamiento",

@@ -72,6 +72,8 @@ export default {
     rackDetail: {
       location: "Près de {{location}}",
       navigate: "Naviguer",
+      attribution: "Contribué par",
+      creator: "Créateur de Rack Finder",
     },
     contributeRackPanel: {
       title: "Contribuer à un nouveau rack à vélos",

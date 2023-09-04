@@ -12,13 +12,14 @@ export const op = async (query: string) => {
 };
 
 export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
+  // get meta and center
   const query = `
     [out:json];
     (
       node["amenity"="bicycle_parking"](around:${radius}, ${lat}, ${lng});
       way["amenity"="bicycle_parking"](around:${radius}, ${lat}, ${lng});
     );
-    out center;
+    out center meta;
   `;
   const { elements } = useDevData ? devData : await op(query);
 

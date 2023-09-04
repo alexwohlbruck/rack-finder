@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    Badge,
     Button,
     Card,
     Heading,
@@ -129,6 +130,19 @@
         </div>
       </ListgroupItem>
     {/each}
+    {#if rack.user}
+      <ListgroupItem>
+        <div class="flex items-center">
+          <div class="flex-1 flex flex-col">
+            <P size="sm">{$t("rackDetail.attribution")}</P>
+            <P size="sm" weight="medium">{rack.user}</P>
+          </div>
+          <div>
+            <Badge color="primary">{$t("rackDetail.creator")}</Badge>
+          </div>
+        </div>
+      </ListgroupItem>
+    {/if}
   </Listgroup>
 
   <div class="p-3 flex">
