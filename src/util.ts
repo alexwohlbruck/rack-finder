@@ -76,3 +76,7 @@ export const syncedWritable = <T>(name: string, initialData: T) => {
   });
   return store;
 };
+
+export const osmProfileUrl = (user: string) => {
+  return `https://www.openstreetmap.org/user/${user}`;
+};

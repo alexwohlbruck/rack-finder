@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    A,
     Badge,
     Button,
     Card,
@@ -10,12 +11,13 @@
   } from "flowbite-svelte";
   import { t } from "../i18n";
   import { racksStore } from "../store/racks";
-  import { friendlyName } from "../util";
+  import { friendlyName, osmProfileUrl } from "../util";
   import { reverseLookup } from "../services/nominatim";
   import type { Rack } from "../types/rack";
   import { setMapCenter } from "../store/map";
   import { Icon } from "flowbite-svelte-icons";
   import RackIcon from "../lib/icons/RackIcon.svelte";
+  import config from "../config";
 
   export let params: {
     id?: string;
@@ -135,11 +137,15 @@
         <div class="flex items-center">
           <div class="flex-1 flex flex-col">
             <P size="sm">{$t("rackDetail.attribution")}</P>
-            <P size="sm" weight="medium">{rack.user}</P>
+            <P size="sm" weight="medium">
+              <A href={osmProfileUrl(rack.user)} target="_blank">
+                {rack.user}
+              </A>
+            </P>
           </div>
-          <div>
+          {#if rack.user === config.creatorUser}
             <Badge color="primary">{$t("rackDetail.creator")}</Badge>
-          </div>
+          {/if}
         </div>
       </ListgroupItem>
     {/if}

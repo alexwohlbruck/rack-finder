@@ -2,15 +2,14 @@
   import { A, Avatar, P } from "flowbite-svelte";
   import type { OSMUser } from "../types/osm";
   import { t } from "../i18n/index";
+  import { osmProfileUrl } from "../util";
 
   export let me: OSMUser;
   export let size: any = "sm";
 
   let profileUrl, changesetsUrl;
 
-  $: profileUrl = me
-    ? `https://www.openstreetmap.org/user/${me.display_name}`
-    : null;
+  $: profileUrl = me ? osmProfileUrl(me.display_name) : null;
 
   $: changesetsUrl = me ? `${profileUrl}/history` : null;
 </script>
