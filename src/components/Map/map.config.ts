@@ -188,7 +188,7 @@ export const routeLayer = {
     "line-cap": "round",
   },
   paint: {
-    "line-color": palette[600],
+    "line-color": palette[500],
     "line-width": 5,
   },
 };

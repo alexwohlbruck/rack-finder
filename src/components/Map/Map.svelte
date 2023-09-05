@@ -221,7 +221,7 @@
         new LngLatBounds(route.bbox.slice(0, 2), route.bbox.slice(2, 4))
       );
       map?.fitBounds(bounds, {
-        padding: 150,
+        padding: Math.floor(window.innerWidth * 0.1),
       });
     } else {
       map?.getSource(routeSourceName)?.setData({
