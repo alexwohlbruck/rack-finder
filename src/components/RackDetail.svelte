@@ -2,13 +2,15 @@
   import {
     A,
     Badge,
-    Button,
+    Button as FlowbiteButton,
+    ButtonGroup,
     Card,
     Heading,
     Listgroup,
     ListgroupItem,
     P,
   } from "flowbite-svelte";
+  import Button from "../lib/Button.svelte";
   import { t } from "../i18n";
   import { racksStore } from "../store/racks";
   import { friendlyName, osmProfileUrl } from "../util";
@@ -160,9 +162,23 @@
     {/if}
   </Listgroup>
 
+  <div class="flex-1" />
+
   <div class="p-3 flex">
+    <ButtonGroup>
+      <FlowbiteButton color="primary" outline size="sm" disabled>
+        <Icon name="pen-outline" class="w-4 h-4 mr-2" />
+        <span>{$t("rackDetail.edit")}</span>
+      </FlowbiteButton>
+      <FlowbiteButton color="primary" outline size="sm" disabled>
+        <Icon name="trash-bin-solid" class="w-4 h-4 mr-2" />
+        <span>{$t("rackDetail.delete")}</span>
+      </FlowbiteButton>
+    </ButtonGroup>
+
     <div class="flex-1" />
-    <Button outline size="sm" href={directionsUrl} target="_blank">
+
+    <Button size="sm" href={directionsUrl} target="_blank">
       <Icon name="map-pin-alt-solid" class="w-4 h-4 mr-2" />
       <span>{$t("rackDetail.navigate")}</span>
     </Button>

@@ -15,7 +15,6 @@ export default {
       matchingResults_other: "{{count}} matching results",
       sortFilter: "Sort / filter",
     },
-    racksList: {},
     rack: {
       attributes: {
         type: "Type",
@@ -72,6 +71,8 @@ export default {
     },
     rackDetail: {
       location: "Near {{location}}",
+      edit: "Edit",
+      delete: "Delete",
       navigate: "Navigate",
       attribution: "Contributed by",
       creator: "Creator of Rack Finder",

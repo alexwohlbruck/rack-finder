@@ -71,6 +71,8 @@ export default {
     },
     rackDetail: {
       location: "Près de {{location}}",
+      edit: "Modifier",
+      delete: "Supprimer",
       navigate: "Naviguer",
       attribution: "Contribué par",
       creator: "Créateur de Rack Finder",
