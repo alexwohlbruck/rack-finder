@@ -151,6 +151,8 @@
       type: "FeatureCollection",
       features: Object.values(racks).map((rack: Rack) => {
         let icon: IconName | string = rack.tags.bicycle_parking;
+        const isPrivate = rack.tags.access === "private";
+        // TODO: Dupe logic from RackIcon.svelte
         if (icon === "stands" && rack.tags.capacity > 2) {
           icon = "stands_multi";
         }
@@ -164,6 +166,7 @@
             id: rack.id,
             icon,
             cluster: true,
+            private: isPrivate,
           },
         };
       }),

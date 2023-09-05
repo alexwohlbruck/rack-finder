@@ -21,7 +21,7 @@ export default {
         type: "Type",
         capacity: "Capacity",
         distance: "Distance",
-        private: "Publicity",
+        access: "Access",
         covered: "Rain coverage",
         traffic: "Foot traffic",
       },
@@ -64,9 +64,9 @@ export default {
         medium: "Medium foot traffic",
         high: "High foot traffic",
       },
-      private: {
-        yes: "Private",
-        no: "Public",
+      access: {
+        private: "Private",
+        yes: "Public",
         permissive: "Permissive access",
       },
     },

@@ -34,7 +34,7 @@
     "capacity",
     "covered",
     "traffic",
-    "private",
+    "access",
   ];
 
   $: rack = $racksStore[params.id];
@@ -125,11 +125,11 @@
         </div>
       </ListgroupItem>
     {/if}
-    {#if tags.private}
+    {#if tags.access}
       <ListgroupItem>
         <div class="flex flex-col">
-          <P size="sm">{$t("rack.attributes.private")}</P>
-          <P size="sm" weight="medium">{$t(`rack.private.${tags.private}`)}</P>
+          <P size="sm">{$t("rack.attributes.access")}</P>
+          <P size="sm" weight="medium">{$t(`rack.access.${tags.access}`)}</P>
         </div>
       </ListgroupItem>
     {/if}

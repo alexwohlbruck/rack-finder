@@ -51,9 +51,9 @@
       name: "Two tier",
     },
   ];
-  const privacyOptions = [
+  const accessOptions = [
     {
-      value: "no",
+      value: "yes",
       name: "Public",
     },
     {
@@ -61,7 +61,7 @@
       name: "Permissive (Needs key/code access or must be customer)",
     },
     {
-      value: "yes",
+      value: "private",
       name: "Private (Private residence or business)",
     },
   ];
@@ -101,7 +101,7 @@
   const form: BikeRackTags = {
     bicycle_parking: "stands",
     capacity: 2,
-    private: "no",
+    access: "public",
   };
 
   function returnToHome() {
@@ -169,12 +169,12 @@
     />
   </Label>
 
-  <Label for="private">
-    <div class="mb-1">{$t("rack.attributes.private")}</div>
+  <Label for="access">
+    <div class="mb-1">{$t("rack.attributes.access")}</div>
     <Select
-      bind:value={form.private}
-      id="private"
-      items={privacyOptions}
+      bind:value={form.access}
+      id="access"
+      items={accessOptions}
       placeholder={$t("common.chooseOption")}
     />
   </Label>

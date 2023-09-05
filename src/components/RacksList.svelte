@@ -3,7 +3,7 @@
   import { racks } from "../store/racks";
   import {
     type RackCoverage,
-    type RackPrivate,
+    type RackAccess,
     type RackTraffic,
     type RackType,
   } from "../types/rack";
@@ -34,17 +34,17 @@
     return $t(`rack.traffic.${traffic}`);
   }
 
-  function renderPrivacy(_private: RackPrivate) {
-    if (!_private || _private === "no") return null;
-    return $t(`rack.private.${_private}`);
+  function renderAccess(access: RackAccess) {
+    if (!access || access === "yes") return null;
+    return $t(`rack.access.${access}`);
   }
 
   function renderDetails(tags) {
     const capacity = renderCapacity(tags.capacity);
     const coverage = renderCoverage(tags.covered);
     const traffic = renderTraffic(tags.traffic);
-    const privacy = renderPrivacy(tags.private);
-    return [privacy, traffic, coverage, capacity].filter(Boolean).join(" • ");
+    const access = renderAccess(tags.access);
+    return [access, traffic, coverage, capacity].filter(Boolean).join(" • ");
   }
 
   function centerMapOnRack(rack) {

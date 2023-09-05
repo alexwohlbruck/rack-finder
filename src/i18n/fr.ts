@@ -20,7 +20,7 @@ export default {
         type: "Type",
         capacity: "Capacité",
         distance: "Distance",
-        private: "Publicité",
+        acces: "Accès",
         covered: "Couverture de pluie",
         traffic: "Trafic piétonnier",
       },
@@ -63,9 +63,9 @@ export default {
         medium: "Trafic piétonnier moyen",
         high: "Trafic piétonnier élevé",
       },
-      private: {
-        yes: "Privé",
-        no: "Public",
+      access: {
+        private: "Privé",
+        yes: "Public",
         permissive: "Accès permissif",
       },
     },

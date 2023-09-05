@@ -21,6 +21,7 @@ export const routeSourceName = "route";
 // import tailwindConfig from "../../tailwind.config.cjs";
 // const palette = tailwindConfig.theme.extend.colors;
 export const palette = colors.yellow;
+export const privatePalette = colors.rose;
 export const styles = {
   light: "mapbox://styles/mapbox/streets-v12",
   dark: "mapbox://styles/mapbox/dark-v11",
@@ -125,10 +126,20 @@ export const unclusteredPointLayer = {
   source: racksSourceName,
   filter: ["!", ["has", "point_count"]],
   paint: {
-    "circle-color": palette[100],
+    "circle-color": [
+      "case",
+      ["==", ["get", "private"], true],
+      privatePalette[100],
+      palette[100],
+    ],
     "circle-radius": 10,
     "circle-stroke-width": 2,
-    "circle-stroke-color": palette[300],
+    "circle-stroke-color": [
+      "case",
+      ["==", ["get", "private"], true],
+      privatePalette[300],
+      palette[300],
+    ],
   },
 };
 
