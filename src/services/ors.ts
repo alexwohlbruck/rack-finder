@@ -27,7 +27,7 @@ export const getRoute = async (
     const response = await fetch(url);
     const data = await response.json();
     if (data.error) throw new Error(data.error.message);
-    setRoute(data);
+    setRoute(data, start, end);
     return data;
   } catch (error) {
     // TODO: translate

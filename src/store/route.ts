@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import type { Position } from "../types/geolocation";
 
 type Route = {
   type: "FeatureCollection";
@@ -31,15 +32,21 @@ type Route = {
 
 const routeStore = writable<{
   route: Route | null;
+  start: Position | null;
+  end: Position | null;
 }>({
   route: null,
+  start: null,
+  end: null,
 });
 
-export function setRoute(newRoute: Route | null) {
+export function setRoute(newRoute: Route, start: Position, end: Position) {
   routeStore.update(($data) => {
     return {
       ...$data,
       route: newRoute,
+      start,
+      end,
     };
   });
 }
@@ -49,6 +56,8 @@ export function clearRoute() {
     return {
       ...$data,
       route: {},
+      start: null,
+      end: null,
     };
   });
 }

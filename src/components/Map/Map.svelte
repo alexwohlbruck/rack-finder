@@ -220,8 +220,13 @@
   }
 
   $: {
-    const { route } = $routeStore;
+    const { route, start, end } = $routeStore;
     if (route) {
+      const coordinates = [
+        [start.lng, start.lat],
+        ...route.features[0].geometry.coordinates,
+        [end.lng, end.lat],
+      ];
       map?.getSource(routeSourceName)?.setData({
         type: "FeatureCollection",
         lineMetrics: true,
@@ -230,13 +235,13 @@
             type: "Feature",
             geometry: {
               type: "LineString",
-              coordinates: route.features[0].geometry.coordinates,
+              coordinates,
             },
           },
         ],
       });
       // Set map bounds to fit route
-      const bounds = route.features[0].geometry.coordinates.reduce(
+      const bounds = coordinates.reduce(
         (bounds, coord) => bounds.extend(coord),
         new LngLatBounds(route.bbox.slice(0, 2), route.bbox.slice(2, 4))
       );
