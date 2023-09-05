@@ -21,6 +21,7 @@ export const routeSourceName = "route";
 // import tailwindConfig from "../../tailwind.config.cjs";
 // const palette = tailwindConfig.theme.extend.colors;
 export const palette = colors.yellow;
+export const permissivePalette = colors.orange;
 export const privatePalette = colors.rose;
 export const styles = {
   light: "mapbox://styles/mapbox/streets-v12",
@@ -126,18 +127,23 @@ export const unclusteredPointLayer = {
   source: racksSourceName,
   filter: ["!", ["has", "point_count"]],
   paint: {
+    // private, permissive, public, shade 100
     "circle-color": [
       "case",
-      ["==", ["get", "private"], true],
+      ["==", ["get", "access"], "private"],
       privatePalette[100],
+      ["==", ["get", "access"], "permissive"],
+      permissivePalette[100],
       palette[100],
     ],
     "circle-radius": 10,
     "circle-stroke-width": 2,
     "circle-stroke-color": [
       "case",
-      ["==", ["get", "private"], true],
+      ["==", ["get", "access"], "private"],
       privatePalette[300],
+      ["==", ["get", "access"], "permissive"],
+      permissivePalette[300],
       palette[300],
     ],
   },
