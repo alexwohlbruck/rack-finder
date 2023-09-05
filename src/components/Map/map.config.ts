@@ -121,8 +121,9 @@ export const clustersCountLayer = {
   },
 };
 
+export const unclusteredPointLayerName = "unclustered-point";
 export const unclusteredPointLayer = {
-  id: "unclustered-point",
+  id: unclusteredPointLayerName,
   type: "circle",
   source: racksSourceName,
   filter: ["!", ["has", "point_count"]],

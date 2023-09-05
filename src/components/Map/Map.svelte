@@ -32,6 +32,7 @@
     routeSourceName,
     styles,
     unclusteredPointLayer,
+    unclusteredPointLayerName,
   } from "./map.config";
   import type { Rack } from "../../types/rack";
   import ContributeRackButton from "../ContributeRackButton.svelte";
@@ -39,7 +40,7 @@
   import { locationStore } from "../../store/location";
   import type { Position } from "../../types/geolocation";
   import { asSvg as icons, type IconName } from "../../lib/icons/icons";
-  import { location } from "svelte-spa-router";
+  import { location, push } from "svelte-spa-router";
   import { routeStore } from "../../store/route";
 
   let mapContainer;
@@ -123,6 +124,23 @@
           lng: center.lng,
         });
       }
+    });
+
+    map.on("click", (e) => {
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: [unclusteredPointLayerName],
+      });
+      if (!features?.length) return;
+      const rackId = features[0]?.properties?.id;
+      push(`#/racks/${rackId}`);
+    });
+
+    map.on("mouseenter", unclusteredPointLayerName, () => {
+      map.getCanvas().style.cursor = "pointer";
+    });
+
+    map.on("mouseleave", unclusteredPointLayerName, () => {
+      map.getCanvas().style.cursor = "";
     });
   }
 

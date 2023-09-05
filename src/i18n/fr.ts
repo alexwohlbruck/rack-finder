@@ -67,6 +67,7 @@ export default {
         private: "Privé",
         yes: "Public",
         permissive: "Accès permissif",
+        customers: "Clients seulement",
       },
     },
     rackDetail: {
