@@ -30,7 +30,8 @@ export const getRoute = async (
     setRoute(data);
     return data;
   } catch (error) {
-    showToast(`Couldn't display route: ${error.message}`);
+    // TODO: translate
+    showToast(`Couldn't display route: ${error.message}`, "error");
     return null;
   }
 };

@@ -101,7 +101,7 @@
   const form: BikeRackTags = {
     bicycle_parking: "stands",
     capacity: 2,
-    access: "public",
+    access: "yes",
   };
 
   function returnToHome() {

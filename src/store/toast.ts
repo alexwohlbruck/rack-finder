@@ -1,15 +1,17 @@
 import { writable } from "svelte/store";
 
+export type ToastType = "success" | "error";
 export const toastStore = writable<
   {
     id: number;
     message: string;
+    type: ToastType;
   }[]
 >([]);
 
 let index = 0;
 
-export function showToast(message) {
+export function showToast(message, type: ToastType = "success") {
   const id = index++;
   toastStore.update((store) => {
     return [
@@ -17,6 +19,7 @@ export function showToast(message) {
       {
         id,
         message,
+        type,
       },
     ];
   });
