@@ -177,14 +177,6 @@ export const buildingsLayer = {
 
 export const routeSource = {
   type: "geojson",
-  data: {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "LineString",
-      coordinates: [],
-    },
-  },
 };
 
 export const routeLayer = {
@@ -196,7 +188,7 @@ export const routeLayer = {
     "line-cap": "round",
   },
   paint: {
-    "line-color": "#0074D9",
+    "line-color": palette[600],
     "line-width": 5,
   },
 };

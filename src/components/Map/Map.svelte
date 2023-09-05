@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { Map, Marker, GeolocateControl, NavigationControl } from "mapbox-gl";
+  import {
+    Map,
+    Marker,
+    GeolocateControl,
+    NavigationControl,
+    LngLatBounds,
+  } from "mapbox-gl";
   import { onMount, onDestroy } from "svelte";
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
@@ -131,12 +137,12 @@
   function addMapLayers() {
     map.addSource(racksSourceName, racksLayer);
     map.addSource(routeSourceName, routeSource);
+    map.addLayer(routeLayer);
     map.addLayer(clustersLayer);
     map.addLayer(clustersCountLayer);
     map.addLayer(unclusteredPointLayer);
     map.addLayer(iconsLayer);
     map.addLayer(buildingsLayer);
-    map.addLayer(routeLayer);
     initIcons();
   }
 
@@ -198,6 +204,7 @@
     if (route) {
       map?.getSource(routeSourceName)?.setData({
         type: "FeatureCollection",
+        lineMetrics: true,
         features: [
           {
             type: "Feature",
@@ -207,6 +214,19 @@
             },
           },
         ],
+      });
+      // Set map bounds to fit route
+      const bounds = route.features[0].geometry.coordinates.reduce(
+        (bounds, coord) => bounds.extend(coord),
+        new LngLatBounds(route.bbox.slice(0, 2), route.bbox.slice(2, 4))
+      );
+      map?.fitBounds(bounds, {
+        padding: 150,
+      });
+    } else {
+      map?.getSource(routeSourceName)?.setData({
+        type: "FeatureCollection",
+        features: [],
       });
     }
   }

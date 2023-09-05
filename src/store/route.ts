@@ -35,7 +35,7 @@ const routeStore = writable<{
   route: null,
 });
 
-export function setRoute(newRoute: Route) {
+export function setRoute(newRoute: Route | null) {
   routeStore.update(($data) => {
     return {
       ...$data,

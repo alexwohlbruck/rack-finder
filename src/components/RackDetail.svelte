@@ -20,6 +20,8 @@
   import config from "../config";
   import { locationStore } from "../store/location";
   import { getRoute } from "../services/ors";
+  import { onDestroy } from "svelte";
+  import { setRoute } from "../store/route";
 
   export let params: {
     id?: string;
@@ -62,14 +64,16 @@
     (key) => !knownAttributes.includes(key)
   );
 
-  $: setMapCenter(rack);
-
   async function lookupAddress(rack: Rack) {
     if (rack) {
       const result = await reverseLookup(rack);
       address = result?.address;
     }
   }
+
+  onDestroy(() => {
+    setRoute(null);
+  });
 </script>
 
 <Card padding="none" class="flex flex-1 flex-col">
