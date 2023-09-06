@@ -123,6 +123,7 @@ export default {
       license: "ODbL license",
       happyCycling: "Happy cycling! 🚲🚲",
       madeBy: "Made with 💛 by",
+      viewOn: "View project on",
     },
     toast: {
       contributeConfirmation:

@@ -29,4 +29,10 @@
     {$t("infoModal.madeBy")}
     <A href="https://alex.wohlbruck.com" target="_blank">Alex Wohlbruck</A>.
   </P>
+  <P size="xs" align="center" class="!mt-2">
+    {$t("infoModal.viewOn")}
+    <A href="https://github.com/alexwohlbruck/rack-finder" target="_blank">
+      Github
+    </A>.
+  </P>
 </Modal>

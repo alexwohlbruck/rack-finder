@@ -123,6 +123,11 @@ export default {
       license: "ODbL",
       happyCycling: "¡Feliz ciclismo! 🚲🚲",
       madeBy: "Hecho con 💛 por",
+      viewOn: "Ver proyecto en",
+    },
+    toast: {
+      contributeConfirmation:
+        "¡Gracias! Su contribución se mostrará en el mapa en breve.",
     },
   },
 };
