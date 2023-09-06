@@ -25,6 +25,7 @@ export default {
         traffic: "Tráfico de peatones",
       },
       type: {
+        unknown: "Tipo desconocido",
         stands: "Soportes",
         wave: "Soporte de onda",
         staple: "Soporte de grapa",

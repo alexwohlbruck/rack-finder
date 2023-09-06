@@ -23,7 +23,7 @@
   import { locationStore } from "../store/location";
   import { getRoute } from "../services/ors";
   import { onDestroy } from "svelte";
-  import { setRoute } from "../store/route";
+  import { clearRoute, setRoute } from "../store/route";
 
   export let params: {
     id?: string;
@@ -74,7 +74,7 @@
   }
 
   onDestroy(() => {
-    setRoute(null);
+    clearRoute();
   });
 </script>
 
@@ -87,7 +87,9 @@
     </div>
     <div class="flex-1 flex flex-col">
       <Heading tag="h6">
-        {$t(`rack.type.${rack?.tags.bicycle_parking}`)}
+        {rack?.tags.bicycle_parking
+          ? $t(`rack.type.${rack?.tags.bicycle_parking}`)
+          : $t("rack.type.unknown")}
       </Heading>
       <P size="xs">
         {$t("rackDetail.location", {

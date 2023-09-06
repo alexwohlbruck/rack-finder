@@ -25,6 +25,7 @@ export default {
         traffic: "Trafic piétonnier",
       },
       type: {
+        unknown: "Type inconnu",
         stands: "Supports",
         wave: "Support d'onde",
         staple: "Support de base",

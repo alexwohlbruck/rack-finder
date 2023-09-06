@@ -25,6 +25,7 @@ export default {
         traffic: "Foot traffic",
       },
       type: {
+        unknown: "Unknown type",
         stands: "Stands",
         wave: "Wave rack",
         staple: "Staple rack",

@@ -14,7 +14,7 @@
   import { t } from "../i18n/index";
 
   function renderType(type: RackType): string {
-    if (!type) return "Unknown type";
+    if (!type) return $t("rack.type.unknown");
     // TODO: Add fallback for unknown types
     return $t(`rack.type.${type}`);
   }

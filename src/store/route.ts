@@ -55,7 +55,7 @@ export function clearRoute() {
   routeStore.update(($data) => {
     return {
       ...$data,
-      route: {},
+      route: null,
       start: null,
       end: null,
     };
