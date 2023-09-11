@@ -23,7 +23,7 @@
   import { locationStore } from "../store/location";
   import { getRoute } from "../services/ors";
   import { onDestroy } from "svelte";
-  import { clearRoute, setRoute } from "../store/route";
+  import { clearRoute, routeStore, setRoute } from "../store/route";
 
   export let params: {
     id?: string;
@@ -41,18 +41,17 @@
 
   $: rack = $racksStore[params.id];
   $: tags = rack?.tags;
+  let lastId;
   $: {
-    if (rack) {
-      lookupAddress(rack);
-      console.log(locationStore);
-      if ($locationStore?.lat && $locationStore?.lng) {
-        getRoute($locationStore, rack);
-      }
+    if (rack && (rack.id !== lastId || $routeStore.route === null)) {
+      lastId = rack.id;
+      loadDetails();
     }
   }
   $: location = address
     ? `${address.road}, ${address.city}`
     : `${rack?.lat}, ${rack?.lng}`;
+
   let directionsUrl;
   $: {
     const qs = new URLSearchParams({
@@ -70,6 +69,13 @@
     if (rack) {
       const result = await reverseLookup(rack);
       address = result?.address;
+    }
+  }
+
+  function loadDetails() {
+    lookupAddress(rack);
+    if ($locationStore?.lat && $locationStore?.lng) {
+      getRoute($locationStore, rack);
     }
   }
 
