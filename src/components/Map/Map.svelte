@@ -275,8 +275,13 @@
         (bounds, coord) => bounds.extend(coord),
         new LngLatBounds(route.bbox.slice(0, 2), route.bbox.slice(2, 4))
       );
+      const bearing =
+        (Math.atan2(end.lng - start.lng, end.lat - start.lat) * 180) / Math.PI;
+
       map?.fitBounds(bounds, {
         padding: Math.floor(window.innerWidth * 0.1),
+        bearing,
+        pitch: 40,
       });
     } else {
       map?.getSource(routeSourceName)?.setData({
