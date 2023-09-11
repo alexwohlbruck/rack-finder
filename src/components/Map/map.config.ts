@@ -24,18 +24,18 @@ export const palette = colors.yellow;
 export const permissivePalette = colors.orange;
 export const privatePalette = colors.rose;
 export const styles = {
-  light: "mapbox://styles/mapbox/streets-v12",
-  dark: "mapbox://styles/mapbox/dark-v11",
+  standard: "mapbox://styles/mapbox/standard-beta",
   satellite: "mapbox://styles/mapbox/satellite-streets-v12",
 };
 
 export const mapConfig = {
   accessToken:
     "pk.eyJ1IjoiYWxleHdvaGxicnVjayIsImEiOiJjbGtxNXhibTYwbGJ0M2RuenUybTg3bDZlIn0.lfZIscTvkJKY9P1cxR1nhQ",
-  style: styles.light,
   center: [INITIAL_STATE.lng, INITIAL_STATE.lat],
   zoom: INITIAL_STATE.zoom,
   fadeDuration: 200,
+  style: styles.standard,
+  // hash: true,
 };
 
 export const geolocateControlConfig = {
@@ -106,6 +106,7 @@ export const clustersLayer = {
       1000,
       40,
     ],
+    "circle-emissive-strength": 1,
   },
 };
 
@@ -147,6 +148,7 @@ export const unclusteredPointLayer = {
       permissivePalette[300],
       palette[300],
     ],
+    "circle-emissive-strength": 1,
   },
 };
 
@@ -159,37 +161,6 @@ export const iconsLayer = {
     "icon-size": 0.65,
     "icon-allow-overlap": true,
     "icon-image": ["coalesce", ["get", "icon"], "stands"],
-  },
-};
-
-export const buildingsLayer = {
-  id: "add-3d-buildings",
-  source: "composite",
-  "source-layer": "building",
-  filter: ["==", "extrude", "true"],
-  type: "fill-extrusion",
-  minzoom: 15,
-  paint: {
-    "fill-extrusion-color": "#aaa",
-    "fill-extrusion-height": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
-      15,
-      0,
-      15.05,
-      ["get", "height"],
-    ],
-    "fill-extrusion-base": [
-      "interpolate",
-      ["linear"],
-      ["zoom"],
-      15,
-      0,
-      15.05,
-      ["get", "min_height"],
-    ],
-    "fill-extrusion-opacity": 0.6,
   },
 };
 
@@ -208,5 +179,6 @@ export const routeLayer = {
   paint: {
     "line-color": palette[500],
     "line-width": 5,
+    "line-emissive-strength": 1,
   },
 };

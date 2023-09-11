@@ -7,6 +7,7 @@
     LngLatBounds,
   } from "mapbox-gl";
   import { onMount, onDestroy } from "svelte";
+  import SunCalc from "suncalc";
   import * as op from "../../services/overpass";
   import { racksStore } from "../../store/racks";
   import { prefsStore } from "../../store/prefs";
@@ -18,7 +19,6 @@
     DEFAULT_FETCH_RADIUS,
     RACKS_FETCH_OUTER_BOUNDS_RATIO,
     RACKS_LAYER_MAX_ZOOM,
-    buildingsLayer,
     clustersCountLayer,
     clustersLayer,
     geolocateControlConfig,
@@ -46,9 +46,11 @@
   let mapContainer;
   let map;
   let mapLoaded = false;
+  let styleLoaded = false;
   let geolocateControl;
   let navigationControl;
   let marker;
+  let darkMode = isDarkMode();
 
   onMount(() => {
     initMap();
@@ -72,7 +74,6 @@
     map = new Map({
       ...mapConfig,
       container: mapContainer,
-      style: getSystemTheme(),
     });
 
     watchSystemTheme();
@@ -93,6 +94,8 @@
     map.on("style.load", async () => {
       addMapLayers();
       updateRacksLayer($racksStore);
+      setLightPreset(getLightPreset(darkMode));
+      styleLoaded = true;
     });
 
     // Use debounce to only load 2s after the last moveend event
@@ -160,7 +163,6 @@
     map.addLayer(clustersCountLayer);
     map.addLayer(unclusteredPointLayer);
     map.addLayer(iconsLayer);
-    map.addLayer(buildingsLayer);
     initIcons();
   }
 
@@ -190,7 +192,35 @@
     });
   }
 
-  function setMapStyle(style = getSystemTheme()) {
+  function getLightPreset(darkMode = false) {
+    const now = new Date();
+    const {
+      nauticalDawn, // Dawn begins
+      goldenHourEnd, // End of sunrise
+      goldenHour, // Sun begins setting
+      night, // Dusk ends
+    } = SunCalc.getTimes(now, $locationStore.lat, $locationStore.lng);
+
+    const isGolden =
+      (now > nauticalDawn && now < goldenHourEnd) ||
+      (now > goldenHour && now < night);
+
+    let lightPreset;
+    if (darkMode) {
+      lightPreset = isGolden ? "dusk" : "night";
+    } else {
+      lightPreset = isGolden ? "dawn" : "day";
+    }
+    return lightPreset;
+  }
+
+  function setLightPreset(lightPreset = "day") {
+    if (!map || !mapLoaded) return;
+    map.setConfigProperty("basemap", "lightPreset", lightPreset);
+  }
+
+  function setMapStyle(style = styles.standard) {
+    if (!map || !mapLoaded) return;
     map.setStyle(style);
   }
 
@@ -259,8 +289,8 @@
   // Watch contribute mode and update listeners
   $: contributeMode = $location === "/contribute";
   $: {
-    if (map) {
-      setMapStyle(contributeMode ? styles.satellite : getSystemTheme());
+    if (mapLoaded && styleLoaded) {
+      setMapStyle(contributeMode ? styles.satellite : styles.standard);
 
       if (contributeMode) {
         marker = new Marker({
@@ -315,13 +345,11 @@
     op.fetchRacks(center, radius);
   }
 
-  function getSystemTheme() {
-    return !(
+  function isDarkMode() {
+    return (
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
-    )
-      ? styles.light
-      : styles.dark;
+    );
   }
 
   function watchSystemTheme() {
@@ -329,9 +357,11 @@
     darkThemeMq.addListener((e) => {
       if (contributeMode) return;
       if (e.matches) {
-        setMapStyle(styles.dark);
+        darkMode = true;
+        setLightPreset(getLightPreset(true));
       } else {
-        setMapStyle(styles.light);
+        darkMode = false;
+        setLightPreset(getLightPreset());
       }
     });
   }
