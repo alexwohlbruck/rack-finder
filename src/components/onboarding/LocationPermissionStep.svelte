@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Alert, Heading, P } from "flowbite-svelte";
+  import { Alert, Heading, P, Button as FlowbiteButton } from "flowbite-svelte";
   import Button from "../../lib/Button.svelte";
   import {
     getCurrentLocation,
@@ -31,6 +31,10 @@
       status = await getLocationPermissionStatus();
     }
   }
+
+  function skip() {
+    completeOnboarding();
+  }
 </script>
 
 <div class="flex flex-col gap-5 items-center">
@@ -53,6 +57,7 @@
   {:else}
     <div class="flex gap-2">
       <Button size="sm" on:click={requestLocation}>Grant permission</Button>
+      <FlowbiteButton outline size="sm" on:click={skip}>Skip</FlowbiteButton>
     </div>
   {/if}
 </div>
