@@ -95,6 +95,7 @@
       addMapLayers();
       updateRacksLayer($racksStore);
       setLightPreset(getLightPreset(darkMode));
+      map.setConfigProperty("basemap", "showPointOfInterestLabels", false);
       styleLoaded = true;
     });
 
