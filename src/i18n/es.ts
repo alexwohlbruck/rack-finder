@@ -4,6 +4,34 @@ export default {
       done: "Hecho",
       chooseOption: "Elegir opción",
     },
+    onboarding: {
+      welcomeStep: {
+        title: "Bienvenido a Rack Finder!",
+        description:
+          "Su compañero gratuito, crowdsourced, sin adornos de estacionamiento para bicicletas.",
+      },
+      mapInstructionStep: {
+        title: "Explore los estacionamientos para bicicletas cercanos",
+        description:
+          "A medida que se desplaza por el mapa, verá los estacionamientos para bicicletas más cercanos y sus detalles. ¡Ajuste su búsqueda con opciones de búsqueda / filtro!",
+      },
+      contributeInstructionStep: {
+        title: "Contribuir al mapa",
+        description:
+          "Si encuentra un estacionamiento para bicicletas sin mapear, puede tocar el botón más para contribuir al mapa *.",
+        disclaimer:
+          "*Cualquier contribución que realice le pertenece a través de su cuenta de OpenStreetMap.",
+      },
+      locationPermissionStep: {
+        title: "Comparte tu ubicación para comenzar",
+        description:
+          "Sus datos de ubicación no se cargarán ni compartirán con nadie. Se mantiene localmente en su dispositivo.",
+        permissionDenied:
+          "¡Permiso de ubicación denegado! Verifique la configuración del sitio en su navegador.",
+        grant: "Conceder permiso",
+        skip: "Saltar",
+      },
+    },
     auth: {
       signIn: "Iniciar sesión",
       signOut: "Cerrar sesión",

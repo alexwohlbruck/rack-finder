@@ -4,6 +4,34 @@ export default {
       done: "Done",
       chooseOption: "Choose option",
     },
+    onboarding: {
+      welcomeStep: {
+        title: "Welcome to Rack Finder!",
+        description:
+          "Your free, crowdsourced, no-frills bicycle parking companion.",
+      },
+      mapInstructionStep: {
+        title: "Browse nearby bike racks",
+        description:
+          "As you pan around the map, you'll see the nearest bike racks and their details. Narrow your search with search/filter options!",
+      },
+      contributeInstructionStep: {
+        title: "Contribute to the map",
+        description:
+          "If you find an unmapped bike rack, you can tap the plus button to contribute it to the map*.",
+        disclaimer:
+          "*Any contributions you make are owned by you via your OpenStreetMap account.",
+      },
+      locationPermissionStep: {
+        title: "Share your location to get started",
+        description:
+          "Your location data will not be uploaded or shared with anyone. It is kept locally on your device.",
+        permissionDenied:
+          "Location permission denied! Check the site settings in your browser.",
+        grant: "Grant permission",
+        skip: "Skip",
+      },
+    },
     auth: {
       signIn: "Sign in",
       signOut: "Sign out",

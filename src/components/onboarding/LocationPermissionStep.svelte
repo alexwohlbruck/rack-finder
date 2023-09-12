@@ -9,6 +9,7 @@
   import { createEventDispatcher } from "svelte";
   import { completeOnboarding } from "../../store/prefs";
   import { Icon } from "flowbite-svelte-icons";
+  import { t } from "../../i18n";
 
   let status: LocationPermissionStatus = "prompt";
   const dispatch = createEventDispatcher();
@@ -41,23 +42,26 @@
   <Icon name="map-pin-solid" class="w-12 h-12 text-sky-500" />
   <div class="flex flex-col gap-2">
     <Heading tag="h5" class="text-center">
-      Share your location to get started
+      {$t("onboarding.locationPermissionStep.title")}
     </Heading>
     <P size="sm" class="text-center">
-      Your location data will not be uploaded or shared with anyone. It is kept
-      locally on your device.
+      {$t("onboarding.locationPermissionStep.description")}
     </P>
   </div>
   {#if status === "denied"}
     <Alert class="text-center">
-      <span class="font-medium"
-        >Location permission denied! Check the site settings in your browser.</span
-      >
+      <span class="font-medium">
+        {$t("onboarding.locationPermissionStep.permissionDenied")}
+      </span>
     </Alert>
   {:else}
     <div class="flex gap-2">
-      <Button size="sm" on:click={requestLocation}>Grant permission</Button>
-      <FlowbiteButton outline size="sm" on:click={skip}>Skip</FlowbiteButton>
+      <Button size="sm" on:click={requestLocation}>
+        {$t("onboarding.locationPermissionStep.grant")}
+      </Button>
+      <FlowbiteButton outline size="sm" on:click={skip}>
+        {$t("onboarding.locationPermissionStep.skip")}
+      </FlowbiteButton>
     </div>
   {/if}
 </div>

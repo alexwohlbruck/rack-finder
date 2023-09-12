@@ -2,6 +2,7 @@
   import { DropdownDivider, Heading, P } from "flowbite-svelte";
   import Button from "../../lib/Button.svelte";
   import { Icon } from "flowbite-svelte-icons";
+  import { t } from "../../i18n";
 </script>
 
 <div class="flex flex-col gap-5 items-center">
@@ -17,10 +18,11 @@
   </div>
 
   <div class="flex flex-col gap-2">
-    <Heading tag="h5" class="text-center">Browse nearby bike racks</Heading>
+    <Heading tag="h5" class="text-center">
+      {$t("onboarding.mapInstructionStep.title")}
+    </Heading>
     <P size="sm" class="text-center">
-      As you pan around the map, you'll see the nearest bike racks and their
-      details. Narrow your search with search/filter options!
+      {$t("onboarding.mapInstructionStep.description")}
     </P>
   </div>
 </div>

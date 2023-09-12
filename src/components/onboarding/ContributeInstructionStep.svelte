@@ -2,6 +2,7 @@
   import { Heading, P } from "flowbite-svelte";
   import Button from "../../lib/Button.svelte";
   import { Icon } from "flowbite-svelte-icons";
+  import { t } from "../../i18n";
 </script>
 
 <div class="flex flex-col gap-5 items-center">
@@ -10,14 +11,15 @@
   </Button>
 
   <div class="flex flex-col gap-2">
-    <Heading tag="h5" class="text-center">Contribute to the map</Heading>
+    <Heading tag="h5" class="text-center">
+      {$t("onboarding.contributeInstructionStep.title")}
+    </Heading>
     <P size="sm" class="text-center">
-      If you find an unmapped bike rack, you can tap the plus button to
-      contribute it to the map*.
+      {$t("onboarding.contributeInstructionStep.description")}
     </P>
   </div>
 
   <P size="xs" weight="semibold" class="text-center opacity-70">
-    *Any contributions you make are owned by you via your OpenStreetMap account.
+    {$t("onboarding.contributeInstructionStep.disclaimer")}
   </P>
 </div>

@@ -4,6 +4,34 @@ export default {
       done: "Terminé",
       chooseOption: "Choisissez une option",
     },
+    onboarding: {
+      welcomeStep: {
+        title: "Bienvenue sur Rack Finder!",
+        description:
+          "Votre compagnon de stationnement pour vélos gratuit, crowdsourcé et sans fioritures.",
+      },
+      mapInstructionStep: {
+        title: "Parcourez les supports à vélos à proximité",
+        description:
+          "En parcourant la carte, vous verrez les supports à vélos les plus proches et leurs détails. Affinez votre recherche avec les options de recherche / filtre!",
+      },
+      contributeInstructionStep: {
+        title: "Contribuer à la carte",
+        description:
+          "Si vous trouvez un support à vélos non cartographié, vous pouvez appuyer sur le bouton plus pour le contribuer à la carte *.",
+        disclaimer:
+          "*Toute contribution que vous apportez vous appartient via votre compte OpenStreetMap.",
+      },
+      locationPermissionStep: {
+        title: "Partagez votre position pour commencer",
+        description:
+          "Vos données de localisation ne seront pas téléchargées ni partagées avec qui que ce soit. Il est conservé localement sur votre appareil.",
+        permissionDenied:
+          "Autorisation de localisation refusée! Vérifiez les paramètres du site dans votre navigateur.",
+        grant: "Accorder l'autorisation",
+        skip: "Sauter",
+      },
+    },
     auth: {
       signIn: "Se connecter",
       signOut: "Se déconnecter",
