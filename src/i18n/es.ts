@@ -155,7 +155,11 @@ export default {
     },
     toast: {
       contributeConfirmation:
-        "¡Gracias! Su contribución se mostrará en el mapa en breve.",
+        "¡Gracias! Su contribución aparecerá en el mapa en breve.",
+      reviewConfirmation:
+        "¡Gracias! Su modificación será revisada por la comunidad.",
+      deleteConfirmation:
+        "¡Gracias! Esta característica se ha eliminado del mapa.",
     },
   },
 };

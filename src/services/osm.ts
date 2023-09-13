@@ -8,11 +8,11 @@
 
 import { osmAuth } from "osm-auth";
 import { setUser } from "../store/auth";
-import type { Node } from "../types/osm";
+import type { OSMNode } from "../types/osm";
 import { js2xml, xml2js } from "xml-js";
 import { showToast } from "../store/toast";
 import { APP_URL } from "../globals";
-import { addRack } from "../store/racks";
+import { addRack, removeRack } from "../store/racks";
 import type { Rack } from "../types/rack";
 import i18next from "i18next";
 import { push } from "svelte-spa-router";
@@ -43,6 +43,8 @@ const osm = osmAuth({
   locale: "fr",
 });
 
+let me = null;
+
 export const checkAuthenticated = () => {
   return osm.authenticated();
 };
@@ -59,6 +61,7 @@ export const authenticate = async () => {
 export const logout = () => {
   osm.logout();
   setUser(null);
+  me = null;
   push("/");
 };
 
@@ -93,6 +96,7 @@ export const getOsmUser = async () => {
     );
     const { user } = await response.json();
     setUser(user);
+    me = user;
   } catch (err) {
     console.error(err);
   }
@@ -157,7 +161,7 @@ const createChangeset = async (comment, requestReview = false) => {
   return changeset as string;
 };
 
-const createNode = async ({ changeset, lat, lng, tags }: Node) => {
+const createNode = async ({ changeset, lat, lng, tags }: Partial<OSMNode>) => {
   const data = {
     _declaration,
     osm: {
@@ -168,7 +172,7 @@ const createNode = async ({ changeset, lat, lng, tags }: Node) => {
           version: "1",
           changeset,
         },
-        tag: tags.map(({ key, value }) => ({
+        tag: Object.entries(tags).map(([key, value]) => ({
           _attributes: {
             k: key,
             v: value,
@@ -186,6 +190,35 @@ const createNode = async ({ changeset, lat, lng, tags }: Node) => {
   });
   const node = await newNodeResponse.text();
   return node as string;
+};
+
+// Delete OSM node by its ID
+const deleteNode = async (
+  changeset: string,
+  { id, version, lat, lng }: Partial<OSMNode>
+) => {
+  const data = {
+    _declaration,
+    osm: {
+      node: {
+        _attributes: {
+          id,
+          version,
+          changeset,
+          lat,
+          lon: lng,
+        },
+      },
+    },
+  };
+  const deletedNodeResponse = await osm.fetch(`${OSM_BASE_URL}/node/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "text/xml",
+    },
+    body: js2xml(data, { compact: true }),
+  });
+  return await deletedNodeResponse.text();
 };
 
 const closeChangeset = async (changeset) => {
@@ -214,22 +247,45 @@ export const submitBikeRack = async (bikeRack: Rack) => {
     const changeset = await createChangeset(
       `Add ${bikeRack.tags.bicycle_parking} bike rack`
     );
-    await createNode({
-      changeset,
-      lat,
-      lng,
-      tags: [
-        {
-          key: "amenity",
-          value: "bicycle_parking",
+    const rackId = parseInt(
+      await createNode({
+        changeset,
+        lat,
+        lng,
+        tags: {
+          amenity: "bicycle_parking",
+          ...tags.reduce((acc, { key, value }) => {
+            acc[key] = value;
+            return acc;
+          }, {}),
         },
-        ...tags,
-      ],
-    });
+      })
+    );
     await closeChangeset(changeset);
-    addRack(bikeRack);
-    // TODO: I haven't tested this works
+    addRack({
+      ...bikeRack,
+      user: me.display_name,
+      id: rackId,
+    });
     showToast(i18next.t("toast.contributeConfirmation"));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const deleteBikeRack = async (rack: Rack, requestReview = true) => {
+  try {
+    const changeset = await createChangeset(`Remove bike rack`, requestReview);
+    await deleteNode(changeset, rack);
+    await closeChangeset(changeset);
+    if (!requestReview) {
+      removeRack(rack.id);
+    }
+    showToast(
+      i18next.t(
+        requestReview ? "toast.reviewConfirmation" : "toast.deleteConfirmation"
+      )
+    );
   } catch (err) {
     console.error(err);
   }

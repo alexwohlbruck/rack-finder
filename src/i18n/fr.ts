@@ -156,6 +156,10 @@ export default {
     toast: {
       contributeConfirmation:
         "Merci! Votre contribution apparaîtra sur la carte sous peu.",
+      reviewConfirmation:
+        "Merci! Votre modification sera examinée par la communauté.",
+      deleteConfirmation:
+        "Merci! Cette fonctionnalité a été supprimée de la carte.",
     },
   },
 };

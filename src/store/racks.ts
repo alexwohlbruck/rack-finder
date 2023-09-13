@@ -68,6 +68,13 @@ export function addRacks(racks: Rack[]) {
   });
 }
 
+export function removeRack(rackId: number) {
+  racksStore.update(($data) => {
+    delete $data[rackId];
+    return $data;
+  });
+}
+
 export function selectRack(rack) {
   searchOptionsStore.update(($data) => {
     $data.selectedRack = rack;

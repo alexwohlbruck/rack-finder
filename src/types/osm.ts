@@ -35,12 +35,22 @@ export type OSMUser = {
   };
 };
 
-export type Node = {
-  changeset: string;
+export type OSMNode = {
+  id?: number;
   lat: number;
-  lng: number;
+  lon: number;
+  lng?: number;
+  version: number;
+  changeset: string;
+  center?: {
+    lat: number;
+    long: number;
+  };
+  timestamp?: string;
+  uid?: number;
+  user?: string;
+  type: "node" | "way" | "relation";
   tags: {
-    key: string;
-    value: any;
-  }[];
+    [key: string]: string;
+  };
 };

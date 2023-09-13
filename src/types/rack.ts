@@ -1,3 +1,5 @@
+import type { OSMNode } from "./osm";
+
 export const RackTypes = [
   "stands",
   "wave",
@@ -34,23 +36,21 @@ export type RackTraffic = "high" | "medium" | "low" | "none";
 
 // https://wiki.openstreetmap.org/wiki/Key:bicycle_parking
 
-export type BikeRackTags = {
-  bicycle_parking: RackType;
-  capacity: number;
+export type RackTags = {
+  bicycle_parking?: RackType;
+  capacity?: number;
   covered?: RackCoverage;
   access?: RackAccess;
   traffic?: RackTraffic;
 };
 
-export type Rack = {
-  id?: number;
-  lat: number;
-  lng: number;
-  tags: BikeRackTags & {
+export type Rack = OSMNode & {
+  tags: RackTags & {
     amenity?: string;
     fee?: string;
     lit?: string;
     operator?: string;
     source?: string;
+    [key: string]: any;
   };
 };
