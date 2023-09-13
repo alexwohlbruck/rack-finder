@@ -35,7 +35,6 @@ export const mapConfig = {
   zoom: INITIAL_STATE.zoom,
   fadeDuration: 200,
   style: styles.standard,
-  // hash: true,
 };
 
 export const geolocateControlConfig = {

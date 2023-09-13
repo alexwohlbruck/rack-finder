@@ -187,7 +187,7 @@
       <ButtonGroup>
         <FlowbiteButton color="primary" outline size="sm" disabled>
           <Icon name="pen-outline" class="w-4 h-4 mr-2" />
-          <span>{$t("rackDetail.edit")}</span>
+          <span>{$t("common.edit")}</span>
         </FlowbiteButton>
         <FlowbiteButton
           on:click={() => (deleteConfirmationModal = true)}
@@ -196,7 +196,7 @@
           size="sm"
         >
           <Icon name="trash-bin-solid" class="w-4 h-4 mr-2" />
-          <span>{$t("rackDetail.delete")}</span>
+          <span>{$t("common.delete")}</span>
         </FlowbiteButton>
       </ButtonGroup>
 

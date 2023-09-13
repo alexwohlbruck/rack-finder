@@ -2,7 +2,11 @@ export default {
   translation: {
     common: {
       done: "Done",
+      cancel: "Cancel",
+      edit: "Edit",
+      delete: "Delete",
       chooseOption: "Choose option",
+      bikeRack: "bike rack",
     },
     onboarding: {
       welcomeStep: {
@@ -101,8 +105,6 @@ export default {
     },
     rackDetail: {
       location: "Near {{location}}",
-      edit: "Edit",
-      delete: "Delete",
       navigate: "Navigate",
       attribution: "Contributed by",
       creator: "Creator of Rack Finder",
@@ -111,6 +113,11 @@ export default {
       title: "Contribute new bike rack",
       instruction: "Drag the marker to the location of the rack",
       addToMap: "Add to map",
+    },
+    deleteConfirmationModal: {
+      deleteWarning: "This rack will be deleted from OpenStreetMap.",
+      deleteReviewWarning:
+        "This rack will be marked for deletion. Since you weren't the original contributor, a member of the OpenStreetMap community will review your request shortly.",
     },
     searchOptionsModal: {
       sortAndFilter: "Sort and filter",

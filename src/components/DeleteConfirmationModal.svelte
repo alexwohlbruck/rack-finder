@@ -23,26 +23,27 @@
 
 <Modal bind:open size="xs" outsideclose>
   <Heading tag="h5">
-    Delete {rack?.tags.bicycle_parking
+    {$t("common.delete")}
+    {rack?.tags.bicycle_parking
       ? $t(`rack.type.${rack.tags.bicycle_parking}`)
-      : "bike rack"}?
+      : $t("common.bikeRack")}?
   </Heading>
   <P size="sm" class="!mt-2">
     {#if isMyRack}
-      This rack will be deleted from OpenStreetMap.
+      {$t("deleteConfirmationModal.deleteWarning")}
     {:else}
-      This rack will be marked for deletion. Since you weren't the original
-      contributor, a member of the OpenStreetMap community will review your
-      request shortly.
+      {$t("deleteConfirmationModal.deleteReviewWarning")}
     {/if}
   </P>
   <div class="flex gap-2 justify-end">
-    <Button outline on:click={() => (open = false)}>Cancel</Button>
+    <Button outline on:click={() => (open = false)}
+      >{$t("common.cancel")}</Button
+    >
     <Button color="red" on:click={deleteRack}>
       {#if loading}
         <Spinner class="mr-3" size="5" color="white" />
       {/if}
-      Delete
+      {$t("common.delete")}
     </Button>
   </div>
 </Modal>

@@ -2,7 +2,11 @@ export default {
   translation: {
     common: {
       done: "Hecho",
+      cancel: "Cancelar",
+      edit: "Editar",
+      delete: "Eliminar",
       chooseOption: "Elegir opción",
+      bikeRack: "rack para bicicletas",
     },
     onboarding: {
       welcomeStep: {
@@ -101,8 +105,6 @@ export default {
     },
     rackDetail: {
       location: "Cerca de {{location}}",
-      edit: "Editar",
-      delete: "Eliminar",
       navigate: "Navegar",
       attribution: "Contribuido por",
       creator: "Creador de Rack Finder",
@@ -111,6 +113,11 @@ export default {
       title: "Contribuir nuevo estacionamiento",
       instruction: "Arrastre el marcador a la ubicación del estacionamiento",
       addToMap: "Agregar al mapa",
+    },
+    deleteConfirmationModal: {
+      deleteWarning: "Este estacionamiento se eliminará de OpenStreetMap.",
+      deleteReviewWarning:
+        "Esta característica se marcará para su eliminación. Como no fue el contribuyente original, un miembro de la comunidad de OpenStreetMap revisará su solicitud en breve.",
     },
     searchOptionsModal: {
       sortAndFilter: "Ordenar y filtrar",
