@@ -133,7 +133,7 @@ export default {
         imperial: "Unités impériales",
       },
       language: "Langue",
-      theme: "Thème (Prochainement)",
+      theme: "Thème",
       themeOptions: {
         light: "Clair",
         dark: "Sombre",

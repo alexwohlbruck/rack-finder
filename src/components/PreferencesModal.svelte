@@ -81,12 +81,7 @@
 
     <Label>
       {$t("preferencesModal.theme")}
-      <Select
-        class="mt-2"
-        items={themeOptions}
-        bind:value={prefs.theme}
-        disabled
-      />
+      <Select class="mt-2" items={themeOptions} bind:value={prefs.theme} />
     </Label>
   </div>
 </Modal>

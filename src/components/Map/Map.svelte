@@ -13,6 +13,7 @@
   import { prefsStore } from "../../store/prefs";
   import { updateLocation } from "../../store/location";
   import { mapStore, setMapCenter } from "../../store/map";
+  import dark from "../../store/theme";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
     DEBOUNCE_TIME,
@@ -50,7 +51,6 @@
   let geolocateControl;
   let navigationControl;
   let marker;
-  let darkMode = isDarkMode();
 
   onMount(() => {
     initMap();
@@ -76,8 +76,6 @@
       container: mapContainer,
     });
 
-    watchSystemTheme();
-
     geolocateControl = new GeolocateControl(geolocateControlConfig);
     geolocateControl.on("geolocate", onGeolocateSuccess);
 
@@ -94,7 +92,7 @@
     map.on("style.load", async () => {
       addMapLayers();
       updateRacksLayer($racksStore);
-      setLightPreset(getLightPreset(darkMode));
+      setLightPreset(getLightPreset($dark));
       map.setConfigProperty("basemap", "showPointOfInterestLabels", false);
       styleLoaded = true;
     });
@@ -227,6 +225,9 @@
 
   $: onboardingCompleted = $prefsStore.onboardingCompleted;
   $: {
+    setLightPreset(getLightPreset($dark));
+  }
+  $: {
     if (mapLoaded && onboardingCompleted) {
       locateUser();
     }
@@ -349,27 +350,6 @@
       : RACKS_FETCH_OUTER_BOUNDS_RATIO(getViewportRadius());
     areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
     op.fetchRacks(center, radius);
-  }
-
-  function isDarkMode() {
-    return (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    );
-  }
-
-  function watchSystemTheme() {
-    const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-    darkThemeMq.addListener((e) => {
-      if (contributeMode) return;
-      if (e.matches) {
-        darkMode = true;
-        setLightPreset(getLightPreset(true));
-      } else {
-        darkMode = false;
-        setLightPreset(getLightPreset());
-      }
-    });
   }
 </script>
 

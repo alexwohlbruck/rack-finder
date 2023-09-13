@@ -133,7 +133,7 @@ export default {
         imperial: "Unidades imperiales",
       },
       language: "Idioma",
-      theme: "Tema (Próximamente)",
+      theme: "Tema",
       themeOptions: {
         light: "Claro",
         dark: "Oscuro",
