@@ -36,7 +36,7 @@
     unclusteredPointLayerName,
   } from "./map.config";
   import type { Rack } from "../../types/rack";
-  import ContributeRackButton from "../ContributeRackButton.svelte";
+  import AddRackButton from "../AddRackButton.svelte";
   import { haversine } from "../../util";
   import { locationStore } from "../../store/location";
   import type { Position } from "../../types/geolocation";
@@ -294,7 +294,7 @@
   }
 
   // Watch contribute mode and update listeners
-  $: contributeMode = $location === "/contribute";
+  $: contributeMode = $location === "/racks/add";
   $: {
     if (mapLoaded && styleLoaded) {
       setMapStyle(contributeMode ? styles.satellite : styles.standard);
@@ -354,7 +354,7 @@
 </script>
 
 <div class="relative w-full h-full">
-  <ContributeRackButton />
+  <AddRackButton />
   <div class="map" bind:this={mapContainer} />
 </div>
 

@@ -5,6 +5,7 @@ export default {
       cancel: "Annuler",
       edit: "Modifier",
       delete: "Supprimer",
+      save: "Enregistrer",
       chooseOption: "Choisissez une option",
       bikeRack: "rack à vélos",
     },
@@ -110,7 +111,8 @@ export default {
       creator: "Créateur de Rack Finder",
     },
     rackForm: {
-      title: "Contribuer à un nouveau rack à vélos",
+      addTitle: "Contribuer à un nouveau rack à vélos",
+      editTitle: "Modifier le rack à vélos",
       instruction: "Faites glisser le marqueur à l'emplacement du rack",
       addToMap: "Ajouter à la carte",
     },

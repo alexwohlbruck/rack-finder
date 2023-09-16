@@ -35,13 +35,14 @@ export type OSMUser = {
   };
 };
 
+// TODO: Separate into payload and response types
 export type OSMNode = {
   id?: number;
-  lat: number;
-  lon: number;
+  lat?: number;
+  lon?: number;
   lng?: number;
-  version: number;
-  changeset: string;
+  version?: number;
+  changeset?: string;
   center?: {
     lat: number;
     long: number;

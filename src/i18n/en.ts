@@ -5,6 +5,7 @@ export default {
       cancel: "Cancel",
       edit: "Edit",
       delete: "Delete",
+      save: "Save",
       chooseOption: "Choose option",
       bikeRack: "bike rack",
     },
@@ -110,7 +111,8 @@ export default {
       creator: "Creator of Rack Finder",
     },
     rackForm: {
-      title: "Contribute new bike rack",
+      addTitle: "Contribute new bike rack",
+      editTitle: "Edit bike rack", // TODO: Add type variable
       instruction: "Drag the marker to the location of the rack",
       addToMap: "Add to map",
     },

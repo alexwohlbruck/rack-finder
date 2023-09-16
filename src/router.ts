@@ -4,6 +4,7 @@ import RackDetail from "./components/RackDetail.svelte";
 
 export const routes = {
   "/": Racks,
-  "/contribute": RackForm,
+  "/racks/add": RackForm,
+  "/racks/:id/edit": RackForm,
   "/racks/:id": RackDetail,
 };

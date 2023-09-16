@@ -18,10 +18,34 @@
   import { t } from "../i18n/index";
   import { push } from "svelte-spa-router";
   import { Icon } from "flowbite-svelte-icons";
+  import { racksStore } from "../store/racks";
 
-  let loading = false;
+  export let params: {
+    id?: string;
+  } = {};
+
+  let loading = false; // TODO: Load bike rack on open
+  let submitLoading = false;
+
+  let form: BikeRackTags = {
+    bicycle_parking: "stands",
+    capacity: 2,
+    access: "yes",
+  };
+
+  $: editMode = !!params.id;
+  $: {
+    const originalRack = $racksStore[params.id];
+    if (originalRack) {
+      form = {
+        ...form,
+        ...originalRack.tags,
+      };
+    }
+  }
 
   // TODO: Get this from type defs
+  // TODO: Translate
   const rackTypeOptions = [
     {
       value: "stands",
@@ -99,16 +123,6 @@
     },
   ];
 
-  const form: BikeRackTags = {
-    bicycle_parking: "stands",
-    capacity: 2,
-    access: "yes",
-  };
-
-  function returnToHome() {
-    push("/");
-  }
-
   async function submit() {
     const mapCenter = get(mapStore).center;
     const payload = {
@@ -116,10 +130,10 @@
       lng: mapCenter.lng,
       tags: form,
     };
-    loading = true;
-    await submitBikeRack(payload);
-    returnToHome();
-    loading = false;
+    submitLoading = true;
+    await submitBikeRack(payload); // TODO: Type error
+    push("/");
+    submitLoading = false;
   }
 </script>
 
@@ -132,7 +146,9 @@
     </div>
     <div class="flex items-start">
       <div class="flex-1">
-        <Heading tag="h6">{$t("rackForm.title")}</Heading>
+        <Heading tag="h6"
+          >{$t(`rackForm.${editMode ? "editTitle" : "addTitle"}`)}</Heading
+        >
         <P size="xs">{$t("rackForm.instruction")}</P>
       </div>
     </div>
@@ -192,9 +208,9 @@
 
   <div class="flex-1" />
   <Button on:click={submit}>
-    {#if loading}
+    {#if submitLoading}
       <Spinner class="mr-3" size="5" color="gray" />
     {/if}
-    {$t("rackForm.addToMap")}
+    {$t(editMode ? "common.save" : "rackForm.addToMap")}
   </Button>
 </Card>

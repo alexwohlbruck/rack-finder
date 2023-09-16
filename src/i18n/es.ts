@@ -5,6 +5,7 @@ export default {
       cancel: "Cancelar",
       edit: "Editar",
       delete: "Eliminar",
+      save: "Guardar",
       chooseOption: "Elegir opción",
       bikeRack: "rack para bicicletas",
     },
@@ -110,7 +111,8 @@ export default {
       creator: "Creador de Rack Finder",
     },
     rackForm: {
-      title: "Contribuir nuevo estacionamiento",
+      addTitle: "Contribuir nuevo estacionamiento",
+      editTitle: "Editar estacionamiento",
       instruction: "Arrastre el marcador a la ubicación del estacionamiento",
       addToMap: "Agregar al mapa",
     },

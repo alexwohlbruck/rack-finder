@@ -5,11 +5,11 @@
   import { push } from "svelte-spa-router";
   import { location } from "svelte-spa-router";
 
-  $: contributeMode = $location === "/contribute";
+  $: contributeMode = $location === "/racks/add";
 
   function contribute() {
     if (checkAuthenticated()) {
-      push(contributeMode ? "/" : "/contribute");
+      push(contributeMode ? "/" : "/racks/add");
     } else {
       authenticate();
     }

@@ -29,6 +29,8 @@
     id?: string;
   } = {};
 
+  // TODO: Load bike rack on open
+
   let deleteConfirmationModal = false;
 
   let address;
@@ -185,7 +187,12 @@
 
     <div class="p-3 flex">
       <ButtonGroup>
-        <FlowbiteButton color="primary" outline size="sm" disabled>
+        <FlowbiteButton
+          href={`#/racks/${params.id}/edit`}
+          color="primary"
+          outline
+          size="sm"
+        >
           <Icon name="pen-outline" class="w-4 h-4 mr-2" />
           <span>{$t("common.edit")}</span>
         </FlowbiteButton>
