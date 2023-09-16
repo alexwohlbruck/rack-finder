@@ -109,7 +109,7 @@ export default {
       attribution: "Contributed by",
       creator: "Creator of Rack Finder",
     },
-    contributeRackPanel: {
+    rackForm: {
       title: "Contribute new bike rack",
       instruction: "Drag the marker to the location of the rack",
       addToMap: "Add to map",

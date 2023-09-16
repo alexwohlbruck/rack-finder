@@ -109,7 +109,7 @@ export default {
       attribution: "Contribuido por",
       creator: "Creador de Rack Finder",
     },
-    contributeRackPanel: {
+    rackForm: {
       title: "Contribuir nuevo estacionamiento",
       instruction: "Arrastre el marcador a la ubicación del estacionamiento",
       addToMap: "Agregar al mapa",

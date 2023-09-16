@@ -17,6 +17,7 @@
   import type { BikeRackTags } from "../types/rack";
   import { t } from "../i18n/index";
   import { push } from "svelte-spa-router";
+  import { Icon } from "flowbite-svelte-icons";
 
   let loading = false;
 
@@ -122,29 +123,19 @@
   }
 </script>
 
-<Card padding="md" class="flex flex-1 flex-col gap-4">
-  <div class="flex items-start">
-    <div class="flex-1">
-      <Heading tag="h5">{$t("contributeRackPanel.title")}</Heading>
-      <P size="sm">{$t("contributeRackPanel.instruction")}</P>
+<Card padding="none" class="flex flex-1 flex-col gap-4 p-3">
+  <div class="flex gap-2 items-center">
+    <div class="flex items-center">
+      <Button size="sm" color="none" class="w-9 h-9" href="#/">
+        <Icon name="arrow-left-solid" class="w-4 h-4 outline-none" />
+      </Button>
     </div>
-    <FlowbiteButton size="xs" outline class="py-3" on:click={returnToHome}>
-      <svg
-        class="w-3 h-3 text-gray-800 dark:text-white"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 14 14"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-        />
-      </svg>
-    </FlowbiteButton>
+    <div class="flex items-start">
+      <div class="flex-1">
+        <Heading tag="h6">{$t("rackForm.title")}</Heading>
+        <P size="xs">{$t("rackForm.instruction")}</P>
+      </div>
+    </div>
   </div>
 
   <Label for="type">
@@ -204,6 +195,6 @@
     {#if loading}
       <Spinner class="mr-3" size="5" color="gray" />
     {/if}
-    {$t("contributeRackPanel.addToMap")}
+    {$t("rackForm.addToMap")}
   </Button>
 </Card>
