@@ -72,7 +72,7 @@
       name: "Building",
     },
     {
-      value: "two_tier",
+      value: "two-tier",
       name: "Two tier",
     },
   ];
