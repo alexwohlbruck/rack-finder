@@ -192,6 +192,7 @@
           color="primary"
           outline
           size="sm"
+          disabled
         >
           <Icon name="pen-outline" class="w-4 h-4 mr-2" />
           <span>{$t("common.edit")}</span>
