@@ -65,6 +65,7 @@ export default {
         bollard: "Bollard",
         rack: "Rack",
         wall_loops: "Wall loops",
+        loops: "Loops",
         building: "Building",
         "two-tier": "Two tier",
         wide_stands: "Wide stands",

@@ -64,6 +64,7 @@ export default {
         staple: "Support de base",
         bollard: "Borne",
         rack: "Rack",
+        loops: "Boucles",
         wall_loops: "Boucles murales",
         building: "Bâtiment",
         "two-tier": "Deux niveaux",

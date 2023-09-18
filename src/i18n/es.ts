@@ -64,6 +64,7 @@ export default {
         staple: "Soporte de grapa",
         bollard: "Bolardo",
         rack: "Rack",
+        loops: "Bucles",
         wall_loops: "Bucles de pared",
         building: "Edificio",
         "two-tier": "Dos niveles",
