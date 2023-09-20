@@ -164,6 +164,7 @@ export default {
       viewOn: "View project on",
     },
     toast: {
+      error: "Oops! Something went wrong.",
       contributeConfirmation:
         "Thanks! Your contribution will is now live on the map!.",
       reviewConfirmation:

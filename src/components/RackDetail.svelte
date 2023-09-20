@@ -20,9 +20,9 @@
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import config from "../config";
   import { locationStore } from "../store/location";
+  import { clearRoute, routeStore } from "../store/route";
   import { getRoute } from "../services/ors";
   import { onDestroy } from "svelte";
-  import { clearRoute, routeStore } from "../store/route";
   import DeleteConfirmationModal from "./DeleteConfirmationModal.svelte";
 
   export let params: {
@@ -45,6 +45,7 @@
 
   $: rack = $racksStore[params.id];
   $: tags = rack?.tags;
+
   let lastId;
   $: {
     if (rack && (rack.id !== lastId || $routeStore.route === null)) {

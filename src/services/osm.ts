@@ -55,6 +55,7 @@ export const authenticate = async () => {
     await getOsmUser();
   } catch (err) {
     console.error(err);
+    showToast(i18next.t("toast.error"), "error");
   }
 };
 
@@ -99,6 +100,7 @@ export const getOsmUser = async () => {
     me = user;
   } catch (err) {
     console.error(err);
+    showToast(i18next.t("toast.error"), "error");
   }
 };
 
@@ -192,6 +194,38 @@ const createNode = async ({ changeset, lat, lng, tags }: Partial<OSMNode>) => {
   return node as string;
 };
 
+const editNode = async ({ changeset, id, version, lat, lng, tags }) => {
+  const data = {
+    _declaration,
+    osm: {
+      node: {
+        _attributes: {
+          id,
+          visible: "true",
+          version,
+          changeset,
+          lat,
+          lon: lng,
+        },
+        tag: Object.entries(tags).map(([key, value]) => ({
+          _attributes: {
+            k: key,
+            v: value,
+          },
+        })),
+      },
+    },
+  };
+  const editNodeResponse = await osm.fetch(`${OSM_BASE_URL}/node/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "text/xml",
+    },
+    body: js2xml(data, { compact: true }),
+  });
+  return await editNodeResponse.text();
+};
+
 // Delete OSM node by its ID
 const deleteNode = async (
   changeset: string,
@@ -234,18 +268,22 @@ const closeChangeset = async (changeset) => {
   await closeChangesetResponse.text();
 };
 
-export const submitBikeRack = async (bikeRack: Rack) => {
-  const { lat, lng } = bikeRack;
-  const tags = Object.entries(bikeRack.tags)
+const dictToKVList = (dict) => {
+  return Object.entries(dict)
     .map(([key, value]) => ({
       key,
       value,
     }))
     .filter(({ value }) => value); // Remove empty tags
+};
+
+export const addBikeRack = async (rack: Rack) => {
+  const { lat, lng } = rack;
+  const tags = dictToKVList(rack.tags);
 
   try {
     const changeset = await createChangeset(
-      `Add ${bikeRack.tags.bicycle_parking} bike rack`
+      `Add ${rack.tags.bicycle_parking} bike rack`
     );
     const rackId = parseInt(
       await createNode({
@@ -262,14 +300,54 @@ export const submitBikeRack = async (bikeRack: Rack) => {
       })
     );
     await closeChangeset(changeset);
+    // TODO: Maybe fetch a fresh copy of the node after creation?
     addRack({
-      ...bikeRack,
+      ...rack,
       user: me.display_name,
       id: rackId,
+      version: 1,
     });
     showToast(i18next.t("toast.contributeConfirmation"));
   } catch (err) {
     console.error(err);
+    showToast(i18next.t("toast.error"), "error");
+  }
+};
+
+export const editBikeRack = async (rack: Rack, requestReview = true) => {
+  const { id, version, lat, lng } = rack;
+  const tags = dictToKVList(rack.tags);
+
+  try {
+    const changeset = await createChangeset(`Edit bike rack`, requestReview);
+
+    const newVersion = await editNode({
+      changeset,
+      id,
+      version,
+      lat,
+      lng,
+      tags: {
+        ...tags.reduce((acc, { key, value }) => {
+          acc[key] = value;
+          return acc;
+        }, {}),
+      },
+    });
+
+    await closeChangeset(changeset);
+    addRack(
+      {
+        ...rack,
+        user: me.display_name,
+        version: parseInt(newVersion),
+      },
+      true
+    );
+    showToast(i18next.t("toast.reviewConfirmation"));
+  } catch (err) {
+    console.error(err);
+    showToast(i18next.t("toast.error"), "error");
   }
 };
 
@@ -288,5 +366,6 @@ export const deleteBikeRack = async (rack: Rack, requestReview = true) => {
     );
   } catch (err) {
     console.error(err);
+    showToast(i18next.t("toast.error"), "error");
   }
 };

@@ -12,13 +12,14 @@
   import Button from "../lib/Button.svelte";
   import { mapStore } from "../store/map";
 
-  import { submitBikeRack } from "../services/osm";
+  import { editBikeRack, addBikeRack } from "../services/osm";
   import { get } from "svelte/store";
   import type { BikeRackTags } from "../types/rack";
   import { t } from "../i18n/index";
   import { push } from "svelte-spa-router";
   import { Icon } from "flowbite-svelte-icons";
   import { racksStore } from "../store/racks";
+  import { authStore } from "../store/auth";
 
   export let params: {
     id?: string;
@@ -27,21 +28,36 @@
   let loading = false; // TODO: Load bike rack on open
   let submitLoading = false;
 
+  const knownAttributes = [
+    "amenity",
+    "bicycle_parking",
+    "capacity",
+    "covered",
+    "traffic",
+    "access",
+  ];
   let form: BikeRackTags = {
     bicycle_parking: "stands",
     capacity: 2,
     access: "yes",
   };
 
-  $: editMode = !!params.id;
-  $: {
-    const originalRack = $racksStore[params.id];
+  function initForm(originalRack) {
     if (originalRack) {
       form = {
         ...form,
         ...originalRack.tags,
       };
     }
+  }
+
+  $: me = $authStore.me;
+  $: rack = $racksStore[params.id];
+  $: isMyRack = rack?.user === me?.display_name;
+  $: editMode = !!params.id;
+  $: {
+    const originalRack = $racksStore[params.id];
+    initForm(originalRack);
   }
 
   // TODO: Get this from type defs
@@ -131,7 +147,18 @@
       tags: form,
     };
     submitLoading = true;
-    await submitBikeRack(payload); // TODO: Type error
+    if (editMode) {
+      await editBikeRack(
+        {
+          id: parseInt(rack.id),
+          version: rack.version,
+          ...payload,
+        },
+        !isMyRack
+      ); // TODO: Type error
+    } else {
+      await addBikeRack(payload); // TODO: Type error
+    }
     push("/");
     submitLoading = false;
   }
@@ -146,9 +173,9 @@
     </div>
     <div class="flex items-start">
       <div class="flex-1">
-        <Heading tag="h6"
-          >{$t(`rackForm.${editMode ? "editTitle" : "addTitle"}`)}</Heading
-        >
+        <Heading tag="h6">
+          {$t(`rackForm.${editMode ? "editTitle" : "addTitle"}`)}
+        </Heading>
         <P size="xs">{$t("rackForm.instruction")}</P>
       </div>
     </div>

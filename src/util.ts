@@ -2,11 +2,13 @@ import { writable } from "svelte/store";
 import type { Position } from "./types/geolocation";
 import type { Units } from "./store/prefs";
 
+// TODO: Refactor these methods into more appropriate files
+
 export const haversine = (a: Position, b: Position) => {
   if (!(a?.lat && a?.lng && b?.lat && b?.lng)) {
     return 0;
   }
-  const R = 6371e3; // metres
+  const R = 6371e3; // Earth radius in meters
   const φ1 = (a.lat * Math.PI) / 180; // φ, λ in radians
   const φ2 = (b.lat * Math.PI) / 180;
   const Δφ = ((b.lat - a.lat) * Math.PI) / 180;

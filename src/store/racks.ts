@@ -46,9 +46,10 @@ const searchOptionsStore = syncedWritable<{
   },
 });
 
-export function addRack(rack: Rack) {
+// TODO: Make force update false and expire racks after some time period
+export function addRack(rack: Rack, forceUpdate = true) {
   racksStore.update(($data) => {
-    if (!$data[rack.id]) {
+    if (forceUpdate || !$data[rack.id]) {
       $data[rack.id] = rack;
     }
     return $data;

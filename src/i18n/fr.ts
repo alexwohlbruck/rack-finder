@@ -164,6 +164,7 @@ export default {
       viewOn: "Voir le projet sur",
     },
     toast: {
+      error: "Oups! Quelque chose s'est mal passé.",
       contributeConfirmation:
         "Merci! Votre contribution apparaîtra sur la carte sous peu.",
       reviewConfirmation:
