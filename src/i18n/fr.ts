@@ -4,8 +4,10 @@ export default {
       done: "Terminé",
       cancel: "Annuler",
       edit: "Modifier",
+      clear: "Effacer",
       delete: "Supprimer",
       save: "Enregistrer",
+      confirm: "Confirmer",
       chooseOption: "Choisissez une option",
       bikeRack: "rack à vélos",
     },
@@ -148,6 +150,10 @@ export default {
         light: "Clair",
         dark: "Sombre",
       },
+      dangerZone: "Zone de danger",
+      clearCache: "Effacer le cache de l'application",
+      clearCacheDescription:
+        "Cela vous déconnectera et effacera toutes les données mises en cache sur votre appareil.",
     },
     infoModal: {
       title: "À propos de Rack Finder",

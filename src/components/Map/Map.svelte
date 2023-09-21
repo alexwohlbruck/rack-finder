@@ -45,6 +45,8 @@
   import { location, push } from "svelte-spa-router";
   import { routeStore } from "../../store/route";
 
+  // TODO: Come up with a way for other components to control the map its features
+
   let mapContainer;
   let map;
   let mapLoaded = false;

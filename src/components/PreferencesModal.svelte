@@ -1,11 +1,20 @@
 <script lang="ts">
-  import { Button, Heading, Label, Modal, Select } from "flowbite-svelte";
+  import {
+    Button,
+    Card,
+    Heading,
+    Label,
+    Modal,
+    P,
+    Select,
+  } from "flowbite-svelte";
   import { authStore } from "../store/auth";
   import { prefsStore, setPrefs } from "../store/prefs";
   import Profile from "./Profile.svelte";
   import { logout } from "../services/osm";
   import { t, i18n } from "../i18n/index";
   import type { LanguageOption } from "../store/prefs";
+  import { clearLocalStorageAndRefresh } from "../localStorage";
 
   export let open;
 
@@ -48,6 +57,15 @@
     { name: $t("preferencesModal.themeOptions.light"), value: "light" },
     { name: $t("preferencesModal.themeOptions.dark"), value: "dark" },
   ];
+
+  let confirmClearCache = false;
+  function clearCache() {
+    if (confirmClearCache) {
+      clearLocalStorageAndRefresh();
+    } else {
+      confirmClearCache = true;
+    }
+  }
 </script>
 
 <Modal bind:open outsideclose>
@@ -84,4 +102,28 @@
       <Select class="mt-2" items={themeOptions} bind:value={prefs.theme} />
     </Label>
   </div>
+
+  <Card class="max-w-none !bg-red-500/10 !border-red-500/40">
+    <Heading tag="h6">{$t("preferencesModal.dangerZone")}</Heading>
+
+    <div class="flex flex-col gap-3 !mt-2">
+      <div class="flex">
+        <div class="flex flex-col flex-1">
+          <Label>{$t("preferencesModal.clearCache")}</Label>
+          <P size="xs">
+            {$t("preferencesModal.clearCacheDescription")}
+          </P>
+        </div>
+        <Button
+          color="red"
+          on:click={clearCache}
+          class={confirmClearCache
+            ? ""
+            : `scale-100 active:scale-110 transition-transform`}
+        >
+          {$t(confirmClearCache ? "common.confirm" : "common.clear")}
+        </Button>
+      </div>
+    </div>
+  </Card>
 </Modal>

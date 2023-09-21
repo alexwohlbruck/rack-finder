@@ -4,8 +4,10 @@ export default {
       done: "Done",
       cancel: "Cancel",
       edit: "Edit",
+      clear: "Clear",
       delete: "Delete",
       save: "Save",
+      confirm: "Confirm",
       chooseOption: "Choose option",
       bikeRack: "bike rack",
     },
@@ -148,6 +150,10 @@ export default {
         light: "Light",
         dark: "Dark",
       },
+      dangerZone: "Danger zone",
+      clearCache: "Clear application cache",
+      clearCacheDescription:
+        "This will sign you out and clear all data that has been cached on your device.",
     },
     infoModal: {
       title: "About Rack Finder",
