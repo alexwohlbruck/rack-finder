@@ -8,6 +8,7 @@
     Select,
     Spinner,
     Button as FlowbiteButton,
+    Textarea,
   } from "flowbite-svelte";
   import Button from "../lib/Button.svelte";
   import { mapStore } from "../store/map";
@@ -148,6 +149,7 @@
       lat: mapCenter.lat,
       lng: mapCenter.lng,
       tags: form,
+      description: form.description ? form.description : undefined,
     };
     submitLoading = true;
     if (editMode) {
@@ -167,7 +169,7 @@
   }
 </script>
 
-<Card padding="none" class="flex flex-1 flex-col gap-4 p-3">
+<Card padding="none" class="flex flex-1 flex-col gap-4 p-3 overflow-x-hidden">
   <div class="flex gap-2 items-center">
     <div class="flex items-center">
       <Button size="sm" color="none" class="w-9 h-9" href="#/">
@@ -243,6 +245,16 @@
       id="indoor"
       items={indoorOptions}
       placeholder={$t("common.chooseOption")}
+    />
+  </Label>
+
+  <Label for="description">
+    <div class="mb-1">{$t("rack.attributes.description")}</div>
+    <Textarea
+      bind:value={form.description}
+      id="description"
+      rows="3"
+      class="bg-gray-50 dark:bg-gray-700"
     />
   </Label>
 

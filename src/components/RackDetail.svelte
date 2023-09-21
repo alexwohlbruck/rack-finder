@@ -42,6 +42,8 @@
     "covered",
     "traffic",
     "access",
+    "indoor",
+    "description",
   ];
 
   $: rack = $racksStore[params.id];
@@ -124,6 +126,14 @@
     <Listgroup
       class="flex-1 overflow-y-auto overflow-x-hidden rounded-t-none rounded-b-none border-x-0"
     >
+      {#if tags.description}
+        <ListgroupItem>
+          <div class="flex flex-col">
+            <P size="sm">{$t("rack.attributes.description")}</P>
+            <P size="sm" weight="medium">{tags.description}</P>
+          </div>
+        </ListgroupItem>
+      {/if}
       {#if tags.capacity}
         <ListgroupItem>
           <div class="flex flex-col">
