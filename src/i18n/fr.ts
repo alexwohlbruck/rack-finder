@@ -8,6 +8,8 @@ export default {
       delete: "Supprimer",
       save: "Enregistrer",
       confirm: "Confirmer",
+      yes: "Oui",
+      no: "Non",
       chooseOption: "Choisissez une option",
       bikeRack: "rack à vélos",
     },
@@ -58,6 +60,8 @@ export default {
         acces: "Accès",
         covered: "Couverture de pluie",
         traffic: "Trafic piétonnier",
+        indoor: "À l'intérieur",
+        description: "Description",
       },
       type: {
         unknown: "Type inconnu",
@@ -105,6 +109,10 @@ export default {
         yes: "Public",
         permissive: "Accès permissif",
         customers: "Clients seulement",
+      },
+      indoors: {
+        yes: "À l'intérieur",
+        no: "À l'extérieur",
       },
     },
     rackDetail: {

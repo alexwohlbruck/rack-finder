@@ -8,6 +8,8 @@ export default {
       delete: "Delete",
       save: "Save",
       confirm: "Confirm",
+      yes: "Yes",
+      no: "No",
       chooseOption: "Choose option",
       bikeRack: "bike rack",
     },
@@ -58,6 +60,8 @@ export default {
         access: "Access",
         covered: "Rain coverage",
         traffic: "Foot traffic",
+        indoor: "Indoors",
+        description: "Description",
       },
       type: {
         unknown: "Unknown type",
@@ -105,6 +109,10 @@ export default {
         yes: "Public",
         permissive: "Permissive access",
         customers: "Customers only",
+      },
+      indoor: {
+        yes: "Indoors",
+        no: "Outdoors",
       },
     },
     rackDetail: {

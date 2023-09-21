@@ -15,7 +15,7 @@
   import { racksStore } from "../store/racks";
   import { friendlyName, osmElementUrl, osmProfileUrl } from "../util";
   import { reverseLookup } from "../services/nominatim";
-  import type { Rack } from "../types/rack";
+  import { type Rack } from "../types/rack";
   import { Icon } from "flowbite-svelte-icons";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import config from "../config";
@@ -34,6 +34,7 @@
   let deleteConfirmationModal = false;
 
   let address;
+  // TODO: Move out of here
   const knownAttributes = [
     "amenity",
     "bicycle_parking",
@@ -139,6 +140,16 @@
             <P size="sm">{$t("rack.attributes.covered")}</P>
             <P size="sm" weight="medium">{$t(`rack.covered.${tags.covered}`)}</P
             >
+          </div>
+        </ListgroupItem>
+      {/if}
+      {#if tags.indoor}
+        <ListgroupItem>
+          <div class="flex flex-col">
+            <P size="sm">{$t("rack.attributes.indoor")}</P>
+            <P size="sm" weight="medium">
+              {$t(tags.indoor === "yes" ? "common.yes" : "common.no")}
+            </P>
           </div>
         </ListgroupItem>
       {/if}

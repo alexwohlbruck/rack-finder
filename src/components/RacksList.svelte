@@ -8,8 +8,7 @@
     type RackType,
   } from "../types/rack";
   import RackIcon from "../lib/icons/RackIcon.svelte";
-  import { setMapCenter } from "../store/map";
-  import { capitalize, renderDistance, friendlyName } from "../util";
+  import { renderDistance } from "../util";
   import { preferredUnits } from "../store/prefs";
   import { t } from "../i18n/index";
 
@@ -25,7 +24,7 @@
   }
 
   function renderCoverage(coverage: RackCoverage) {
-    if (!coverage) return null;
+    if (!coverage || coverage === "no") return null;
     return $t(`rack.covered.${coverage}`);
   }
 
@@ -39,19 +38,22 @@
     return $t(`rack.access.${access}`);
   }
 
+  function renderIndoor(indoor: string) {
+    if (indoor === "yes") {
+      return $t("rack.indoor.yes");
+    }
+    return null;
+  }
+
   function renderDetails(tags) {
-    const capacity = renderCapacity(tags.capacity);
+    const indoor = renderIndoor(tags.indoor);
     const coverage = renderCoverage(tags.covered);
     const traffic = renderTraffic(tags.traffic);
     const access = renderAccess(tags.access);
-    return [access, traffic, coverage, capacity].filter(Boolean).join(" • ");
-  }
-
-  function centerMapOnRack(rack) {
-    setMapCenter({
-      lat: rack.lat,
-      lng: rack.lng,
-    });
+    const capacity = renderCapacity(tags.capacity);
+    return [indoor, coverage, traffic, access, capacity]
+      .filter(Boolean)
+      .join(" • ");
   }
 </script>
 

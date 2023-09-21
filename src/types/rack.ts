@@ -42,6 +42,8 @@ export type RackTags = {
   covered?: RackCoverage;
   access?: RackAccess;
   traffic?: RackTraffic;
+  indoor?: "yes" | "no";
+  description?: string;
 };
 
 export type Rack = OSMNode & {

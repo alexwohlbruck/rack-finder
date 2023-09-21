@@ -28,14 +28,6 @@
   let loading = false; // TODO: Load bike rack on open
   let submitLoading = false;
 
-  const knownAttributes = [
-    "amenity",
-    "bicycle_parking",
-    "capacity",
-    "covered",
-    "traffic",
-    "access",
-  ];
   let form: BikeRackTags = {
     bicycle_parking: "stands",
     capacity: 2,
@@ -104,6 +96,16 @@
     {
       value: "private",
       name: "Private (Private residence or business)",
+    },
+  ];
+  const indoorOptions = [
+    {
+      value: "yes",
+      name: "Indoors",
+    },
+    {
+      value: "no",
+      name: "Outdoors",
     },
   ];
   const coverageOptions = [
@@ -230,6 +232,16 @@
       bind:value={form.traffic}
       id="traffic"
       items={trafficOptions}
+      placeholder={$t("common.chooseOption")}
+    />
+  </Label>
+
+  <Label for="indoor">
+    <div class="mb-1">{$t("rack.attributes.indoor")}</div>
+    <Select
+      bind:value={form.indoor}
+      id="indoor"
+      items={indoorOptions}
       placeholder={$t("common.chooseOption")}
     />
   </Label>
