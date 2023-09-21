@@ -82,3 +82,7 @@ export const syncedWritable = <T>(name: string, initialData: T) => {
 export const osmProfileUrl = (user: string) => {
   return `https://www.openstreetmap.org/user/${user}`;
 };
+
+export const osmElementUrl = (type: string, id: string) => {
+  return `https://www.openstreetmap.org/${type}/${id}`;
+};

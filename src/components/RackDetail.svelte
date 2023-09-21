@@ -13,7 +13,7 @@
   import Button from "../lib/Button.svelte";
   import { t } from "../i18n";
   import { racksStore } from "../store/racks";
-  import { friendlyName, osmProfileUrl } from "../util";
+  import { friendlyName, osmElementUrl, osmProfileUrl } from "../util";
   import { reverseLookup } from "../services/nominatim";
   import type { Rack } from "../types/rack";
   import { Icon } from "flowbite-svelte-icons";
@@ -178,9 +178,22 @@
                 </A>
               </P>
             </div>
-            {#if rack.user === config.creatorUser}
-              <Badge color="primary">{$t("rackDetail.creator")}</Badge>
-            {/if}
+            <div class="flex items-center gap-2">
+              {#if rack.user === config.creatorUser}
+                <Badge color="primary">{$t("rackDetail.creator")}</Badge>
+              {/if}
+              <FlowbiteButton
+                size="xs"
+                outline
+                href={osmElementUrl(rack.type, rack.id)}
+                target="_blank"
+              >
+                <Icon
+                  name="arrow-up-right-from-square-outline"
+                  class="w-4 h-4 outline-none"
+                />
+              </FlowbiteButton>
+            </div>
           </div>
         </ListgroupItem>
       {/if}
