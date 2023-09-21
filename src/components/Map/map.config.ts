@@ -11,6 +11,7 @@ export const INITIAL_STATE = {
   lat: mapStore?.center?.lat || 0,
   zoom: mapStore?.zoom || 0,
 };
+export const EDIT_MODE_ZOOM = 19;
 export const RACKS_LAYER_MAX_ZOOM = 13;
 export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 2.0 * radius + 2000;
 

@@ -142,6 +142,7 @@
   async function submit() {
     const mapCenter = get(mapStore).center;
     const payload = {
+      // TODO: This should be marker position, not map center
       lat: mapCenter.lat,
       lng: mapCenter.lng,
       tags: form,

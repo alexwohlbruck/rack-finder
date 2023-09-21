@@ -18,6 +18,7 @@
   import {
     DEBOUNCE_TIME,
     DEFAULT_FETCH_RADIUS,
+    EDIT_MODE_ZOOM,
     RACKS_FETCH_OUTER_BOUNDS_RATIO,
     RACKS_LAYER_MAX_ZOOM,
     clustersCountLayer,
@@ -293,8 +294,19 @@
     }
   }
 
-  // Watch contribute mode and update listeners
-  $: contributeMode = $location === "/racks/add";
+  $: addMode = $location === "/racks/add";
+  $: editMode = /^\/racks\/\d+\/edit$/.test($location);
+  $: contributeMode = addMode || editMode;
+  $: if (editMode) {
+    const rack = $racksStore[$location.split("/")[2]];
+    if (rack) {
+      map?.flyTo({
+        center: [rack.lng, rack.lat],
+        pitch: 0,
+        zoom: EDIT_MODE_ZOOM,
+      });
+    }
+  }
   $: {
     if (mapLoaded && styleLoaded) {
       setMapStyle(contributeMode ? styles.satellite : styles.standard);
