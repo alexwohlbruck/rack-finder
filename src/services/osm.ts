@@ -16,6 +16,7 @@ import { addRack, removeRack } from "../store/racks";
 import type { Rack } from "../types/rack";
 import i18next from "i18next";
 import { push } from "svelte-spa-router";
+import { fetchRack } from "./overpass";
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isIOS =
@@ -300,14 +301,31 @@ export const addBikeRack = async (rack: Rack) => {
       })
     );
     await closeChangeset(changeset);
-    // TODO: Maybe fetch a fresh copy of the node after creation?
-    addRack({
-      ...rack,
-      user: me.display_name,
-      id: rackId,
-      version: 1,
-    });
+    const result = await getBikeRack(rackId, "node");
+    addRack(result);
     showToast(i18next.t("toast.contributeConfirmation"));
+  } catch (err) {
+    console.error(err);
+    showToast(i18next.t("toast.error"), "error");
+  }
+};
+
+export const getBikeRack = async (id: number, type: "node") => {
+  try {
+    // include center point for ways
+    const response = await osm.fetch(
+      `${OSM_BASE_URL}/${type}/${id}.json?center=true`
+    );
+
+    const { elements } = await response.json();
+    const element = elements[0];
+    let { lat, lon: lng } = element;
+
+    return {
+      ...element,
+      lat,
+      lng,
+    };
   } catch (err) {
     console.error(err);
     showToast(i18next.t("toast.error"), "error");
@@ -336,14 +354,8 @@ export const editBikeRack = async (rack: Rack, requestReview = true) => {
     });
 
     await closeChangeset(changeset);
-    addRack(
-      {
-        ...rack,
-        user: me.display_name,
-        version: parseInt(newVersion),
-      },
-      true
-    );
+    const result = await getBikeRack(id, "node");
+    addRack(result, true);
     showToast(i18next.t("toast.reviewConfirmation"));
   } catch (err) {
     console.error(err);

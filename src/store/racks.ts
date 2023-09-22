@@ -1,4 +1,4 @@
-import { derived, writable } from "svelte/store";
+import { derived } from "svelte/store";
 import { haversine, syncedWritable } from "../util";
 import {
   type Rack,

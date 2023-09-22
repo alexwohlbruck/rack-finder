@@ -24,6 +24,7 @@
   import { getRoute } from "../services/ors";
   import { onDestroy } from "svelte";
   import DeleteConfirmationModal from "./DeleteConfirmationModal.svelte";
+  import { push } from "svelte-spa-router";
 
   export let params: {
     id?: string;
@@ -223,10 +224,11 @@
     <div class="p-3 flex">
       <ButtonGroup>
         <FlowbiteButton
-          href={`#/racks/${params.id}/edit`}
           color="primary"
           outline
           size="sm"
+          disabled={rack?.type === "way"}
+          on:click={() => push(`/racks/${params.id}/edit`)}
         >
           <Icon name="pen-outline" class="w-4 h-4 mr-2" />
           <span>{$t("common.edit")}</span>
