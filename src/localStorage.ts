@@ -10,8 +10,10 @@ export const incrementVisits = () => {
 };
 
 export const clearLocalStorageAndRefresh = () => {
+  push("/");
   localStorage.clear();
   logout();
-  push("/");
-  window.location.reload();
+  setTimeout(() => {
+    window.location.reload();
+  }, 1);
 };
