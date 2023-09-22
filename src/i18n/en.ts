@@ -51,6 +51,9 @@ export default {
       matchingResults_one: "{{count}} matching result",
       matchingResults_other: "{{count}} matching results",
       sortFilter: "Sort / filter",
+      rainExpected: "Rain expected around {{time}}!",
+      narrowSearch: "Narrow your search to only covered racks?",
+      updateFilter: "Update filter",
     },
     rack: {
       attributes: {

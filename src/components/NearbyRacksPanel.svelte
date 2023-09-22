@@ -1,11 +1,57 @@
 <script lang="ts">
-  import { Card, Heading, Button as FlowbiteButton, P } from "flowbite-svelte";
+  import {
+    Card,
+    Heading,
+    Button as FlowbiteButton,
+    P,
+    Alert,
+    Button,
+  } from "flowbite-svelte";
   import RacksList from "./RacksList.svelte";
-  import { racks } from "../store/racks";
+  import { racks, searchOptionsStore } from "../store/racks";
   import SearchOptionsModal from "./SearchOptionsModal.svelte";
   import { t } from "../i18n/index";
+  import { getForecast } from "../services/owm";
+  import { Icon } from "flowbite-svelte-icons";
+  import RainIcon from "../lib/icons/RainIcon.svelte";
+  import { locationStore } from "../store/location";
 
   let searchOptionsModal = false;
+  let fetchedForecast = false;
+  let timeOfPrecipitation = null;
+  const rainWarningThresholdHours = 6;
+
+  $: showRainWarning =
+    timeOfPrecipitation && $searchOptionsStore.filter.covered.includes("no");
+
+  async function checkPrecipitation() {
+    const { lat, lng } = $locationStore;
+    const { hourly } = await getForecast(lat, lng);
+    fetchedForecast = true;
+
+    for (const [i, hour] of hourly.entries()) {
+      const { main } = hour.weather[0];
+      if (i >= rainWarningThresholdHours) break;
+      if (["Rain", "Drizzle", "Thunderstorm"].includes(main)) {
+        const timestamp = new Date(hour.dt * 1000);
+        // Don't add leading zero to hour
+        timeOfPrecipitation = timestamp.toLocaleTimeString([], {
+          hour: "numeric",
+        });
+        break;
+      }
+    }
+  }
+
+  function filterCovered() {
+    $searchOptionsStore.filter.covered = ["yes"];
+  }
+
+  $: {
+    if (!fetchedForecast && $locationStore.lat && $locationStore.lng) {
+      checkPrecipitation();
+    }
+  }
 </script>
 
 <SearchOptionsModal bind:open={searchOptionsModal} />
@@ -24,24 +70,32 @@
       color="primary"
       size="xs"
     >
-      <svg
-        class="w-4 h-4 mr-2"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 20 20"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M7.75 4H19M7.75 4a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 4h2.25m13.5 6H19m-2.25 0a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 10h11.25m-4.5 6H19M7.75 16a2.25 2.25 0 0 1-4.5 0m4.5 0a2.25 2.25 0 0 0-4.5 0M1 16h2.25"
-        />
-      </svg>
+      <Icon name="adjustments-horizontal-outline" class="w-4 h-4 mr-2" />
       {$t("nearbyRacksPanel.sortFilter")}
     </FlowbiteButton>
   </div>
+
+  {#if showRainWarning}
+    <Alert color="blue" class="rounded-none dark:bg-blue-500/10">
+      <div class="flex items-center gap-3">
+        <RainIcon class="w-5 h-5" />
+
+        <div class="flex flex-col flex-1">
+          <span class="text-sm font-medium">
+            {$t("nearbyRacksPanel.rainExpected", { time: timeOfPrecipitation })}
+          </span>
+          <p class="mb-4 text-xs mb-0">
+            {$t("nearbyRacksPanel.narrowSearch")}
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <Button color="blue" size="xs" on:click={filterCovered}>
+            {$t("nearbyRacksPanel.filterCovered")}
+          </Button>
+        </div>
+      </div>
+    </Alert>
+  {/if}
 
   <div
     class="flex-1 overflow-y-auto overflow-x-hidden border-t border-gray-200 dark:border-gray-700"
