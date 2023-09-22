@@ -103,7 +103,7 @@
     </Label>
   </div>
 
-  <Card class="max-w-none !bg-red-500/10 !border-red-500/40">
+  <Card class="!p-4 max-w-none !bg-red-500/10 !border-red-500/40">
     <Heading tag="h6">{$t("preferencesModal.dangerZone")}</Heading>
 
     <div class="flex flex-col gap-3 !mt-2">
