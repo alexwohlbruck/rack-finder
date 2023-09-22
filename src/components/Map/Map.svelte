@@ -4,6 +4,7 @@
     Marker,
     GeolocateControl,
     NavigationControl,
+    AttributionControl,
     LngLatBounds,
   } from "mapbox-gl";
   import { onMount, onDestroy } from "svelte";
@@ -86,6 +87,7 @@
 
     map.addControl(navigationControl);
     map.addControl(geolocateControl);
+    map.addControl(new AttributionControl({ compact: true }), "bottom-left");
 
     map.on("load", () => {
       mapLoaded = true;

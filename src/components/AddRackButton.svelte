@@ -17,7 +17,7 @@
 </script>
 
 <Button
-  class="!p-5 bg-primary-400 absolute right-5 bottom-5 z-40"
+  class="!p-5 bg-primary-400 absolute right-0 bottom-0 m-[.6rem] z-40"
   rounded
   shadow
   size="xl"
