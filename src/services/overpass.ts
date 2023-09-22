@@ -38,4 +38,35 @@ export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
   });
 
   addRacks(payload);
+  return payload;
+};
+
+export const fetchRack = async (id: number) => {
+  const query = `
+    [out:json];
+    (
+      node(${id});
+      way(${id});
+    );
+    out center meta;
+  `;
+
+  const { elements } = useDevData ? devData : await op(query);
+  const element = elements[0];
+  let { lat, lon: lng } = element;
+
+  if (element.type === "way") {
+    const { center } = element;
+    lat = center.lat;
+    lng = center.lon;
+  }
+
+  const payload = {
+    ...element,
+    lat,
+    lng,
+  };
+
+  addRacks([payload]);
+  return payload;
 };
