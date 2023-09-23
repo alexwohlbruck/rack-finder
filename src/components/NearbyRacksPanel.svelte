@@ -34,10 +34,13 @@
       if (i >= rainWarningThresholdHours) break;
       if (["Rain", "Drizzle", "Thunderstorm"].includes(main)) {
         const timestamp = new Date(hour.dt * 1000);
-        // Don't add leading zero to hour
-        timeOfPrecipitation = timestamp.toLocaleTimeString([], {
-          hour: "numeric",
-        });
+        if (i === 0) {
+          timeOfPrecipitation = $t("nearbyRacksPanel.now");
+        } else {
+          timeOfPrecipitation = timestamp.toLocaleTimeString([], {
+            hour: "numeric",
+          });
+        }
         break;
       }
     }
@@ -90,7 +93,7 @@
         </div>
         <div class="flex gap-2">
           <Button color="blue" size="xs" on:click={filterCovered}>
-            {$t("nearbyRacksPanel.filterCovered")}
+            {$t("nearbyRacksPanel.updateFilter")}
           </Button>
         </div>
       </div>

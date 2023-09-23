@@ -2,7 +2,6 @@ import config from "../config";
 
 const { openweathermapUrl: baseUrl, openweathermapApiKey: apiKey } = config;
 
-// We need to find if it will rain in the next 24 hours
 export const getForecast = async (lat: number, lng: number) => {
   try {
     const qs = new URLSearchParams({

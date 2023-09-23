@@ -52,6 +52,7 @@ export default {
       matchingResults_other: "{{count}} resultados coincidentes",
       sortFilter: "Ordenar / filtrar",
       rainExpected: "¡Se espera lluvia alrededor de {{time}}!",
+      now: "ahora",
       narrowSearch: "¿Estrechar su búsqueda solo a bastidores cubiertos?",
       updateFilter: "Actualizar filtro",
     },

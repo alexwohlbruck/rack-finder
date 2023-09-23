@@ -52,6 +52,7 @@ export default {
       matchingResults_other: "{{count}} résultats correspondants",
       sortFilter: "Trier / filtrer",
       rainExpected: "Pluie attendue autour de {{time}}!",
+      now: "maintenant",
       narrowSearch: "Réduire votre recherche aux racks couverts uniquement?",
       updateFilter: "Mettre à jour le filtre",
     },
