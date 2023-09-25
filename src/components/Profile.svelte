@@ -16,7 +16,7 @@
 
 <div class="flex-1 flex gap-3 items-center">
   <Avatar
-    src={me?.img.href}
+    src={me?.img?.href}
     alt={me?.display_name}
     rounded
     border
