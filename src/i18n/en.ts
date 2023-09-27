@@ -145,6 +145,7 @@ export default {
       maxDistance: "Maximum distance",
     },
     preferencesModal: {
+      profile: "Profile",
       contributions_short_one: "{{count}} contribution",
       contributions_short_other: "{{count}} contributions",
       contributions_long_one: "{{count}} OSM contribution",
@@ -162,6 +163,8 @@ export default {
         light: "Light",
         dark: "Dark",
       },
+      advanced: "Advanced",
+      mapAnimationSpeed: "Map camera animation speed",
       dangerZone: "Danger zone",
       clearCache: "Clear application cache",
       clearCacheDescription:

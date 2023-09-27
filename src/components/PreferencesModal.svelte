@@ -7,6 +7,7 @@
     Modal,
     P,
     Select,
+    Range,
   } from "flowbite-svelte";
   import { authStore } from "../store/auth";
   import { prefsStore, setPrefs } from "../store/prefs";
@@ -70,6 +71,7 @@
 
 <Modal bind:open outsideclose>
   {#if me}
+    <Heading tag="h5">{$t("preferencesModal.profile")}</Heading>
     <div class="flex items-center">
       <div class="flex-1">
         <Profile {me} size="lg" />
@@ -80,7 +82,7 @@
     </div>
   {/if}
 
-  <Heading tag="h6">{$t("preferencesModal.preferences")}</Heading>
+  <Heading tag="h5">{$t("preferencesModal.preferences")}</Heading>
 
   <div class="flex flex-col gap-3 !mt-2">
     <Label>
@@ -101,6 +103,22 @@
       {$t("preferencesModal.theme")}
       <Select class="mt-2" items={themeOptions} bind:value={prefs.theme} />
     </Label>
+  </div>
+
+  <Heading tag="h6">{$t("preferencesModal.advanced")}</Heading>
+
+  <div class="flex flex-col gap-3 !mt-2">
+    <Label>{$t("preferencesModal.mapAnimationSpeed")}</Label>
+    <div class="flex gap-3 items-center !mt-2">
+      <P class="w-9">{prefs.animationSpeedMs / 1000} s</P>
+      <Range
+        bind:value={prefs.animationSpeedMs}
+        id="range1"
+        min="0"
+        max="2000"
+        step="100"
+      />
+    </div>
   </div>
 
   <Card class="!p-4 max-w-none !bg-red-500/10 !border-red-500/40">

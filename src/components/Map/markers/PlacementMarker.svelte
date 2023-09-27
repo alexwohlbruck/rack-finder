@@ -4,6 +4,7 @@
   import { key, palette } from "../map.config";
   import { location } from "svelte-spa-router";
   import { mapStore } from "../../../store/map";
+  import { prefsStore } from "../../../store/prefs";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -34,6 +35,7 @@
     const center = marker.getLngLat();
     map.flyTo({
       center: [center.lng, center.lat],
+      duration: $prefsStore.prefs.animationSpeedMs,
     });
   };
 

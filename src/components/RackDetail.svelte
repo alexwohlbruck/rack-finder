@@ -27,6 +27,7 @@
   import { push } from "svelte-spa-router";
   import { EDIT_MODE_ZOOM, key } from "./Map/map.config";
   import { LngLatBounds } from "mapbox-gl";
+  import { prefsStore } from "../store/prefs";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -105,6 +106,7 @@
       padding: Math.floor(window.innerWidth * 0.1),
       bearing,
       pitch: 40,
+      duration: $prefsStore.prefs.animationSpeedMs,
     });
   }
 
@@ -122,6 +124,7 @@
       map.flyTo({
         center: end,
         zoom: EDIT_MODE_ZOOM,
+        duration: $prefsStore.prefs.animationSpeedMs,
       });
     }
   }

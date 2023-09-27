@@ -9,7 +9,7 @@
   } from "../types/rack";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import { renderDistance } from "../util";
-  import { preferredUnits } from "../store/prefs";
+  import { preferredUnits, prefsStore } from "../store/prefs";
   import { t } from "../i18n/index";
   import { getContext, onMount } from "svelte";
   import { key } from "./Map/map.config";
@@ -65,6 +65,7 @@
     map?.flyTo({
       pitch: 0,
       bearing: 0,
+      duration: $prefsStore.prefs.animationSpeedMs,
     });
   });
 </script>

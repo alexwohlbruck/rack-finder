@@ -10,6 +10,7 @@ export type Preferences = {
   theme: ThemeOption;
   language: LanguageOption;
   units: UnitsOption;
+  animationSpeedMs?: number;
 };
 
 const defaultPrefs: {
@@ -22,6 +23,7 @@ const defaultPrefs: {
     theme: "auto",
     language: "auto",
     units: "auto",
+    animationSpeedMs: 500,
   },
   visits: 0,
   onboardingCompleted: false,

@@ -5,7 +5,7 @@
   import { prefsStore } from "../../../store/prefs";
   import { updateLocation } from "../../../store/location";
 
-  const { getMap, fetchRacks } = getContext(key) as any;
+  const { getMap } = getContext(key) as any;
   const map = getMap();
 
   let mapLoaded = false;
@@ -25,7 +25,8 @@
     const { latitude: lat, longitude: lng } = e.coords;
     const position = { lat, lng };
     updateLocation(position);
-    fetchRacks(true, position);
+    // TODO:
+    // fetchRacks(true, position);
   }
 
   const geolocateControl = new GeolocateControl(config);

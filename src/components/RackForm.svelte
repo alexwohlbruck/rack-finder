@@ -24,6 +24,7 @@
   import { getContext } from "svelte";
   import { EDIT_MODE_ZOOM, key } from "./Map/map.config";
   import { location } from "svelte-spa-router";
+  import { prefsStore } from "../store/prefs";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -66,6 +67,7 @@
         center: [rack.lng, rack.lat],
         pitch: 0,
         zoom: EDIT_MODE_ZOOM,
+        duration: $prefsStore.prefs.animationSpeedMs,
       });
     }
   }
