@@ -6,6 +6,7 @@ import {
   type RackType,
   RackCoverages,
   type RackTraffic,
+  type RackIndoor,
 } from "../types/rack";
 import { mapStore } from "./map";
 import { prefsStore } from "./prefs";
@@ -19,6 +20,7 @@ export type FilterOptions = {
   ignoreType: RackType[];
   covered: RackCoverage[];
   traffic: RackTraffic[];
+  indoorOnly: boolean;
   minCapacity: number;
   maxDistance: number;
 };
@@ -44,6 +46,7 @@ const searchOptionsStore = syncedWritable<{
     ignoreType: [],
     covered: [...RackCoverages],
     traffic: [],
+    indoorOnly: false,
     minCapacity: 1,
     maxDistance: 1000,
   },
@@ -114,32 +117,42 @@ const racks = derived(
           ignoreType,
           covered: coveredSelection,
           traffic: trafficSelection,
+          indoorOnly,
           minCapacity,
           maxDistance,
         } = $searchOptionsStore.filter;
         const capacity = parseInt(rack.tags?.capacity, null);
         const { distance } = rack;
 
-        const { bicycle_parking: type, covered, traffic } = rack.tags;
+        const { bicycle_parking: type, covered, traffic, indoor } = rack.tags;
 
+        // Hide types
         if (ignoreType && ignoreType.length && ignoreType.includes(type)) {
           return false;
         }
-        if (
-          (!covered && coveredSelection.length) ||
-          (coveredSelection.length && !coveredSelection.includes(covered))
-        ) {
-          return false;
-        }
+        // Foot traffic
         if (
           (!traffic && trafficSelection.length) ||
           (trafficSelection.length && !trafficSelection.includes(traffic))
         ) {
           return false;
         }
+        // Rain coverage
+        if (
+          (!covered && coveredSelection.length) ||
+          (coveredSelection.length && !coveredSelection.includes(covered))
+        ) {
+          return false;
+        }
+        // Indoors only
+        if (indoorOnly && indoor !== "yes") {
+          return false;
+        }
+        // Min capacity
         if (capacity && minCapacity && capacity < minCapacity) {
           return false;
         }
+        // Max distance
         const isMetric = $prefsStore.prefs.units === "metric";
         if (
           distance &&

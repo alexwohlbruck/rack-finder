@@ -140,6 +140,7 @@ export default {
       sortAndFilter: "Trier et filtrer",
       sortBy: "Trier par",
       hideRackTypes: "Masquer les types de racks",
+      indoorOnly: "Uniquement à l'intérieur",
       minCapacity: "Capacité minimale",
       maxDistance: "Distance maximale",
     },

@@ -15,6 +15,7 @@
     MultiSelect,
     P,
     Range,
+    Checkbox,
   } from "flowbite-svelte";
   import { RackTypes } from "../types/rack";
   import { snakeToWords, renderDistance } from "../util";
@@ -42,16 +43,16 @@
       // TODO: Fallback to friendlyName/snakeToWords
       name: $t(`rack.type.${type}`),
     })),
-    covered: [
-      { value: "yes", name: $t("rack.covered.yes") },
-      { value: "partial", name: $t("rack.covered.partial") },
-      { value: "no", name: $t("rack.covered.no") },
-    ],
     traffic: [
       { value: "high", name: $t("rack.traffic.high") },
       { value: "medium", name: $t("rack.traffic.medium") },
       { value: "low", name: $t("rack.traffic.low") },
       { value: "none", name: $t("rack.traffic.none") },
+    ],
+    covered: [
+      { value: "yes", name: $t("rack.covered.yes") },
+      { value: "partial", name: $t("rack.covered.partial") },
+      { value: "no", name: $t("rack.covered.no") },
     ],
   };
 
@@ -98,6 +99,14 @@
     class="!mt-2"
   />
 
+  <Label for="covered">{$t("rack.attributes.traffic")}</Label>
+  <MultiSelect
+    bind:value={filter.traffic}
+    id="covered"
+    items={filterOptions.traffic}
+    class="!mt-2"
+  />
+
   <Label for="covered">{$t("rack.attributes.covered")}</Label>
   <MultiSelect
     bind:value={filter.covered}
@@ -106,13 +115,9 @@
     class="!mt-2"
   />
 
-  <Label for="covered">{$t("rack.attributes.traffic")}</Label>
-  <MultiSelect
-    bind:value={filter.traffic}
-    id="covered"
-    items={filterOptions.traffic}
-    class="!mt-2"
-  />
+  <Checkbox bind:checked={filter.indoorOnly} class>
+    {$t("searchOptionsModal.indoorOnly")}
+  </Checkbox>
 
   <Label>{$t("searchOptionsModal.minCapacity")}</Label>
   <div class="flex gap-3 items-center !mt-2">

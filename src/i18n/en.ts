@@ -140,6 +140,7 @@ export default {
       sortAndFilter: "Sort and filter",
       sortBy: "Sort by",
       hideRackTypes: "Hide rack types",
+      indoorOnly: "Indoors only",
       minCapacity: "Minimum capacity",
       maxDistance: "Maximum distance",
     },

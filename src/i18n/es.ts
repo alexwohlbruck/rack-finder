@@ -140,6 +140,7 @@ export default {
       sortAndFilter: "Ordenar y filtrar",
       sortBy: "Ordenar por",
       hideRackTypes: "Ocultar tipos de estacionamiento",
+      indoorOnly: "Solo en interiores",
       minCapacity: "Capacidad mínima",
       maxDistance: "Distancia máxima",
     },
