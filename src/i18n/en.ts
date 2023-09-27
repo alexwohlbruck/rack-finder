@@ -140,7 +140,6 @@ export default {
       sortAndFilter: "Sort and filter",
       sortBy: "Sort by",
       hideRackTypes: "Hide rack types",
-      rainCoverage: "Rain coverage",
       minCapacity: "Minimum capacity",
       maxDistance: "Maximum distance",
     },

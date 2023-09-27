@@ -47,6 +47,12 @@
       { value: "partial", name: $t("rack.covered.partial") },
       { value: "no", name: $t("rack.covered.no") },
     ],
+    traffic: [
+      { value: "high", name: $t("rack.traffic.high") },
+      { value: "medium", name: $t("rack.traffic.medium") },
+      { value: "low", name: $t("rack.traffic.low") },
+      { value: "none", name: $t("rack.traffic.none") },
+    ],
   };
 
   function toggleSortDirection() {
@@ -92,11 +98,19 @@
     class="!mt-2"
   />
 
-  <Label for="covered">{$t("searchOptionsModal.rainCoverage")}</Label>
+  <Label for="covered">{$t("rack.attributes.covered")}</Label>
   <MultiSelect
     bind:value={filter.covered}
     id="covered"
     items={filterOptions.covered}
+    class="!mt-2"
+  />
+
+  <Label for="covered">{$t("rack.attributes.traffic")}</Label>
+  <MultiSelect
+    bind:value={filter.traffic}
+    id="covered"
+    items={filterOptions.traffic}
     class="!mt-2"
   />
 

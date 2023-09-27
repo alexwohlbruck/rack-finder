@@ -5,6 +5,7 @@ import {
   type RackCoverage,
   type RackType,
   RackCoverages,
+  type RackTraffic,
 } from "../types/rack";
 import { mapStore } from "./map";
 import { prefsStore } from "./prefs";
@@ -17,6 +18,7 @@ export type SortOptions = {
 export type FilterOptions = {
   ignoreType: RackType[];
   covered: RackCoverage[];
+  traffic: RackTraffic[];
   minCapacity: number;
   maxDistance: number;
 };
@@ -41,6 +43,7 @@ const searchOptionsStore = syncedWritable<{
   filter: {
     ignoreType: [],
     covered: [...RackCoverages],
+    traffic: [],
     minCapacity: 1,
     maxDistance: 1000,
   },
@@ -97,6 +100,7 @@ export function setOptions({
   });
 }
 
+// TODO: Create a robust filter/sort system
 const racks = derived(
   [racksStore, mapStore, searchOptionsStore, prefsStore],
   ([$racksStore, $mapStore, $searchOptionsStore, $prefsStore]) => {
@@ -109,21 +113,27 @@ const racks = derived(
         const {
           ignoreType,
           covered: coveredSelection,
+          traffic: trafficSelection,
           minCapacity,
           maxDistance,
         } = $searchOptionsStore.filter;
         const capacity = parseInt(rack.tags?.capacity, null);
         const { distance } = rack;
 
-        const { bicycle_parking: type, covered } = rack.tags;
+        const { bicycle_parking: type, covered, traffic } = rack.tags;
 
         if (ignoreType && ignoreType.length && ignoreType.includes(type)) {
           return false;
         }
         if (
-          covered &&
-          coveredSelection.length &&
-          !coveredSelection.includes(covered)
+          (!covered && coveredSelection.length) ||
+          (coveredSelection.length && !coveredSelection.includes(covered))
+        ) {
+          return false;
+        }
+        if (
+          (!traffic && trafficSelection.length) ||
+          (trafficSelection.length && !trafficSelection.includes(traffic))
         ) {
           return false;
         }

@@ -140,7 +140,6 @@ export default {
       sortAndFilter: "Ordenar y filtrar",
       sortBy: "Ordenar por",
       hideRackTypes: "Ocultar tipos de estacionamiento",
-      rainCoverage: "Cobertura de lluvia",
       minCapacity: "Capacidad mínima",
       maxDistance: "Distancia máxima",
     },
