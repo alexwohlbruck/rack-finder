@@ -127,20 +127,20 @@ const racks = derived(
         const { bicycle_parking: type, covered, traffic, indoor } = rack.tags;
 
         // Hide types
-        if (ignoreType && ignoreType.length && ignoreType.includes(type)) {
+        if (ignoreType && ignoreType?.length && ignoreType.includes(type)) {
           return false;
         }
         // Foot traffic
         if (
           (!traffic && trafficSelection?.length) ||
-          (trafficSelection.length && !trafficSelection.includes(traffic))
+          (trafficSelection?.length && !trafficSelection.includes(traffic))
         ) {
           return false;
         }
         // Rain coverage
         if (
           (!covered && coveredSelection?.length) ||
-          (coveredSelection.length && !coveredSelection.includes(covered))
+          (coveredSelection?.length && !coveredSelection.includes(covered))
         ) {
           return false;
         }
