@@ -127,7 +127,7 @@ const racks = derived(
         const { bicycle_parking: type, covered, traffic, indoor } = rack.tags;
 
         // Hide types
-        if (ignoreType && ignoreType.length && ignoreType.includes(type)) {
+        if (ignoreType && ignoreType?.length && ignoreType.includes(type)) {
           return false;
         }
         // Foot traffic
