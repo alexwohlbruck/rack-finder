@@ -165,6 +165,7 @@ export default {
       },
       advanced: "Avanzado",
       mapAnimationSpeed: "Velocidad de animación de la cámara del mapa",
+      locateOnOpen: "Localízame al abrir la aplicación",
       dangerZone: "Zona de peligro",
       clearCache: "Borrar caché de la aplicación",
       clearCacheDescription:

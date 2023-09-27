@@ -8,6 +8,7 @@
     P,
     Select,
     Range,
+    Toggle,
   } from "flowbite-svelte";
   import { authStore } from "../store/auth";
   import { prefsStore, setPrefs } from "../store/prefs";
@@ -109,7 +110,7 @@
 
   <div class="flex flex-col gap-3 !mt-2">
     <Label>{$t("preferencesModal.mapAnimationSpeed")}</Label>
-    <div class="flex gap-3 items-center !mt-2">
+    <div class="flex gap-3 items-center">
       <P class="w-9">{prefs.animationSpeedMs / 1000} s</P>
       <Range
         bind:value={prefs.animationSpeedMs}
@@ -119,6 +120,10 @@
         step="100"
       />
     </div>
+
+    <Toggle bind:checked={prefs.locateOnOpen} class="mt-3">
+      {$t("preferencesModal.locateOnOpen")}
+    </Toggle>
   </div>
 
   <Card class="!p-4 max-w-none !bg-red-500/10 !border-red-500/40">

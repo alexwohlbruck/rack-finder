@@ -15,10 +15,10 @@
     MultiSelect,
     P,
     Range,
-    Checkbox,
+    Toggle,
   } from "flowbite-svelte";
   import { RackTypes } from "../types/rack";
-  import { snakeToWords, renderDistance } from "../util";
+  import { renderDistance } from "../util";
   import Button from "../lib/Button.svelte";
   import { preferredUnits } from "../store/prefs";
   import { t } from "../i18n/index";
@@ -115,9 +115,9 @@
     class="!mt-2"
   />
 
-  <Checkbox bind:checked={filter.indoorOnly} class>
+  <Toggle bind:checked={filter.indoorOnly} class>
     {$t("searchOptionsModal.indoorOnly")}
-  </Checkbox>
+  </Toggle>
 
   <Label>{$t("searchOptionsModal.minCapacity")}</Label>
   <div class="flex gap-3 items-center !mt-2">

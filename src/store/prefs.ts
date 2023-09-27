@@ -11,6 +11,7 @@ export type Preferences = {
   language: LanguageOption;
   units: UnitsOption;
   animationSpeedMs?: number;
+  locateOnOpen?: boolean;
 };
 
 const defaultPrefs: {
@@ -24,6 +25,7 @@ const defaultPrefs: {
     language: "auto",
     units: "auto",
     animationSpeedMs: 500,
+    locateOnOpen: true,
   },
   visits: 0,
   onboardingCompleted: false,

@@ -165,6 +165,7 @@ export default {
       },
       advanced: "Advanced",
       mapAnimationSpeed: "Map camera animation speed",
+      locateOnOpen: "Locate me upon opening the app",
       dangerZone: "Danger zone",
       clearCache: "Clear application cache",
       clearCacheDescription:

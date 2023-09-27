@@ -37,7 +37,12 @@
 
   $: onboardingCompleted = $prefsStore.onboardingCompleted;
   $: {
-    if (map && mapLoaded && onboardingCompleted) {
+    if (
+      $prefsStore.prefs.locateOnOpen &&
+      map &&
+      mapLoaded &&
+      onboardingCompleted
+    ) {
       geolocateControl.trigger();
     }
   }
