@@ -132,14 +132,14 @@ const racks = derived(
         }
         // Foot traffic
         if (
-          (!traffic && trafficSelection.length) ||
+          (!traffic && trafficSelection?.length) ||
           (trafficSelection.length && !trafficSelection.includes(traffic))
         ) {
           return false;
         }
         // Rain coverage
         if (
-          (!covered && coveredSelection.length) ||
+          (!covered && coveredSelection?.length) ||
           (coveredSelection.length && !coveredSelection.includes(covered))
         ) {
           return false;
