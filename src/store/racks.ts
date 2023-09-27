@@ -4,9 +4,7 @@ import {
   type Rack,
   type RackCoverage,
   type RackType,
-  RackCoverages,
   type RackTraffic,
-  type RackIndoor,
 } from "../types/rack";
 import { mapStore } from "./map";
 import { prefsStore } from "./prefs";
@@ -44,7 +42,7 @@ const searchOptionsStore = syncedWritable<{
   },
   filter: {
     ignoreType: [],
-    covered: [...RackCoverages],
+    covered: [],
     traffic: [],
     indoorOnly: false,
     minCapacity: 1,
