@@ -42,11 +42,15 @@
   $: {
     if (mapLoaded && styleLoaded) {
       if (contributeMode) {
+        const center = map.getCenter();
         marker = new Marker({
           draggable: true,
           color: palette.primary[500],
         })
-          .setLngLat([map.getCenter().lng, map.getCenter().lat])
+          .setLngLat({
+            lat: center.lat,
+            lng: center.lng,
+          })
           .addTo(map);
         marker.on("dragend", markerDragEnd);
       } else {

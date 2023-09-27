@@ -72,6 +72,7 @@ export const mapStore = derived([store, location], ([$mapStore, $location]) => {
 });
 
 export function storeMapPosition({ lat, lng }: Position, zoom?: number) {
+  if (!lat || !lng) return;
   store.update((store) => {
     return {
       ...store,
