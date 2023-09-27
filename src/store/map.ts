@@ -2,17 +2,77 @@ import { writable } from "svelte/store";
 import { INITIAL_STATE } from "../components/Map/map.config";
 import type { Position } from "../types/geolocation";
 import { syncedWritable } from "../util";
+import { derived } from "svelte/store";
+import { location } from "svelte-spa-router";
 
-const mapStore = syncedWritable("map", {
+// TODO: Move to types file
+type Route = {
+  type: "FeatureCollection";
+  metadata: {
+    attribution: string;
+    service: string;
+    timestamp: number;
+    query: {
+      coordinates: [number, number][];
+      profile: string;
+      format: string;
+    };
+    engine: {
+      version: string;
+      build_date: string;
+      graph_date: string;
+    };
+  };
+  bbox: number[];
+  features: {
+    bbox: number[];
+    type: string;
+    properties: any[];
+    geometry: {
+      coordinates: [number, number][];
+      type: string;
+    };
+  }[];
+};
+
+type MapStore = {
+  zoom: number;
+  center: Position;
+  route: {
+    data: Route | null;
+    start: Position | null;
+    end: Position | null;
+  };
+};
+
+const store = syncedWritable<MapStore>("map", {
   zoom: 1,
   center: {
     lat: INITIAL_STATE.lat,
     lng: INITIAL_STATE.lng,
   },
+  route: {
+    data: null,
+    start: null,
+    end: null,
+  },
 });
 
-export function setMapCenter({ lat, lng }: Position, zoom?: number) {
-  mapStore.update((store) => {
+export const mapStore = derived([store, location], ([$mapStore, $location]) => {
+  const addMode = $location === "/racks/add";
+  const editMode = /^\/racks\/\d+\/edit$/.test($location);
+  const contributeMode = addMode || editMode;
+
+  return {
+    ...$mapStore,
+    addMode,
+    editMode,
+    contributeMode,
+  };
+});
+
+export function storeMapPosition({ lat, lng }: Position, zoom?: number) {
+  store.update((store) => {
     return {
       ...store,
       zoom: zoom ?? store.zoom,
@@ -24,4 +84,28 @@ export function setMapCenter({ lat, lng }: Position, zoom?: number) {
   });
 }
 
-export { mapStore };
+export function setRoute(newRoute: Route, start: Position, end: Position) {
+  store.update(($data) => {
+    return {
+      ...$data,
+      route: {
+        data: newRoute,
+        start,
+        end,
+      },
+    };
+  });
+}
+
+export function clearRoute() {
+  store.update(($data) => {
+    return {
+      ...$data,
+      route: {
+        data: null,
+        start: null,
+        end: null,
+      },
+    };
+  });
+}

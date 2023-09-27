@@ -8,6 +8,26 @@
   import Router from "svelte-spa-router";
   import { routes } from "./router";
   import dark from "./store/theme";
+  import GeolocateControl from "./components/Map/controls/GeolocateControl.svelte";
+  import NavigationControl from "./components/Map/controls/NavigationControl.svelte";
+  import AttributionControl from "./components/Map/controls/AttributionControl.svelte";
+  import RacksSource from "./components/Map/sources/RacksSource.svelte";
+  import ClusterLayer from "./components/Map/layers/ClusterLayer.svelte";
+  import RacksLayer from "./components/Map/layers/RacksLayer.svelte";
+  import RouteLayer from "./components/Map/layers/RouteLayer.svelte";
+  import RouteSource from "./components/Map/sources/RouteSource.svelte";
+  import MapIcons from "./components/Map/assets/MapIcons.svelte";
+  import ThemeController from "./components/Map/controllers/ThemeController.svelte";
+  import { setContext } from "svelte";
+  import { key } from "./components/Map/map.config";
+  import PlacementMarker from "./components/Map/markers/PlacementMarker.svelte";
+
+  let map, fetchRacks;
+
+  setContext(key, {
+    getMap: () => map,
+    fetchRacks,
+  });
 </script>
 
 <OnboardingModal />
@@ -30,7 +50,23 @@
       </div>
 
       <Card padding="none" class="flex-auto max-w-none overflow-hidden">
-        <Map />
+        <Map bind:map bind:fetchRacks>
+          <ThemeController />
+          <MapIcons />
+
+          <RacksSource />
+          <RouteSource />
+
+          <RouteLayer />
+          <RacksLayer />
+          <ClusterLayer />
+
+          <PlacementMarker />
+
+          <NavigationControl />
+          <GeolocateControl />
+          <AttributionControl />
+        </Map>
       </Card>
     </div>
   </main>

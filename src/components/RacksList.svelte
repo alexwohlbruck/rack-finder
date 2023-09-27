@@ -11,6 +11,11 @@
   import { renderDistance } from "../util";
   import { preferredUnits } from "../store/prefs";
   import { t } from "../i18n/index";
+  import { getContext, onMount } from "svelte";
+  import { key } from "./Map/map.config";
+
+  const { getMap } = getContext(key) as any;
+  const map = getMap();
 
   function renderType(type: RackType): string {
     if (!type) return $t("rack.type.unknown");
@@ -55,6 +60,13 @@
       .filter(Boolean)
       .join(" • ");
   }
+
+  onMount(() => {
+    map?.flyTo({
+      pitch: 0,
+      bearing: 0,
+    });
+  });
 </script>
 
 {#if !$racks.length}

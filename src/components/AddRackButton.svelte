@@ -3,9 +3,9 @@
   import Button from "../lib/Button.svelte";
   import { authenticate, checkAuthenticated } from "../services/osm";
   import { push } from "svelte-spa-router";
-  import { location } from "svelte-spa-router";
+  import { mapStore } from "../store/map";
 
-  $: contributeMode = $location === "/racks/add";
+  $: contributeMode = $mapStore.contributeMode;
 
   function contribute() {
     if (checkAuthenticated()) {

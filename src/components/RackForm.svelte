@@ -21,6 +21,12 @@
   import { Icon } from "flowbite-svelte-icons";
   import { racksStore } from "../store/racks";
   import { authStore } from "../store/auth";
+  import { getContext } from "svelte";
+  import { EDIT_MODE_ZOOM, key } from "./Map/map.config";
+  import { location } from "svelte-spa-router";
+
+  const { getMap } = getContext(key) as any;
+  const map = getMap();
 
   export let params: {
     id?: string;
@@ -47,10 +53,21 @@
   $: me = $authStore.me;
   $: rack = $racksStore[params.id];
   $: isMyRack = rack?.user === me?.display_name;
-  $: editMode = !!params.id;
+  $: editMode = $mapStore.editMode;
+  $: contributeMode = $mapStore.contributeMode;
   $: {
     const originalRack = $racksStore[params.id];
     initForm(originalRack);
+  }
+  $: if (editMode) {
+    const rack = $racksStore[$location.split("/")[2]];
+    if (rack) {
+      map?.flyTo({
+        center: [rack.lng, rack.lat],
+        pitch: 0,
+        zoom: EDIT_MODE_ZOOM,
+      });
+    }
   }
 
   // TODO: Get this from type defs

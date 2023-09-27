@@ -1,332 +1,19 @@
 <script lang="ts">
-  import {
-    Map,
-    Marker,
-    GeolocateControl,
-    NavigationControl,
-    AttributionControl,
-    LngLatBounds,
-  } from "mapbox-gl";
+  import { Map } from "mapbox-gl";
   import { onMount, onDestroy } from "svelte";
-  import SunCalc from "suncalc";
   import * as op from "../../services/overpass";
-  import { racksStore } from "../../store/racks";
-  import { prefsStore } from "../../store/prefs";
-  import { updateLocation } from "../../store/location";
-  import { mapStore, setMapCenter } from "../../store/map";
-  import dark from "../../store/theme";
+  import { mapStore, storeMapPosition } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
     DEBOUNCE_TIME,
     DEFAULT_FETCH_RADIUS,
-    EDIT_MODE_ZOOM,
     RACKS_FETCH_OUTER_BOUNDS_RATIO,
     RACKS_LAYER_MAX_ZOOM,
-    clustersCountLayer,
-    clustersLayer,
-    geolocateControlConfig,
-    iconsLayer,
     mapConfig,
-    palette,
-    racksLayer,
-    racksSourceName,
-    routeLayer,
-    routeSource,
-    routeSourceName,
-    styles,
-    unclusteredPointLayer,
-    unclusteredPointLayerName,
   } from "./map.config";
-  import type { Rack } from "../../types/rack";
   import AddRackButton from "../AddRackButton.svelte";
   import { haversine } from "../../util";
-  import { locationStore } from "../../store/location";
   import type { Position } from "../../types/geolocation";
-  import { asSvg as icons, type IconName } from "../../lib/icons/icons";
-  import { location, push } from "svelte-spa-router";
-  import { routeStore } from "../../store/route";
-
-  // TODO: Come up with a way for other components to control the map its features
-
-  let mapContainer;
-  let map;
-  let mapLoaded = false;
-  let styleLoaded = false;
-  let geolocateControl;
-  let navigationControl;
-  let marker;
-
-  onMount(() => {
-    initMap();
-  });
-  onDestroy(() => {
-    map?.remove();
-  });
-
-  function locateUser() {
-    geolocateControl?.trigger();
-  }
-
-  function onGeolocateSuccess(e) {
-    const { latitude: lat, longitude: lng } = e.coords;
-    const position = { lat, lng };
-    updateLocation(position);
-    fetchRacks(true, position);
-  }
-
-  function initMap() {
-    map = new Map({
-      ...mapConfig,
-      container: mapContainer,
-    });
-
-    geolocateControl = new GeolocateControl(geolocateControlConfig);
-    geolocateControl.on("geolocate", onGeolocateSuccess);
-
-    navigationControl = new NavigationControl();
-
-    map.addControl(navigationControl);
-    map.addControl(geolocateControl);
-    map.addControl(new AttributionControl({ compact: true }), "bottom-left");
-
-    map.on("load", () => {
-      mapLoaded = true;
-      addMapLayers();
-    });
-
-    map.on("style.load", async () => {
-      addMapLayers();
-      updateRacksLayer($racksStore);
-      setLightPreset(getLightPreset($dark));
-      map.setConfigProperty("basemap", "showPointOfInterestLabels", false);
-      styleLoaded = true;
-    });
-
-    // Use debounce to only load 2s after the last moveend event
-    let timeout;
-    map.on("moveend", () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        const center = map.getCenter();
-        const zoom = map.getZoom();
-        marker?.setLngLat({
-          lat: center.lat,
-          lng: center.lng,
-        });
-        if (
-          center.lat !== $locationStore.lat ||
-          center.lng !== $locationStore.lng
-        ) {
-          setMapCenter(center, zoom);
-        }
-        fetchRacks();
-      }, DEBOUNCE_TIME);
-    });
-
-    map.on("move", () => {
-      if (contributeMode) {
-        const center = map.getCenter();
-        marker?.setLngLat({
-          lat: center.lat,
-          lng: center.lng,
-        });
-      }
-    });
-
-    map.on("click", (e) => {
-      const features = map.queryRenderedFeatures(e.point, {
-        layers: [unclusteredPointLayerName],
-      });
-      if (!features?.length) return;
-      const rackId = features[0]?.properties?.id;
-      push(`#/racks/${rackId}`);
-    });
-
-    map.on("mouseenter", unclusteredPointLayerName, () => {
-      map.getCanvas().style.cursor = "pointer";
-    });
-
-    map.on("mouseleave", unclusteredPointLayerName, () => {
-      map.getCanvas().style.cursor = "";
-    });
-  }
-
-  function initIcons() {
-    Object.entries(icons).forEach(([name, path]) => {
-      let img = new Image(20, 20);
-      img.onload = () => map.addImage(name, img);
-      img.src = path;
-    });
-  }
-
-  function addMapLayers() {
-    map.addSource(racksSourceName, racksLayer);
-    map.addSource(routeSourceName, routeSource);
-    map.addLayer(routeLayer);
-    map.addLayer(clustersLayer);
-    map.addLayer(clustersCountLayer);
-    map.addLayer(unclusteredPointLayer);
-    map.addLayer(iconsLayer);
-    initIcons();
-  }
-
-  function updateRacksLayer(racks) {
-    map?.getSource(racksSourceName)?.setData({
-      type: "FeatureCollection",
-      features: Object.values(racks).map((rack: Rack) => {
-        let icon: IconName | string = rack.tags.bicycle_parking;
-        // TODO: Dupe logic from RackIcon.svelte
-        if (icon === "stands" && rack.tags.capacity > 2) {
-          icon = "stands_multi";
-        }
-        return {
-          type: "Feature",
-          geometry: {
-            type: "Point",
-            coordinates: [rack.lng, rack.lat],
-          },
-          properties: {
-            id: rack.id,
-            icon,
-            cluster: true,
-            access: rack.tags.access,
-          },
-        };
-      }),
-    });
-  }
-
-  function getLightPreset(darkMode = false) {
-    const now = new Date();
-    const {
-      nauticalDawn, // Dawn begins
-      goldenHourEnd, // End of sunrise
-      goldenHour, // Sun begins setting
-      night, // Dusk ends
-    } = SunCalc.getTimes(now, $locationStore.lat, $locationStore.lng);
-
-    const isGolden =
-      (now > nauticalDawn && now < goldenHourEnd) ||
-      (now > goldenHour && now < night);
-
-    let lightPreset;
-    if (darkMode) {
-      lightPreset = isGolden ? "dusk" : "night";
-    } else {
-      lightPreset = isGolden ? "dawn" : "day";
-    }
-    return lightPreset;
-  }
-
-  function setLightPreset(lightPreset = "day") {
-    if (!map || !mapLoaded) return;
-    map.setConfigProperty("basemap", "lightPreset", lightPreset);
-  }
-
-  function setMapStyle(style = styles.standard) {
-    if (!map || !mapLoaded) return;
-    map.setStyle(style);
-  }
-
-  $: onboardingCompleted = $prefsStore.onboardingCompleted;
-  $: {
-    setLightPreset(getLightPreset($dark));
-  }
-  $: {
-    if (mapLoaded && onboardingCompleted) {
-      locateUser();
-    }
-  }
-
-  $: {
-    const racks = $racksStore;
-    updateRacksLayer(racks);
-  }
-
-  $: {
-    const center = $mapStore.center;
-    const currentCenter = map?.getCenter();
-    if (
-      center &&
-      (center.lng != currentCenter?.lng || center.lat != currentCenter?.lat)
-    ) {
-      map?.flyTo({
-        center: [center.lng, center.lat],
-      });
-    }
-  }
-
-  $: {
-    const { route, start, end } = $routeStore;
-    if (route) {
-      const coordinates = [
-        [start.lng, start.lat],
-        ...route.features[0].geometry.coordinates,
-        [end.lng, end.lat],
-      ];
-      map?.getSource(routeSourceName)?.setData({
-        type: "FeatureCollection",
-        lineMetrics: true,
-        features: [
-          {
-            type: "Feature",
-            geometry: {
-              type: "LineString",
-              coordinates,
-            },
-          },
-        ],
-      });
-      // Set map bounds to fit route
-      const bounds = coordinates.reduce(
-        (bounds, coord) => bounds.extend(coord),
-        new LngLatBounds(route.bbox.slice(0, 2), route.bbox.slice(2, 4))
-      );
-      const bearing =
-        (Math.atan2(end.lng - start.lng, end.lat - start.lat) * 180) / Math.PI;
-
-      map?.fitBounds(bounds, {
-        padding: Math.floor(window.innerWidth * 0.1),
-        bearing,
-        pitch: 40,
-      });
-    } else {
-      map?.getSource(routeSourceName)?.setData({
-        type: "FeatureCollection",
-        features: [],
-      });
-    }
-  }
-
-  $: addMode = $location === "/racks/add";
-  $: editMode = /^\/racks\/\d+\/edit$/.test($location);
-  $: contributeMode = addMode || editMode;
-  $: if (editMode) {
-    const rack = $racksStore[$location.split("/")[2]];
-    if (rack) {
-      map?.flyTo({
-        center: [rack.lng, rack.lat],
-        pitch: 0,
-        zoom: EDIT_MODE_ZOOM,
-      });
-    }
-  }
-  $: {
-    if (mapLoaded && styleLoaded) {
-      setMapStyle(contributeMode ? styles.satellite : styles.standard);
-
-      if (contributeMode) {
-        marker = new Marker({
-          draggable: true,
-          color: palette[500],
-        })
-          .setLngLat([map.getCenter().lng, map.getCenter().lat])
-          .addTo(map);
-      } else {
-        marker?.remove();
-      }
-    }
-  }
 
   // Store a list of areas which bike racks have already been fetched
   const areasLoaded: {
@@ -334,6 +21,36 @@
     lng: number;
     radius: number;
   }[] = [];
+
+  let timeout;
+  const onMoveEnd = () => {
+    clearTimeout(timeout);
+    storeMapPosition(map.getCenter(), map.getZoom());
+    timeout = setTimeout(() => {
+      fetchRacks();
+    }, DEBOUNCE_TIME);
+  };
+
+  export function fetchRacks(ignoreZoom = false, center?: Position) {
+    if (!map) return;
+    const tooFarZoom = !ignoreZoom && map.getZoom() < RACKS_LAYER_MAX_ZOOM;
+    center = center || map.getCenter();
+    if (tooFarZoom || isAreaLoaded(center)) return;
+    const radius = ignoreZoom
+      ? DEFAULT_FETCH_RADIUS
+      : RACKS_FETCH_OUTER_BOUNDS_RATIO(getViewportRadius());
+    areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
+    op.fetchRacks(center, radius);
+  }
+
+  // Check if the map bounds are within any of the previously loaded areas
+  function isAreaLoaded(center: Position) {
+    const radius = getViewportRadius();
+    return areasLoaded.some((area) => {
+      const dist = haversine(center, area);
+      return dist < area.radius + radius;
+    });
+  }
 
   // Return the radius of the viewport in meters
   // Effectively the width or height of the map view, whichever is larger
@@ -347,31 +64,32 @@
     return Math.max(neDist, swDist);
   }
 
-  // Check if the map bounds are within any of the previously loaded areas
-  function isAreaLoaded(center: Position) {
-    const radius = getViewportRadius();
-    return areasLoaded.some((area) => {
-      const dist = haversine(center, area);
-      return dist < area.radius + radius;
-    });
-  }
+  let mapContainer;
+  export let map;
 
-  function fetchRacks(ignoreZoom = false, center?: Position) {
-    if (!map) return;
-    const tooFarZoom = !ignoreZoom && map.getZoom() < RACKS_LAYER_MAX_ZOOM;
-    center = center || map.getCenter();
-    if (tooFarZoom || isAreaLoaded(center)) return;
-    const radius = ignoreZoom
-      ? DEFAULT_FETCH_RADIUS
-      : RACKS_FETCH_OUTER_BOUNDS_RATIO(getViewportRadius());
-    areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
-    op.fetchRacks(center, radius);
+  onMount(() => {
+    initMap();
+  });
+  onDestroy(() => {
+    map?.remove();
+  });
+
+  function initMap() {
+    map = new Map({
+      ...mapConfig,
+      container: mapContainer,
+    });
+    map.on("moveend", onMoveEnd);
   }
 </script>
 
 <div class="relative w-full h-full">
   <AddRackButton />
-  <div class="map" bind:this={mapContainer} />
+  <div class="map" bind:this={mapContainer}>
+    {#if map}
+      <slot />
+    {/if}
+  </div>
 </div>
 
 <style>

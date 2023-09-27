@@ -11,6 +11,7 @@
 
   $: profileUrl = me ? osmProfileUrl(me.display_name) : null;
 
+  // TODO: Move to common util
   $: changesetsUrl = me ? `${profileUrl}/history` : null;
 </script>
 

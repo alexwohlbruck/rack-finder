@@ -1,7 +1,7 @@
 import config from "../config";
 import type { Position } from "../types/geolocation";
 import { showToast } from "../store/toast";
-import { setRoute } from "../store/route";
+import { setRoute } from "../store/map";
 
 const { openrouteserviceUrl: baseUrl, openrouteserviceApiKey: apiKey } = config;
 

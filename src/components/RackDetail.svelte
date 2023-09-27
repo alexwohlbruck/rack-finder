@@ -20,11 +20,16 @@
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import config from "../config";
   import { locationStore } from "../store/location";
-  import { clearRoute, routeStore } from "../store/route";
+  import { clearRoute, mapStore } from "../store/map";
   import { getRoute } from "../services/ors";
-  import { onDestroy } from "svelte";
+  import { getContext, onDestroy } from "svelte";
   import DeleteConfirmationModal from "./DeleteConfirmationModal.svelte";
   import { push } from "svelte-spa-router";
+  import { EDIT_MODE_ZOOM, key } from "./Map/map.config";
+  import { LngLatBounds } from "mapbox-gl";
+
+  const { getMap } = getContext(key) as any;
+  const map = getMap();
 
   export let params: {
     id?: string;
@@ -52,7 +57,7 @@
 
   let lastId;
   $: {
-    if (rack && (rack.id !== lastId || $routeStore.route === null)) {
+    if (rack && (rack.id !== lastId || $mapStore.route.data === null)) {
       lastId = rack.id;
       loadDetails();
     }
@@ -76,15 +81,48 @@
 
   async function lookupAddress(rack: Rack) {
     if (rack) {
-      const result = await reverseLookup(rack);
+      const result = await reverseLookup({
+        lat: rack.lat,
+        lng: rack.lng,
+      });
       address = result?.address;
     }
   }
 
+  function fitCameraToRoute(coordinates: number[][]) {
+    const start = coordinates[0];
+    const end = coordinates[coordinates.length - 1];
+    const bbox = [start[0], start[1], end[0], end[1]];
+    const bounds = coordinates.reduce(
+      (bounds, coord) => bounds.extend(coord),
+      new LngLatBounds(bbox.slice(0, 2), bbox.slice(2, 4))
+    );
+    // Bearing with start facing south and end facing north
+    const bearingRadians = Math.atan2(end[0] - start[0], end[1] - start[1]);
+    const bearing = (bearingRadians * 180) / Math.PI;
+
+    map?.fitBounds(bounds, {
+      padding: Math.floor(window.innerWidth * 0.1),
+      bearing,
+      pitch: 40,
+    });
+  }
+
   function loadDetails() {
     lookupAddress(rack);
+    const end = [rack.lng, rack.lat];
+    const coordinates = [];
     if ($locationStore?.lat && $locationStore?.lng) {
+      const start = [$locationStore.lng, $locationStore.lat];
+      coordinates.push(start);
       getRoute($locationStore, rack);
+      coordinates.push(end);
+      fitCameraToRoute(coordinates);
+    } else {
+      map.flyTo({
+        center: end,
+        zoom: EDIT_MODE_ZOOM,
+      });
     }
   }
 
