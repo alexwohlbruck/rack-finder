@@ -2,9 +2,7 @@
   import { getContext } from "svelte";
   import { key, styles } from "../map.config";
   import SunCalc from "suncalc";
-  import { locationStore } from "../../../store/location";
   import dark from "../../../store/theme";
-  import { location } from "svelte-spa-router";
   import { mapStore } from "../../../store/map";
 
   const { getMap } = getContext(key) as any;
@@ -27,11 +25,18 @@
       goldenHourEnd, // End of sunrise
       goldenHour, // Sun begins setting
       night, // Dusk ends
-    } = SunCalc.getTimes(now, $locationStore.lat, $locationStore.lng);
+    } = SunCalc.getTimes(now, $mapStore.center?.lat, $mapStore.center?.lng);
 
     const isGolden =
       (now > nauticalDawn && now < goldenHourEnd) ||
       (now > goldenHour && now < night);
+
+    console.log(
+      `nautical dawn: ${nauticalDawn.toLocaleTimeString()}\n`,
+      `golden hour end: ${goldenHourEnd.toLocaleTimeString()}\n`,
+      `golden hour: ${goldenHour.toLocaleTimeString()}\n`,
+      `night: ${night.toLocaleTimeString()}\n`
+    );
 
     let lightPreset;
     if (darkMode) {
