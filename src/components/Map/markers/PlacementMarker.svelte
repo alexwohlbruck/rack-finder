@@ -35,7 +35,7 @@
     const center = marker.getLngLat();
     map.flyTo({
       center: [center.lng, center.lat],
-      duration: $prefsStore.prefs.animationSpeedMs,
+      duration: 200,
     });
   };
 

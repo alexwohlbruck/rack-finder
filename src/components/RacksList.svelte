@@ -63,11 +63,11 @@
   }
 
   onMount(() => {
-    map?.flyTo({
-      pitch: 0,
-      bearing: 0,
-      duration: $prefsStore.prefs.animationSpeedMs,
-    });
+    // map?.flyTo({
+    //   pitch: 0,
+    //   bearing: 0,
+    //   duration: $prefsStore.prefs.animationSpeedMs,
+    // });
   });
 </script>
 

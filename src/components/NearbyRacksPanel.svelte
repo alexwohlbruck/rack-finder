@@ -15,6 +15,14 @@
   import RainIcon from "../lib/icons/RainIcon.svelte";
   import { locationStore } from "../store/location";
   import AdjustmentsHorizontalOutline from "flowbite-svelte-icons/AdjustmentsHorizontalOutline.svelte";
+  import { getContext, onDestroy, onMount } from "svelte";
+  import { key } from "./Map/map.config";
+  import { writable } from "svelte/store";
+  import { getLocalStorage, setLocalStorage } from "../localStorage";
+  import { prefsStore } from "../store/prefs";
+
+  const { getMap } = getContext(key) as any;
+  const map = getMap();
 
   let searchOptionsModal = false;
   let fetchedForecast = false;
@@ -55,6 +63,26 @@
       checkPrecipitation();
     }
   }
+
+  onMount(() => {
+    const lastCameraPos = getLocalStorage("camera", null);
+    if (!lastCameraPos) return;
+    map.flyTo({
+      center: [lastCameraPos.lng, lastCameraPos.lat],
+      zoom: lastCameraPos.zoom,
+      bearing: lastCameraPos.bearing,
+      pitch: lastCameraPos.pitch,
+      duration: $prefsStore.prefs.animationSpeedMs,
+    });
+  });
+
+  onDestroy(() => {
+    const { lat, lng } = map.getCenter();
+    const zoom = map.getZoom();
+    const bearing = map.getBearing();
+    const pitch = map.getPitch();
+    setLocalStorage("camera", { lat, lng, zoom, bearing, pitch });
+  });
 </script>
 
 <SearchOptionsModal bind:open={searchOptionsModal} />
