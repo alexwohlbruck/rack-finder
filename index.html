@@ -50,6 +50,15 @@
 <body>
   <div id="app"></div>
   <script type="module" src="/src/main.js"></script>
+  <script>
+    // remove "code" query param
+    const path = window.location.pathname + window.location.search;
+    const filtered = path.replace(/code=[^&]+&?/, '');
+    window.goatcounter = {
+      ...window.goatcounter,
+      path: filtered
+    }
+</script>
   <script data-goatcounter="https://rackfinder.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 
