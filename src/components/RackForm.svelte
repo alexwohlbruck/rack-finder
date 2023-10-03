@@ -55,7 +55,6 @@
   $: rack = $racksStore[params.id];
   $: isMyRack = rack?.user === me?.display_name;
   $: editMode = $mapStore.editMode;
-  $: contributeMode = $mapStore.contributeMode;
   $: {
     const originalRack = $racksStore[params.id];
     initForm(originalRack);
@@ -69,6 +68,11 @@
         zoom: EDIT_MODE_ZOOM,
         duration: $prefsStore.prefs.animationSpeedMs,
       });
+    }
+  }
+  $: {
+    if (form.covered === "no" || form.covered === "partial") {
+      form.indoor = "no";
     }
   }
 
