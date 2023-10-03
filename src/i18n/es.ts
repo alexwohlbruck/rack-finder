@@ -183,6 +183,9 @@ export default {
       license: "ODbL",
       happyCycling: "¡Feliz ciclismo! 🚲🚲",
       madeBy: "Hecho con 💛 por",
+      visitCount: "¡Eres el visitante número {{count}}!",
+      view: "Ver proyecto",
+      analytics: "analítica",
       viewOn: "Ver proyecto en",
     },
     toast: {

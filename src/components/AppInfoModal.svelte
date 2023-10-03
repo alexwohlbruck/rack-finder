@@ -1,7 +1,19 @@
-<script>
+<script lang="ts">
   import { A, Heading, Modal, P } from "flowbite-svelte";
   import { t } from "../i18n/index";
+  import { onMount } from "svelte";
   export let open;
+
+  let count;
+  onMount(async () => {
+    const response = await fetch(
+      "https://rackfinder.goatcounter.com/counter/" +
+        encodeURIComponent(location.pathname) +
+        ".json"
+    );
+    const data = await response.json();
+    count = data.count;
+  });
 </script>
 
 <Modal bind:open autoclose outsideclose>
@@ -30,6 +42,13 @@
     <A href="https://alex.wohlbruck.com" target="_blank">Alex Wohlbruck</A>.
   </P>
   <P size="xs" align="center" class="!mt-2">
+    {$t("infoModal.visitCount", { count })}
+    {$t("infoModal.view")}
+    <A href="https://rackfinder.goatcounter.com">
+      {$t("infoModal.analytics")}
+    </A>.
+  </P>
+  <P size="xs" align="center" class="!mt-0">
     {$t("infoModal.viewOn")}
     <A href="https://github.com/alexwohlbruck/rack-finder" target="_blank">
       Github
