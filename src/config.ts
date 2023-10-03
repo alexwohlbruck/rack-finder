@@ -1,11 +1,17 @@
-export default {
-  useDevData: false, // TODO: set this to environment variable
-  overpassUrl: "https://overpass-api.de/api/interpreter",
-  nominatimUrl: "https://nominatim.openstreetmap.org",
-  openrouteserviceUrl: "https://api.openrouteservice.org",
-  openrouteserviceApiKey:
-    "5b3ce3597851110001cf6248d3133db1f4b04a438dffdbbd90e57c82",
-  openweathermapUrl: "https://api.openweathermap.org/data/2.5/onecall",
-  openweathermapApiKey: "a2f2e30f809d3ba63d69e710bd784880",
-  creatorUser: "alexwohlbruck",
+function env(key: string) {
+  return import.meta.env[`VITE_${key}`];
+}
+
+const config = {
+  useDevData: env("USE_DEV_DATA") === "true",
+  osmClientId: env("OSM_CLIENT_ID"),
+  overpassUrl: env("OVERPASS_URL"),
+  nominatimUrl: env("NOMINATIM_URL"),
+  openrouteserviceUrl: env("ORS_URL"),
+  openrouteserviceApiKey: env("ORS_API_KEY"),
+  openweathermapUrl: env("OWM_URL"),
+  openweathermapApiKey: env("OWM_API_KEY"),
+  creatorUser: env("OSM_USER_ALEX"),
 };
+
+export default config;

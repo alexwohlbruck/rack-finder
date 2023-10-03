@@ -16,7 +16,7 @@ import { addRack, removeRack } from "../store/racks";
 import type { Rack } from "../types/rack";
 import i18next from "i18next";
 import { push } from "svelte-spa-router";
-import { fetchRack } from "./overpass";
+import config from "../config";
 
 const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isIOS =
@@ -36,7 +36,7 @@ const _declaration = {
 };
 
 const osm = osmAuth({
-  client_id: "aGe5vYFwWvRLM6--IrLwXVSM_oQ4Q-HN5e9Ow_lrN_w",
+  client_id: config.osmClientId,
   redirect_uri: REDIRECT_PATH,
   scope: "write_api read_prefs",
   auto: true,
