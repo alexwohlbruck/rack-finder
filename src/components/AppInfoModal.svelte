@@ -44,7 +44,7 @@
   <P size="xs" align="center" class="!mt-2">
     {$t("infoModal.visitCount", { count })}
     {$t("infoModal.view")}
-    <A href="https://rackfinder.goatcounter.com">
+    <A href="https://rackfinder.goatcounter.com" target="_blank">
       {$t("infoModal.analytics")}
     </A>.
   </P>
