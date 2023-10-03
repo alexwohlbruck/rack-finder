@@ -15,7 +15,7 @@
     "mr-3 shrink-0 bg-gray-200 rounded-full peer-focus:ring-4 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:bg-white after:border-gray-300 after:border after:rounded-full after:transition-all";
   const primary = "peer-focus:ring-0 peer-checked:bg-primary-500";
   const size = "w-14 h-7 after:top-0.5 after:left-[4px] after:h-6 after:w-6";
-  const shadow = "shadow-[0_0.05rem_0.3rem_0_#000a]";
+  const shadow = "shadow-[0_0.05rem_0.2rem_0_#0005]";
 
   const icon =
     "relative z-10 w-3 h-3 ml-[.6rem] mt-2 text-gray-800 transition-all";
