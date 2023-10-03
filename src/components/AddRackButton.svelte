@@ -16,17 +16,19 @@
   }
 </script>
 
-<Button
-  class="!p-5 bg-primary-400 absolute right-0 bottom-0 m-[.6rem] z-10"
-  rounded
-  shadow
-  size="xl"
-  on:click={contribute}
->
-  <span class="icon" class:rotate={contributeMode}>
-    <Icon name="plus-solid" class="w-4 h-4 text-gray-800 outline-none" />
-  </span>
-</Button>
+<div class="absolute bottom-0 right-0 z-10 p-[.6rem]">
+  <Button
+    class="!p-5 bg-primary-400"
+    rounded
+    shadow
+    size="xl"
+    on:click={contribute}
+  >
+    <span class="icon" class:rotate={contributeMode}>
+      <Icon name="plus-solid" class="w-4 h-4 text-gray-800 outline-none" />
+    </span>
+  </Button>
+</div>
 
 <style>
   .icon {

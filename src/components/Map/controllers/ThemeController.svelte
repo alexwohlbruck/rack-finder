@@ -3,7 +3,7 @@
   import { key, styles } from "../map.config";
   import SunCalc from "suncalc";
   import dark from "../../../store/theme";
-  import { mapStore } from "../../../store/map";
+  import { mapStore, toggleSatellite } from "../../../store/map";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -31,14 +31,8 @@
       (now > nauticalDawn && now < goldenHourEnd) ||
       (now > goldenHour && now < night);
 
-    console.log(
-      `nautical dawn: ${nauticalDawn.toLocaleTimeString()}\n`,
-      `golden hour end: ${goldenHourEnd.toLocaleTimeString()}\n`,
-      `golden hour: ${goldenHour.toLocaleTimeString()}\n`,
-      `night: ${night.toLocaleTimeString()}\n`
-    );
-
     let lightPreset;
+
     if (darkMode) {
       lightPreset = isGolden ? "dusk" : "night";
     } else {
@@ -71,6 +65,13 @@
   });
 
   $: {
-    setMapStyle(contributeMode ? styles.satellite : styles.standard);
+    toggleSatellite(contributeMode);
+  }
+  let satellite = $mapStore.satellite;
+  $: {
+    if (satellite !== $mapStore.satellite) {
+      satellite = $mapStore.satellite;
+      setMapStyle(satellite ? styles.satellite : styles.standard);
+    }
   }
 </script>

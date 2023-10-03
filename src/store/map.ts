@@ -38,6 +38,7 @@ type Route = {
 type MapStore = {
   zoom: number;
   center: Position;
+  satellite: boolean;
   route: {
     data: Route | null;
     start: Position | null;
@@ -51,6 +52,7 @@ const store = syncedWritable<MapStore>("map", {
     lat: INITIAL_STATE.lat,
     lng: INITIAL_STATE.lng,
   },
+  satellite: false,
   route: {
     data: null,
     start: null,
@@ -81,6 +83,15 @@ export function storeMapPosition({ lat, lng }: Position, zoom?: number) {
         lat,
         lng,
       },
+    };
+  });
+}
+
+export function toggleSatellite(satellite: boolean) {
+  store.update((store) => {
+    return {
+      ...store,
+      satellite,
     };
   });
 }

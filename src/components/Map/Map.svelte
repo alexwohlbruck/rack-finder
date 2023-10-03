@@ -14,6 +14,7 @@
   import AddRackButton from "../AddRackButton.svelte";
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";
+  import SatelliteToggle from "./controls/SatelliteToggle.svelte";
 
   // Store a list of areas which bike racks have already been fetched
   const areasLoaded: {
@@ -85,6 +86,7 @@
 
 <div class="relative w-full h-full">
   <AddRackButton />
+  <SatelliteToggle />
   <div class="map" bind:this={mapContainer}>
     {#if map}
       <slot />

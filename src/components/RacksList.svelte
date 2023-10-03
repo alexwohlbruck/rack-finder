@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { ListgroupItem, Button, P } from "flowbite-svelte";
+  import { ListgroupItem, P } from "flowbite-svelte";
+  import VirtualList from "@sveltejs/svelte-virtual-list";
   import { racks } from "../store/racks";
   import {
     type RackCoverage,
@@ -75,36 +76,36 @@
     <P size="sm">Nothing nearby!</P>
   </div>
 {:else}
-  <div class="flex flex-col">
-    {#each $racks as rack, i}
+  <div class="flex flex-col h-full">
+    <VirtualList items={$racks} let:item>
       <ListgroupItem
-        key={rack.id}
+        key={item.id}
         class="flex items-center border-b border-gray-200 dark:border-gray-700"
       >
-        <a href={`#/racks/${rack.id}`} class="w-full">
+        <a href={`#/racks/${item.id}`} class="w-full">
           <div class="flex gap-3 items-center">
             <div class="py-2 mr-1">
               <RackIcon
-                name={rack?.tags.bicycle_parking}
-                capacity={rack?.tags.capacity}
+                name={item?.tags.bicycle_parking}
+                capacity={item?.tags.capacity}
               />
             </div>
             <div class="flex-1 flex gap-4 items-center">
               <div class="flex-1 flex flex-col">
                 <P size="sm" weight="medium">
-                  {renderType(rack?.tags.bicycle_parking)}
+                  {renderType(item?.tags.bicycle_parking)}
                 </P>
                 <P size="sm">
-                  {renderDetails(rack?.tags)}
+                  {renderDetails(item?.tags)}
                 </P>
               </div>
             </div>
             <P size="sm" weight="medium" class="w-11 text-center">
-              {renderDistance(rack?.distance, $preferredUnits)}
+              {renderDistance(item?.distance, $preferredUnits)}
             </P>
           </div>
         </a>
       </ListgroupItem>
-    {/each}
+    </VirtualList>
   </div>
 {/if}
