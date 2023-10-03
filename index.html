@@ -52,11 +52,12 @@
   <script type="module" src="/src/main.js"></script>
   <script>
     // remove "code" query param
-    const path = window.location.pathname + window.location.search;
-    const filtered = path.replace(/code=[^&]+&?/, '');
+    const qs = new URLSearchParams(window.location.search)
+    const filtered = [...qs].filter(([key, value]) => key !== 'code')
+    const path = window.location.pathname + '?' + filtered.toString()
     window.goatcounter = {
       ...window.goatcounter,
-      path: filtered
+      path,
     }
 </script>
   <script data-goatcounter="https://rackfinder.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
