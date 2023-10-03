@@ -31,6 +31,9 @@
   import {
     ArrowLeftSolid,
     ArrowUpRightFromSquareOutline,
+    MapPinAltSolid,
+    PenOutline,
+    TrashBinSolid,
   } from "flowbite-svelte-icons";
 
   const { getMap } = getContext(key) as any;
@@ -272,7 +275,7 @@
           disabled={rack?.type === "way"}
           on:click={() => push(`/racks/${params.id}/edit`)}
         >
-          <Icon name="pen-outline" class="w-4 h-4 mr-2" />
+          <PenOutline class="w-4 h-4 mr-2" />
           <span>{$t("common.edit")}</span>
         </FlowbiteButton>
         <FlowbiteButton
@@ -281,7 +284,7 @@
           outline
           size="sm"
         >
-          <Icon name="trash-bin-solid" class="w-4 h-4 mr-2" />
+          <TrashBinSolid class="w-4 h-4 mr-2" />
           <span>{$t("common.delete")}</span>
         </FlowbiteButton>
       </ButtonGroup>
@@ -289,7 +292,7 @@
       <div class="flex-1" />
 
       <Button size="sm" href={directionsUrl} target="_blank">
-        <Icon name="map-pin-alt-solid" class="w-4 h-4 mr-2" />
+        <MapPinAltSolid class="w-4 h-4 mr-2" />
         <span>{$t("rackDetail.navigate")}</span>
       </Button>
     </div>
