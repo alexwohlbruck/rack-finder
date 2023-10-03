@@ -43,35 +43,55 @@
 
   function setLightPreset(lightPreset = "day") {
     if (!map || !mapLoaded) return;
-    if (!contributeMode) {
+    if (mapHasBasemap()) {
       map.setConfigProperty("basemap", "lightPreset", lightPreset);
+    }
+  }
+
+  function setDarkTheme(dark?: boolean) {
+    setLightPreset(getLightPreset(dark ?? $dark));
+  }
+
+  function showPOILabels(show: boolean) {
+    if (mapHasBasemap()) {
+      map.setConfigProperty("basemap", "showPointOfInterestLabels", show);
+    }
+  }
+
+  function mapHasBasemap() {
+    try {
+      map.style.getFragmentById("basemap");
+      return true;
+    } catch (err) {
+      return false;
     }
   }
 
   $: {
     // Watch dark theme change
-    setLightPreset(getLightPreset($dark));
+    setDarkTheme($dark);
   }
 
   map.on("load", () => {
     mapLoaded = true;
-    setLightPreset(getLightPreset($dark));
+    setDarkTheme();
   });
 
   map.on("style.load", () => {
-    if (!contributeMode) {
-      map.setConfigProperty("basemap", "showPointOfInterestLabels", false);
-    }
+    setDarkTheme();
+    showPOILabels(false);
   });
 
   $: {
     toggleSatellite(contributeMode);
   }
+  // Handle change to satellite
   let satellite = $mapStore.satellite;
   $: {
     if (satellite !== $mapStore.satellite) {
       satellite = $mapStore.satellite;
       setMapStyle(satellite ? styles.satellite : styles.standard);
+      setDarkTheme();
     }
   }
 </script>
