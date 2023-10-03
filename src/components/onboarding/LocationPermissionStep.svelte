@@ -8,8 +8,8 @@
   } from "../../services/geolocation";
   import { createEventDispatcher } from "svelte";
   import { completeOnboarding } from "../../store/prefs";
-  import { Icon } from "flowbite-svelte-icons";
   import { t } from "../../i18n";
+  import { MapPinSolid } from "flowbite-svelte-icons";
 
   let status: LocationPermissionStatus = "prompt";
   const dispatch = createEventDispatcher();
@@ -39,7 +39,7 @@
 </script>
 
 <div class="flex flex-col gap-5 items-center">
-  <Icon name="map-pin-solid" class="w-12 h-12 text-sky-500" />
+  <MapPinSolid class="w-12 h-12 text-sky-500" />
   <div class="flex flex-col gap-2">
     <Heading tag="h5" class="text-center">
       {$t("onboarding.locationPermissionStep.title")}

@@ -12,9 +12,9 @@
   import SearchOptionsModal from "./SearchOptionsModal.svelte";
   import { t } from "../i18n/index";
   import { getForecast } from "../services/owm";
-  import { Icon } from "flowbite-svelte-icons";
   import RainIcon from "../lib/icons/RainIcon.svelte";
   import { locationStore } from "../store/location";
+  import AdjustmentsHorizontalOutline from "flowbite-svelte-icons/AdjustmentsHorizontalOutline.svelte";
 
   let searchOptionsModal = false;
   let fetchedForecast = false;
@@ -73,7 +73,7 @@
       color="primary"
       size="xs"
     >
-      <Icon name="adjustments-horizontal-outline" class="w-4 h-4 mr-2" />
+      <AdjustmentsHorizontalOutline class="w-4 h-4 mr-2" />
       {$t("nearbyRacksPanel.sortFilter")}
     </FlowbiteButton>
   </div>

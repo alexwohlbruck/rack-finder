@@ -16,7 +16,7 @@
   import { friendlyName, osmElementUrl, osmProfileUrl } from "../util";
   import { reverseLookup } from "../services/nominatim";
   import { type Rack } from "../types/rack";
-  import { Icon } from "flowbite-svelte-icons";
+  import PlusSolid from "flowbite-svelte-icons/PlusSolid.svelte";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import config from "../config";
   import { locationStore } from "../store/location";
@@ -28,6 +28,10 @@
   import { EDIT_MODE_ZOOM, key } from "./Map/map.config";
   import { LngLatBounds } from "mapbox-gl";
   import { prefsStore } from "../store/prefs";
+  import {
+    ArrowLeftSolid,
+    ArrowUpRightFromSquareOutline,
+  } from "flowbite-svelte-icons";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -141,7 +145,7 @@
     <div class="p-3 flex gap-2 items-center">
       <div class="flex items-center">
         <Button size="sm" color="none" class="w-9 h-9" href="#/">
-          <Icon name="arrow-left-solid" class="w-4 h-4 outline-none" />
+          <ArrowLeftSolid class="w-4 h-4 outline-none" />
         </Button>
       </div>
       <div class="flex-1 flex flex-col">
@@ -251,10 +255,7 @@
                 href={osmElementUrl(rack.type, rack.id)}
                 target="_blank"
               >
-                <Icon
-                  name="arrow-up-right-from-square-outline"
-                  class="w-4 h-4 outline-none"
-                />
+                <ArrowUpRightFromSquareOutline class="w-4 h-4 outline-none" />
               </FlowbiteButton>
             </div>
           </div>

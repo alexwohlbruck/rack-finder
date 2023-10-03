@@ -18,13 +18,13 @@
   import type { BikeRackTags } from "../types/rack";
   import { t } from "../i18n/index";
   import { push } from "svelte-spa-router";
-  import { Icon } from "flowbite-svelte-icons";
   import { racksStore } from "../store/racks";
   import { authStore } from "../store/auth";
   import { getContext } from "svelte";
   import { EDIT_MODE_ZOOM, key } from "./Map/map.config";
   import { location } from "svelte-spa-router";
   import { prefsStore } from "../store/prefs";
+  import { ArrowLeftSolid } from "flowbite-svelte-icons";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -192,7 +192,7 @@
   <div class="flex gap-2 items-center">
     <div class="flex items-center">
       <Button size="sm" color="none" class="w-9 h-9" href="#/">
-        <Icon name="arrow-left-solid" class="w-4 h-4 outline-none" />
+        <ArrowLeftSolid class="w-4 h-4 outline-none" />
       </Button>
     </div>
     <div class="flex items-start">

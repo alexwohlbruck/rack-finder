@@ -1,9 +1,9 @@
 <script>
-  import { Icon } from "flowbite-svelte-icons";
   import Button from "../lib/Button.svelte";
   import { authenticate, checkAuthenticated } from "../services/osm";
   import { push } from "svelte-spa-router";
   import { mapStore } from "../store/map";
+  import PlusSolid from "flowbite-svelte-icons/PlusSolid.svelte";
 
   $: contributeMode = $mapStore.contributeMode;
 
@@ -25,7 +25,7 @@
     on:click={contribute}
   >
     <span class="icon" class:rotate={contributeMode}>
-      <Icon name="plus-solid" class="w-4 h-4 text-gray-800 outline-none" />
+      <PlusSolid class="w-4 h-4 text-gray-800 outline-none" />
     </span>
   </Button>
 </div>

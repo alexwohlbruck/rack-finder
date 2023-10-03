@@ -1,5 +1,5 @@
 <script>
-  import { Toggle } from "flowbite-svelte";
+  import Toggle from "../../../lib/Toggle.svelte";
   import { mapStore, toggleSatellite } from "../../../store/map";
 
   $: satellite = $mapStore.satellite;

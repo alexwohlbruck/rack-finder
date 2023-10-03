@@ -1,13 +1,13 @@
 <script>
   import { Heading, P } from "flowbite-svelte";
   import Button from "../../lib/Button.svelte";
-  import { Icon } from "flowbite-svelte-icons";
   import { t } from "../../i18n";
+  import { PlusSolid } from "flowbite-svelte-icons";
 </script>
 
 <div class="flex flex-col gap-5 items-center">
   <Button class="!p-5 bg-primary-400" rounded shadow size="xl">
-    <Icon name="plus-solid" class="w-4 h-4 text-gray-800" />
+    <PlusSolid class="w-4 h-4 text-gray-800 outline-none" />
   </Button>
 
   <div class="flex flex-col gap-2">

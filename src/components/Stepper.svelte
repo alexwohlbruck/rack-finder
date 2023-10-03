@@ -1,6 +1,11 @@
 <script lang="ts">
   import { Button, Indicator } from "flowbite-svelte";
-  import { Icon } from "flowbite-svelte-icons";
+  import {
+    CheckCircleOutline,
+    CheckCircleSolid,
+    ChevronLeftOutline,
+    ChevronRightOutline,
+  } from "flowbite-svelte-icons";
 
   export let steps: any[] = [];
 
@@ -31,7 +36,7 @@
   <div class="flex items-center">
     <div class:invisible={!canPrev}>
       <Button on:click={prev} color="none" size="xs">
-        <Icon size="sm" name="chevron-left-outline" class="text-gray-500" />
+        <ChevronLeftOutline size="sm" class="text-gray-500" />
       </Button>
     </div>
 
@@ -45,7 +50,7 @@
 
     <div class:invisible={!canNext}>
       <Button on:click={next} color="none" size="xs">
-        <Icon size="sm" name="chevron-right-outline" class="text-gray-500" />
+        <ChevronRightOutline size="sm" class="text-gray-500" />
       </Button>
     </div>
   </div>
@@ -53,16 +58,13 @@
   <div class="flex items-center gap-2 px-2">
     {#each indicators as indicator, i}
       <Indicator size="xl" color="none">
-        <Icon
-          name={indicator.completed
-            ? "check-circle-solid"
-            : "check-circle-outline"}
-          class={indicator.completed
-            ? "text-emerald-500"
-            : i === currentStep
-            ? "text-primary-500"
-            : "text-gray-500"}
-        />
+        {#if indicator.completed}
+          <CheckCircleSolid class="text-emerald-500" />
+        {:else}
+          <CheckCircleOutline
+            class={i === currentStep ? "text-primary-500" : "text-gray-500"}
+          />
+        {/if}
       </Indicator>
       {#if i !== indicators.length - 1}
         <div class="flex w-full bg-gray-200 h-0.5 dark:bg-gray-700" />
