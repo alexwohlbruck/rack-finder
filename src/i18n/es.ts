@@ -63,7 +63,7 @@ export default {
         distance: "Distancia",
         access: "Acceso",
         covered: "Cobertura de lluvia",
-        traffic: "Tráfico de peatones",
+        foot_traffic: "Tráfico de peatones",
         indoor: "En interiores",
         description: "Descripción",
       },
@@ -102,7 +102,7 @@ export default {
         partial: "Parcialmente cubierto",
         no: "Expuesto",
       },
-      traffic: {
+      foot_traffic: {
         none: "Sin tráfico peatonal",
         low: "Tráfico peatonal bajo",
         medium: "Tráfico peatonal medio",

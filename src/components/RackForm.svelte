@@ -146,7 +146,7 @@
       name: "Partially covered",
     },
   ];
-  const trafficOptions = [
+  const footTrafficOptions = [
     {
       value: "high",
       name: "High traffic (Public square, ped path, etc)",
@@ -251,12 +251,12 @@
     />
   </Label>
 
-  <Label for="traffic">
-    <div class="mb-1">{$t("rack.attributes.traffic")}</div>
+  <Label for="foot_traffic">
+    <div class="mb-1">{$t("rack.attributes.foot_traffic")}</div>
     <Select
-      bind:value={form.traffic}
-      id="traffic"
-      items={trafficOptions}
+      bind:value={form.foot_traffic}
+      id="foot_traffic"
+      items={footTrafficOptions}
       placeholder={$t("common.chooseOption")}
     />
   </Label>

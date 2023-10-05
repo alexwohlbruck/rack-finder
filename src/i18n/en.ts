@@ -63,7 +63,7 @@ export default {
         distance: "Distance",
         access: "Access",
         covered: "Rain coverage",
-        traffic: "Foot traffic",
+        foot_traffic: "Foot traffic",
         indoor: "Indoors",
         description: "Description",
       },
@@ -102,7 +102,7 @@ export default {
         partial: "Partially covered",
         no: "Exposed",
       },
-      traffic: {
+      foot_traffic: {
         none: "No foot traffic",
         low: "Low foot traffic",
         medium: "Medium foot traffic",

@@ -5,7 +5,7 @@
   import {
     type RackCoverage,
     type RackAccess,
-    type RackTraffic,
+    type RackFootTraffic,
     type RackType,
   } from "../types/rack";
   import RackIcon from "../lib/icons/RackIcon.svelte";
@@ -34,9 +34,9 @@
     return $t(`rack.covered.${coverage}`);
   }
 
-  function renderTraffic(traffic: RackTraffic) {
-    if (!traffic) return null;
-    return $t(`rack.traffic.${traffic}`);
+  function renderFootTraffic(footTraffic: RackFootTraffic) {
+    if (!footTraffic) return null;
+    return $t(`rack.foot_traffic.${footTraffic}`);
   }
 
   function renderAccess(access: RackAccess) {
@@ -54,10 +54,10 @@
   function renderDetails(tags) {
     const indoor = renderIndoor(tags.indoor);
     const coverage = renderCoverage(tags.covered);
-    const traffic = renderTraffic(tags.traffic);
+    const footTraffic = renderFootTraffic(tags.foot_traffic);
     const access = renderAccess(tags.access);
     const capacity = renderCapacity(tags.capacity);
-    return [indoor, coverage, traffic, access, capacity]
+    return [indoor, coverage, footTraffic, access, capacity]
       .filter(Boolean)
       .join(" • ");
   }

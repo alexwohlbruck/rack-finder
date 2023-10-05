@@ -54,7 +54,7 @@
     "bicycle_parking",
     "capacity",
     "covered",
-    "traffic",
+    "foot_traffic",
     "access",
     "indoor",
     "description",
@@ -212,11 +212,12 @@
           </div>
         </ListgroupItem>
       {/if}
-      {#if tags.traffic}
+      {#if tags.foot_traffic}
         <ListgroupItem>
           <div class="flex flex-col">
-            <P size="sm">{$t("rack.attributes.traffic")}</P>
-            <P size="sm" weight="medium">{$t(`rack.traffic.${tags.traffic}`)}</P
+            <P size="sm">{$t("rack.attributes.foot_traffic")}</P>
+            <P size="sm" weight="medium"
+              >{$t(`rack.foot_traffic.${tags.foot_traffic}`)}</P
             >
           </div>
         </ListgroupItem>
