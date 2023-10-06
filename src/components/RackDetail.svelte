@@ -35,6 +35,7 @@
     PenOutline,
     TrashBinSolid,
   } from "flowbite-svelte-icons";
+  import { authenticate, checkAuthenticated } from "../services/osm";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -133,6 +134,22 @@
         zoom: EDIT_MODE_ZOOM,
         duration: $prefsStore.prefs.animationSpeedMs,
       });
+    }
+  }
+
+  function editRack() {
+    if (checkAuthenticated()) {
+      push(`/racks/${params.id}/edit`);
+    } else {
+      authenticate();
+    }
+  }
+
+  function deleteRack() {
+    if (checkAuthenticated()) {
+      deleteConfirmationModal = true;
+    } else {
+      authenticate();
     }
   }
 
@@ -274,17 +291,12 @@
           outline
           size="sm"
           disabled={rack?.type === "way"}
-          on:click={() => push(`/racks/${params.id}/edit`)}
+          on:click={editRack}
         >
           <PenOutline class="w-4 h-4 mr-2" />
           <span>{$t("common.edit")}</span>
         </FlowbiteButton>
-        <FlowbiteButton
-          on:click={() => (deleteConfirmationModal = true)}
-          color="primary"
-          outline
-          size="sm"
-        >
+        <FlowbiteButton on:click={deleteRack} color="primary" outline size="sm">
           <TrashBinSolid class="w-4 h-4 mr-2" />
           <span>{$t("common.delete")}</span>
         </FlowbiteButton>
