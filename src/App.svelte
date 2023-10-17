@@ -12,6 +12,7 @@
   import NavigationControl from "./components/Map/controls/NavigationControl.svelte";
   import AttributionControl from "./components/Map/controls/AttributionControl.svelte";
   import RacksSource from "./components/Map/sources/RacksSource.svelte";
+  import Buildings3DLayer from "./components/Map/layers/Buildings3DLayer.svelte";
   import ClusterLayer from "./components/Map/layers/ClusterLayer.svelte";
   import RacksLayer from "./components/Map/layers/RacksLayer.svelte";
   import RouteLayer from "./components/Map/layers/RouteLayer.svelte";
@@ -57,6 +58,7 @@
           <RacksSource />
           <RouteSource />
 
+          <Buildings3DLayer />
           <RouteLayer />
           <RacksLayer />
           <ClusterLayer />
