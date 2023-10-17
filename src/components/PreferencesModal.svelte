@@ -77,9 +77,7 @@
       <div class="flex-1">
         <Profile {me} size="lg" />
       </div>
-      <Button size="sm" outline class="mr-7" on:click={logout}
-        >{$t("auth.signOut")}</Button
-      >
+      <Button size="sm" outline on:click={logout}>{$t("auth.signOut")}</Button>
     </div>
   {/if}
 
