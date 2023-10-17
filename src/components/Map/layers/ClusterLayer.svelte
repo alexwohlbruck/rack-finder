@@ -1,12 +1,15 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import { key, palette, racksSourceName } from "../map.config";
+  import { prefsStore } from "../../../store/prefs";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
 
+  const clusterLayerName = "clusters";
+
   const clusterConfig = {
-    id: "clusters",
+    id: clusterLayerName,
     type: "circle",
     source: "racks",
     filter: ["has", "point_count"],
@@ -52,5 +55,32 @@
   map.on("style.load", () => {
     map.addLayer(clusterConfig);
     map.addLayer(clustersCountConfig);
+  });
+
+  // Zoom to cluster on click
+  map.on("click", (e) => {
+    const features = map.queryRenderedFeatures(e.point, {
+      layers: [clusterLayerName],
+    });
+    if (!features?.length) return;
+    const clusterId = features[0]?.properties?.cluster_id;
+    map
+      .getSource(racksSourceName)
+      .getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err) return;
+        map.easeTo({
+          center: features[0].geometry.coordinates,
+          zoom: zoom + 1.5,
+          duration: $prefsStore.prefs.animationSpeedMs,
+        });
+      });
+  });
+
+  map.on("mouseenter", clusterLayerName, () => {
+    map.getCanvas().style.cursor = "pointer";
+  });
+
+  map.on("mouseleave", clusterLayerName, () => {
+    map.getCanvas().style.cursor = "";
   });
 </script>
