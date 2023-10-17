@@ -214,7 +214,7 @@
     <div>{$t("rack.attributes.type")}</div>
   </Label>
 
-  <div class="grid gap-2 w-full md:grid-cols-4">
+  <div class="grid gap-2 w-full grid-cols-3 sm:grid-cols-5 md:grid-cols-4">
     {#each rackTypeOptions as type}
       <Radio
         name="custom"
