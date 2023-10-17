@@ -27,7 +27,26 @@ type Route = {
   features: {
     bbox: number[];
     type: string;
-    properties: any[];
+    properties: {
+      fare: number;
+      segments: {
+        distance: number;
+        duration: number;
+        steps: {
+          distance: number;
+          instruction: string;
+          name: string;
+          type: number;
+          way_points: number[];
+        }[];
+      }[];
+      summary: {
+        distance: number;
+        duration: number;
+      };
+      transfers: 0;
+      way_points: number[];
+    };
     geometry: {
       coordinates: [number, number][];
       type: string;

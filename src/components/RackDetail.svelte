@@ -13,11 +13,18 @@
   import Button from "../lib/Button.svelte";
   import { t } from "../i18n";
   import { racksStore } from "../store/racks";
-  import { friendlyName, osmElementUrl, osmProfileUrl } from "../util";
+  import {
+    friendlyName,
+    haversine,
+    osmElementUrl,
+    osmProfileUrl,
+    renderDistance,
+  } from "../util";
   import { reverseLookup } from "../services/nominatim";
   import { type Rack } from "../types/rack";
-  import PlusSolid from "flowbite-svelte-icons/PlusSolid.svelte";
   import RackIcon from "../lib/icons/RackIcon.svelte";
+  import BirdIcon from "../lib/icons/BirdIcon.svelte";
+  import BikeIcon from "../lib/icons/BikeIcon.svelte";
   import config from "../config";
   import { locationStore } from "../store/location";
   import { clearRoute, mapStore } from "../store/map";
@@ -27,7 +34,7 @@
   import { push } from "svelte-spa-router";
   import { EDIT_MODE_ZOOM, key } from "./Map/map.config";
   import { LngLatBounds } from "mapbox-gl";
-  import { prefsStore } from "../store/prefs";
+  import { preferredUnits, prefsStore } from "../store/prefs";
   import {
     ArrowLeftSolid,
     ArrowUpRightFromSquareOutline,
@@ -65,10 +72,27 @@
   $: tags = rack?.tags;
 
   let lastId;
+  let cycleDistance = 0;
+  let directDistance = 0;
+
   $: {
     if (rack && (rack.id !== lastId || $mapStore.route.data === null)) {
       lastId = rack.id;
       loadDetails();
+    }
+  }
+  $: {
+    if ($mapStore.route?.data) {
+      cycleDistance =
+        $mapStore.route.data.features[0].properties.summary.distance;
+      const start = $mapStore.route.start;
+      const end = $mapStore.route.end;
+      if (start && end) {
+        directDistance = haversine(start, end);
+      }
+    } else {
+      cycleDistance = 0;
+      directDistance = 0;
     }
   }
   $: location = address
@@ -162,11 +186,18 @@
 
 <Card padding="none" class="flex-1 flex flex-col overflow-x-hidden">
   {#if rack}
-    <div class="p-3 flex gap-2 items-center">
+    <div class="p-3 flex items-center">
       <div class="flex items-center">
         <Button size="sm" color="none" class="w-9 h-9" href="#/">
           <ArrowLeftSolid class="w-4 h-4 outline-none" />
         </Button>
+      </div>
+      <div class="px-1 mr-1">
+        <RackIcon
+          name={tags.bicycle_parking}
+          capacity={tags.capacity}
+          size={7}
+        />
       </div>
       <div class="flex-1 flex flex-col">
         <Heading tag="h6">
@@ -180,12 +211,23 @@
           })}
         </P>
       </div>
-      <div class="mx-2">
-        <RackIcon
-          name={tags.bicycle_parking}
-          capacity={tags.capacity}
-          size={7}
-        />
+      <div class="flex items-start flex-col">
+        {#if cycleDistance}
+          <div class="flex items-center">
+            <P size="xs" weight="medium">
+              {renderDistance(cycleDistance, $preferredUnits)}
+            </P>
+            <BikeIcon class="w-5 ml-2" />
+          </div>
+        {/if}
+        {#if directDistance}
+          <div class="flex items-center">
+            <P size="xs" weight="medium">
+              {renderDistance(directDistance, $preferredUnits)}
+            </P>
+            <BirdIcon class="w-5 ml-2" />
+          </div>
+        {/if}
       </div>
     </div>
 
