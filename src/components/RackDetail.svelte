@@ -211,7 +211,7 @@
           })}
         </P>
       </div>
-      <div class="flex items-start flex-col">
+      <div class="flex items-end flex-col">
         {#if cycleDistance}
           <div class="flex items-center">
             <P size="xs" weight="medium">
