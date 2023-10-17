@@ -51,6 +51,8 @@ export default {
       matchingResults_one: "{{count}} matching result",
       matchingResults_other: "{{count}} matching results",
       sortFilter: "Sort / filter",
+      nothingNearby: "Nothing nearby!",
+      zoomIn: "Try zooming in a bit.",
       rainExpected: "Rain expected around {{time}}!",
       now: "now",
       narrowSearch: "Narrow your search to only covered racks?",

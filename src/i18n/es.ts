@@ -51,6 +51,8 @@ export default {
       matchingResults_one: "{{count}} resultado coincidente",
       matchingResults_other: "{{count}} resultados coincidentes",
       sortFilter: "Ordenar / filtrar",
+      nothingNearby: "¡Nada cerca!",
+      zoomIn: "Intente acercarse un poco.",
       rainExpected: "¡Se espera lluvia alrededor de {{time}}!",
       now: "ahora",
       narrowSearch: "¿Estrechar su búsqueda solo a bastidores cubiertos?",

@@ -10,13 +10,10 @@
   } from "../types/rack";
   import RackIcon from "../lib/icons/RackIcon.svelte";
   import { renderDistance } from "../util";
-  import { preferredUnits, prefsStore } from "../store/prefs";
+  import { preferredUnits } from "../store/prefs";
   import { t } from "../i18n/index";
-  import { getContext, onMount } from "svelte";
-  import { key } from "./Map/map.config";
-
-  const { getMap } = getContext(key) as any;
-  const map = getMap();
+  import { RACKS_LAYER_MAX_ZOOM } from "./Map/map.config";
+  import { mapStore } from "../store/map";
 
   function renderType(type: RackType): string {
     if (!type) return $t("rack.type.unknown");
@@ -61,19 +58,16 @@
       .filter(Boolean)
       .join(" • ");
   }
-
-  onMount(() => {
-    // map?.flyTo({
-    //   pitch: 0,
-    //   bearing: 0,
-    //   duration: $prefsStore.prefs.animationSpeedMs,
-    // });
-  });
 </script>
 
 {#if !$racks.length}
   <div class="h-full flex items-center justify-center">
-    <P size="sm">Nothing nearby!</P>
+    <P size="sm">
+      {$t("nearbyRacksPanel.nothingNearby")}
+      {#if $mapStore.zoom < RACKS_LAYER_MAX_ZOOM}
+        {$t("nearbyRacksPanel.zoomIn")}
+      {/if}
+    </P>
   </div>
 {:else}
   <div class="flex flex-col h-full">
