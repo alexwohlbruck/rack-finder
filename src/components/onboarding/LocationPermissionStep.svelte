@@ -54,6 +54,9 @@
         {$t("onboarding.locationPermissionStep.permissionDenied")}
       </span>
     </Alert>
+    <FlowbiteButton outline size="sm" on:click={skip}>
+      {$t("onboarding.locationPermissionStep.skip")}
+    </FlowbiteButton>
   {:else}
     <div class="flex gap-2">
       <Button size="sm" on:click={requestLocation}>
