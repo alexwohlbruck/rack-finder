@@ -45,7 +45,7 @@ export const renderDistance = (
     : metersToFeet(distanceInMeters);
 
   const longDistance = shortDistance / longUnitValue;
-  if (longDistance < 1) {
+  if (longDistance < 0.1) {
     return `${Math.round(shortDistance)} ${shortUnit}`;
   }
   return `${longDistance.toFixed(1)} ${longUnit}`;
