@@ -12,7 +12,7 @@
   } from "flowbite-svelte";
   import Button from "../lib/Button.svelte";
   import { t } from "../i18n";
-  import { racksStore } from "../store/racks";
+  import { racksStore, searchOptionsStore } from "../store/racks";
   import {
     friendlyName,
     haversine,
@@ -85,8 +85,8 @@
     if ($mapStore.route?.data) {
       cycleDistance =
         $mapStore.route.data.features[0].properties.summary.distance;
-      const start = $mapStore.route.start;
-      const end = $mapStore.route.end;
+      const start = $locationStore;
+      const end = rack;
       if (start && end) {
         directDistance = haversine(start, end);
       }
