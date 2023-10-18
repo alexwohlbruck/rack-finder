@@ -42,8 +42,10 @@
       $prefsStore.prefs.locateOnOpen &&
       map &&
       mapLoaded &&
-      onboardingCompleted
+      onboardingCompleted &&
+      !geolocateControl._watchState.includes("ACTIVE")
     ) {
+      console.log(geolocateControl._watchState);
       geolocateControl.trigger();
     }
   }
@@ -56,5 +58,6 @@
 
   map.on("load", () => {
     mapLoaded = true;
+    geolocate();
   });
 </script>
