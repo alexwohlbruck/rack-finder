@@ -175,6 +175,13 @@ export default {
       clearCacheDescription:
         "Esto lo desconectará y borrará todos los datos que se hayan almacenado en su dispositivo.",
     },
+    installModal: {
+      title: "¿Vienes aquí a menudo?",
+      description:
+        "Agregue Rack Finder a su pantalla de inicio para un acceso rápido.",
+      install: "Instalar",
+      no: "No, gracias",
+    },
     infoModal: {
       title: "Acerca de Rack Finder",
       uses: "Rack Finder usa",

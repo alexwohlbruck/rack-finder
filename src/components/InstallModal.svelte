@@ -9,7 +9,7 @@
 
   let deferredPrompt;
 
-  const showPromptOnVisitCounts = [3, 20, 100];
+  const showPromptOnVisitCounts = [3, 50, 500];
   const minVisitCount = Math.min(...showPromptOnVisitCounts);
 
   onMount(() => {
@@ -59,9 +59,11 @@
 <Modal bind:open outsideclose class="w-400">
   <div class="flex flex-col gap-5">
     <div class="flex flex-col gap-1">
-      <Heading tag="h5" class="text-center">Come here often?</Heading>
+      <Heading tag="h5" class="text-center">
+        {$t("installModal.title")}
+      </Heading>
       <P size="sm" class="text-center !mt-0">
-        Add Rack Finder to your home screen for quick access.
+        {$t("installModal.description")}
       </P>
     </div>
 
@@ -70,10 +72,12 @@
     <div class="flex gap-2 w-full justify-center !mt-0">
       <Button on:click={showPrompt}>
         <DownloadSolid class="w-4 h-4 mr-3" />
-        Install
+        {$t("installModal.install")}
       </Button>
 
-      <Button outline on:click={closePrompt}>No, thanks.</Button>
+      <Button outline on:click={closePrompt}>
+        {$t("installModal.no")}
+      </Button>
     </div>
   </div>
 </Modal>

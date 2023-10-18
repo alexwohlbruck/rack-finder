@@ -175,6 +175,12 @@ export default {
       clearCacheDescription:
         "This will sign you out and clear all data that has been cached on your device.",
     },
+    installModal: {
+      title: "Come here often?",
+      description: "Add Rack Finder to your home screen for quick access.",
+      install: "Install",
+      no: "No thanks",
+    },
     infoModal: {
       title: "About Rack Finder",
       uses: "Rack Finder uses",
