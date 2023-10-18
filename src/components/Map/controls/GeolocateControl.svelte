@@ -45,7 +45,6 @@
       onboardingCompleted &&
       !geolocateControl._watchState.includes("ACTIVE")
     ) {
-      console.log(geolocateControl._watchState);
       geolocateControl.trigger();
     }
   }

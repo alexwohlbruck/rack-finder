@@ -21,6 +21,7 @@ const defaultPrefs: {
   visits: number;
   onboardingCompleted: boolean;
   installed: boolean;
+  deniedInstall: boolean;
 } = {
   prefs: {
     theme: "auto",
@@ -34,6 +35,7 @@ const defaultPrefs: {
   visits: 0,
   onboardingCompleted: false,
   installed: false,
+  deniedInstall: false,
 };
 
 export const prefsStore = syncedWritable("prefs", defaultPrefs);
@@ -68,6 +70,20 @@ export const incrementVisits = () => {
 export const completeOnboarding = () => {
   prefsStore.update(($data) => {
     $data.onboardingCompleted = true;
+    return $data;
+  });
+};
+
+export const installedPWA = () => {
+  prefsStore.update(($data) => {
+    $data.installed = true;
+    return $data;
+  });
+};
+
+export const deniedInstall = () => {
+  prefsStore.update(($data) => {
+    $data.deniedInstall = true;
     return $data;
   });
 };

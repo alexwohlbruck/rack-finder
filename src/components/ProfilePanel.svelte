@@ -1,5 +1,5 @@
 <script>
-  import { A, Avatar, Button, ButtonGroup, Card, P } from "flowbite-svelte";
+  import { Button, ButtonGroup, Card } from "flowbite-svelte";
   import { authStore } from "../store/auth";
   import { authenticate, logout } from "../services/osm";
   import PreferencesModal from "./PreferencesModal.svelte";

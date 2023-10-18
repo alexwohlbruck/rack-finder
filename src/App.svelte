@@ -2,6 +2,7 @@
   import { Card } from "flowbite-svelte";
   import Map from "./components/Map/Map.svelte";
   import OnboardingModal from "./components/OnboardingModal.svelte";
+  import InstallModal from "./components/InstallModal.svelte";
   import ProfilePanel from "./components/ProfilePanel.svelte";
   import Toast from "./lib/Toast.svelte";
   import AppLogoPanel from "./components/AppLogoPanel.svelte";
@@ -25,6 +26,7 @@
   import { showToast } from "./store/toast";
 
   let map, fetchRacks;
+  let installModal = false;
 
   setContext(key, {
     getMap: () => map,
@@ -32,10 +34,11 @@
   });
 </script>
 
-<OnboardingModal />
-<Toast />
-
 <div class:dark={$dark}>
+  <OnboardingModal />
+  <InstallModal bind:open={installModal} />
+  <Toast />
+
   <main class="h-[100dvh] bg-gray-50 dark:bg-gray-900">
     <div
       class="h-full flex flex-col-reverse md:flex-row md- gap-2 items-stretch"
