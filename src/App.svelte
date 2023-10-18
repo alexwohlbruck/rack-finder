@@ -22,6 +22,7 @@
   import { setContext } from "svelte";
   import { key } from "./components/Map/map.config";
   import PlacementMarker from "./components/Map/markers/PlacementMarker.svelte";
+  import { showToast } from "./store/toast";
 
   let map, fetchRacks;
 

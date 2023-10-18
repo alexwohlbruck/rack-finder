@@ -36,7 +36,8 @@
   map.addControl(geolocateControl);
 
   $: onboardingCompleted = $prefsStore.onboardingCompleted;
-  $: {
+
+  function geolocate() {
     if (
       $prefsStore.prefs.locateOnOpen &&
       map &&
@@ -46,6 +47,12 @@
       geolocateControl.trigger();
     }
   }
+  $: {
+    geolocate(), $prefsStore.prefs.locateOnOpen;
+  }
+  window.onfocus = () => {
+    geolocate();
+  };
 
   map.on("load", () => {
     mapLoaded = true;
