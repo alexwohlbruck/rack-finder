@@ -12,6 +12,8 @@ export type Preferences = {
   units: UnitsOption;
   animationSpeedMs?: number;
   locateOnOpen?: boolean;
+  autoSatellite?: boolean;
+  buildings3d?: boolean;
 };
 
 const defaultPrefs: {
@@ -26,6 +28,8 @@ const defaultPrefs: {
     units: "auto",
     animationSpeedMs: 500,
     locateOnOpen: true,
+    autoSatellite: true,
+    buildings3d: true,
   },
   visits: 0,
   onboardingCompleted: false,

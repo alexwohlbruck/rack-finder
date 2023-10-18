@@ -119,9 +119,19 @@
       />
     </div>
 
-    <Toggle bind:checked={prefs.locateOnOpen} class="mt-3">
-      {$t("preferencesModal.locateOnOpen")}
-    </Toggle>
+    <div class="mt-3 flex flex-col gap-6">
+      <Toggle bind:checked={prefs.locateOnOpen}>
+        {$t("preferencesModal.locateOnOpen")}
+      </Toggle>
+
+      <Toggle bind:checked={prefs.autoSatellite}>
+        {$t("preferencesModal.autoSatellite")}
+      </Toggle>
+
+      <Toggle bind:checked={prefs.buildings3d}>
+        {$t("preferencesModal.buildings3d")}
+      </Toggle>
+    </div>
   </div>
 
   <Card class="!p-4 max-w-none !bg-red-500/10 !border-red-500/40">

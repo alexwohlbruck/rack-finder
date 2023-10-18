@@ -4,6 +4,7 @@
   import SunCalc from "suncalc";
   import dark from "../../../store/theme";
   import { mapStore, toggleSatellite } from "../../../store/map";
+  import { prefsStore } from "../../../store/prefs";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -83,7 +84,9 @@
   });
 
   $: {
-    toggleSatellite(contributeMode);
+    if ($prefsStore.prefs.autoSatellite) {
+      toggleSatellite(contributeMode);
+    }
   }
   // Handle change to satellite
   let satellite = $mapStore.satellite;

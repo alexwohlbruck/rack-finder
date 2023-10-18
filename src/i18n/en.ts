@@ -168,6 +168,8 @@ export default {
       advanced: "Advanced",
       mapAnimationSpeed: "Map camera animation speed",
       locateOnOpen: "Locate me upon opening the app",
+      autoSatellite: "Turn on satellite view in add/edit mode",
+      buildings3d: "Show 3D buildings in satellite view",
       dangerZone: "Danger zone",
       clearCache: "Clear application cache",
       clearCacheDescription:
