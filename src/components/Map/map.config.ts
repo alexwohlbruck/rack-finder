@@ -1,5 +1,6 @@
 import colors from "tailwindcss/colors";
 import { getLocalStorage } from "../../localStorage";
+import config from "../../config";
 
 const mapStore = getLocalStorage("map");
 
@@ -35,8 +36,7 @@ export const styles = {
 export const key = {};
 
 export const mapConfig = {
-  accessToken:
-    "pk.eyJ1IjoiYWxleHdvaGxicnVjayIsImEiOiJjbGtxNXhibTYwbGJ0M2RuenUybTg3bDZlIn0.lfZIscTvkJKY9P1cxR1nhQ",
+  accessToken: config.mapboxKey,
   center: [INITIAL_STATE.lng, INITIAL_STATE.lat],
   zoom: INITIAL_STATE.zoom,
   fadeDuration: 200,

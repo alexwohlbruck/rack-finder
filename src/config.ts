@@ -4,6 +4,7 @@ function env(key: string) {
 
 const config = {
   useDevData: env("USE_DEV_DATA") === "true",
+  mapboxKey: env("MAPBOX_KEY"),
   osmClientId: env("OSM_CLIENT_ID"),
   overpassUrl: env("OVERPASS_URL"),
   nominatimUrl: env("NOMINATIM_URL"),

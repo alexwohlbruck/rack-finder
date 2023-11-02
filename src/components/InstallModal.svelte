@@ -16,7 +16,7 @@
     window.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
 
-      const isInstalled = $prefsStore.installed;
+      const isInstalled = $prefsStore.installed; // TODO: Not needed?
       const deniedInstall = $prefsStore.deniedInstall;
       const neverAsked = !isInstalled && !deniedInstall;
       const visitCount = $prefsStore.visits;
