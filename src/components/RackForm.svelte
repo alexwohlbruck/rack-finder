@@ -100,14 +100,10 @@
       value: "wall_loops",
       name: "Wall loops",
     },
-    // {
-    //   value: "building",
-    //   name: "Building",
-    // },
-    // {
-    //   value: "two-tier",
-    //   name: "Two tier",
-    // },
+    {
+      value: "two-tier",
+      name: "Two tier",
+    },
   ];
   const accessOptions = [
     {

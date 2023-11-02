@@ -13,6 +13,12 @@
   }
 </script>
 
-<div class="text-primary-600">
+<div class="rack-icon text-primary-600">
   <svelte:component this={icon} {...$$props} class={`w-${size} h-${size}`} />
 </div>
+
+<style>
+  :global(.rack-icon svg) {
+    fill: currentColor;
+  }
+</style>

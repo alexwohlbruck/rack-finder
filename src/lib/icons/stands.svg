@@ -1,4 +1,6 @@
 <svg class="w-4 h-4"
-  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-  <path fill="currentColor" d="M25,3.2c-7.7,0-14,6.3-14,14v29.5h7.1V17.2c0-3.8,3.1-6.9,6.9-6.9s6.9,3.1,6.9,6.9v29.5H39V17.2C39,9.5,32.7,3.2,25,3.2z" />
+	xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+	<path d="M23.3,3.3C16.2,4.1,11,10.4,11,17.6c0,7.6,0,19.6,0,25.5c0,2,1.6,3.5,3.5,3.5h0c2,0,3.5-1.6,3.5-3.5l0-25.6
+	c0-3.5,2.5-6.7,6-7.1c4.2-0.5,7.8,2.8,7.8,6.8v26c0,2,1.6,3.5,3.5,3.5h0c2,0,3.5-1.6,3.5-3.5v-26C39,9,31.8,2.3,23.3,3.3z"/>
 </svg>
+

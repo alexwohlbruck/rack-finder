@@ -1,14 +1,10 @@
 <svg class="w-4 h-4"
-  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-  <style type="text/css">
-    .st0 {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 5;
-      stroke-linecap: round;
-      stroke-miterlimit: 10;
-    }
-  </style>
-  <line class="st0" x1="24.4" y1="46.3" x2="24.4" y2="4.7" />
-  <circle class="st0" cx="24.4" cy="22.9" r="11.5" />
+	xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+	<g>
+		<path d="M24.4,48.8c-1.4,0-2.5-1.1-2.5-2.5V4.7c0-1.4,1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5v41.6C26.9,47.7,25.8,48.8,24.4,48.8z"/>
+	</g>
+	<g>
+		<path d="M24.4,36.9c-7.7,0-14-6.3-14-14c0-7.7,6.3-14,14-14c7.7,0,14,6.3,14,14C38.4,30.6,32.1,36.9,24.4,36.9z M24.4,13.9
+		c-5,0-9,4-9,9s4,9,9,9s9-4,9-9S29.4,13.9,24.4,13.9z"/>
+	</g>
 </svg>
