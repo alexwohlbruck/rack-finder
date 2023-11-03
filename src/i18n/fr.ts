@@ -11,6 +11,7 @@ export default {
       yes: "Oui",
       no: "Non",
       chooseOption: "Choisissez une option",
+      showMore: "Montre plus",
       bikeRack: "rack à vélos",
     },
     onboarding: {
@@ -85,7 +86,7 @@ export default {
         anchors: "Ancre",
         lockers: "Casiers",
         ground_slots: "Fentes au sol",
-        informal: "Stationnement de vélo informel",
+        informal: "Informel",
         streetpod: "Pod de rue",
         crossbar: "Barre transversale",
         floor: "Zone désignée",

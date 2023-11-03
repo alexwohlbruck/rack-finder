@@ -81,67 +81,19 @@
   // TODO: Get this from type defs
   // TODO: Translate
   const rackTypeOptions = [
-    {
-      value: "stands",
-      name: "Stands",
-    },
-    {
-      value: "wave",
-      name: "Wave",
-    },
-    {
-      value: "bollard",
-      name: "Bollard",
-    },
-    {
-      value: "rack",
-      name: "Rack",
-    },
-    {
-      value: "wall_loops",
-      name: "Wall loops",
-    },
-    {
-      value: "two-tier",
-      name: "Two tier",
-    },
-    {
-      value: "anchors",
-      name: "Anchors",
-    },
-    {
-      value: "building",
-      name: "Building",
-    },
-    {
-      value: "wide_stands",
-      name: "Wide stands",
-    },
-    {
-      value: "safe_loops",
-      name: "Safe loops",
-    },
-    {
-      value: "lockers",
-      name: "Lockers",
-    },
-    {
-      value: "informal",
-      name: "Informal",
-    },
-    {
-      value: "shed",
-      name: "Shed",
-    },
-    // TODO: Icons
-    // {
-    //   value: "streetpod",
-    //   name: "Streetpod",
-    // },
-    // {
-    //   value: "tree",
-    //   name: "Tree",
-    // },
+    "stands",
+    "wave",
+    "bollard",
+    "rack",
+    "wall_loops",
+    "two-tier",
+    "anchors",
+    "building",
+    "wide_stands",
+    "safe_loops",
+    "lockers",
+    "informal",
+    "shed",
   ];
   let showOtherTypes = false;
   const accessOptions = [
@@ -252,7 +204,7 @@
   <div
     class="types grid gap-2 w-full grid-cols-3 sm:grid-cols-5 md:grid-cols-4"
   >
-    {#each rackTypeOptions as type, i}
+    {#each rackTypeOptions as type}
       <div
         class={showOtherTypes
           ? ""
@@ -261,14 +213,16 @@
         <Radio
           name="custom"
           custom
-          value={type.value}
+          value={type}
           bind:group={form.bicycle_parking}
         >
           <div
             class="inline-flex flex-col justify-center items-center gap-1 p-2 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-primary-500 peer-checked:border-primary-600 peer-checked:text-primary-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
           >
-            <RackIcon name={type.value} capacity="1" size={6} />
-            <P size="xs" weight="medium">{type.name}</P>
+            <RackIcon name={type} capacity="1" size={6} />
+            <P size="xs" weight="medium" class="text-center"
+              >{$t(`rack.type.${type}`)}</P
+            >
           </div>
         </Radio>
       </div>
@@ -282,7 +236,7 @@
         size="xs"
         on:click={() => (showOtherTypes = true)}
       >
-        Show more
+        {$t("common.showMore")}
       </FlowbiteButton>
     </div>
   {/if}
