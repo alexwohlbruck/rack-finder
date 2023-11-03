@@ -13,7 +13,7 @@ export const INITIAL_STATE = {
 };
 export const EDIT_MODE_ZOOM = 19;
 export const RACKS_LAYER_MAX_ZOOM = 13;
-export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 2.0 * radius + 2000;
+export const RACKS_FETCH_OUTER_BOUNDS_RATIO = (radius) => 1.5 * radius + 500;
 
 export const racksSourceName = "racks";
 export const routeSourceName = "route";
