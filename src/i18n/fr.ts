@@ -70,6 +70,12 @@ export default {
         indoor: "À l'intérieur",
         description: "Description",
       },
+      altCapacityFields: {
+        stands: "Nombre de supports",
+        wave: "Nombre de bosses ∩",
+        bollard: "Nombre de bornes",
+        rack: "Nombre de lacunes",
+      },
       type: {
         unknown: "Type inconnu",
         stands: "Supports",

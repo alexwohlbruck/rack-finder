@@ -41,6 +41,7 @@
   let form: BikeRackTags = {
     bicycle_parking: "stands",
     capacity: 2,
+    altCapacity: 1,
     access: "yes",
   };
 
@@ -77,9 +78,54 @@
       form.indoor = "no";
     }
   }
+  $: altCapacityFields = {
+    stands: {
+      label: $t("rack.altCapacityFields.stands"),
+      default: 1,
+      min: 1,
+      capacity: (x) => parseInt(x) * 2,
+    },
+    wave: {
+      label: $t("rack.altCapacityFields.wave"),
+      default: 2,
+      min: 2,
+      max: 6,
+      capacity: (x) => parseInt(x) * 2 + 1,
+    },
+    bollard: {
+      label: $t("rack.altCapacityFields.bollard"),
+      default: 1,
+      capacity: (x) => parseInt(x) * 2,
+    },
+    rack: {
+      label: $t("rack.altCapacityFields.rack"),
+      default: 5,
+      max: 20,
+      capacity: (x) => parseInt(x) + 2, // Allow bike on each end
+    },
+  };
+
+  function typeChanged() {
+    if (Object.keys(altCapacityFields).includes(form.bicycle_parking)) {
+      form.altCapacity = altCapacityFields[form.bicycle_parking].default;
+    } else {
+      form.capacity = 2;
+    }
+    altCapacityChanged();
+  }
+
+  function altCapacityChanged() {
+    const computedCapacity = altCapacityFields[form.bicycle_parking].capacity(
+      form.altCapacity
+    );
+    if (computedCapacity && !isNaN(computedCapacity)) {
+      form.capacity = computedCapacity;
+    } else {
+      form.capacity = "";
+    }
+  }
 
   // TODO: Get this from type defs
-  // TODO: Translate
   const rackTypeOptions = [
     "stands",
     "wave",
@@ -227,6 +273,7 @@
           custom
           value={type}
           bind:group={form.bicycle_parking}
+          on:change={typeChanged}
         >
           <div
             class="inline-flex flex-col justify-center items-center gap-1 p-2 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-primary-500 peer-checked:border-primary-600 peer-checked:text-primary-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
@@ -253,16 +300,32 @@
     </div>
   {/if}
 
-  <Label for="capacity">
-    <div class="mb-1">{$t("rack.attributes.capacity")}</div>
-    <Input
-      bind:value={form.capacity}
-      id="capacity"
-      type="number"
-      required
-      min="1"
-    />
-  </Label>
+  {#if Object.keys(altCapacityFields).includes(form.bicycle_parking)}
+    <!-- Abstracted capacity form which asks about the rack details instead of the direct capacity -->
+    <Label for="capacity-alt">
+      <div class="mb-1">{altCapacityFields[form.bicycle_parking].label}</div>
+      <Input
+        bind:value={form.altCapacity}
+        on:input={altCapacityChanged}
+        id="capacity-alt"
+        type="number"
+        required
+        min={altCapacityFields[form.bicycle_parking].min}
+        max={altCapacityFields[form.bicycle_parking].max}
+      />
+    </Label>
+  {:else}
+    <Label for="capacity">
+      <div class="mb-1">{$t("rack.attributes.capacity")}</div>
+      <Input
+        bind:value={form.capacity}
+        id="capacity"
+        type="number"
+        required
+        min="1"
+      />
+    </Label>
+  {/if}
 
   <Label for="access">
     <div class="mb-1">{$t("rack.attributes.access")}</div>

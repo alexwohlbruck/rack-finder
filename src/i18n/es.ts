@@ -70,6 +70,12 @@ export default {
         indoor: "En interiores",
         description: "Descripción",
       },
+      altCapacityFields: {
+        stands: "Número de soportes",
+        wave: "Número de baches ∩",
+        bollard: "Número de bolardos",
+        rack: "Número de huecos",
+      },
       type: {
         unknown: "Tipo desconocido",
         stands: "Soportes",

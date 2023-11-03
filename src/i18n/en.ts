@@ -70,6 +70,12 @@ export default {
         indoor: "Indoors",
         description: "Description",
       },
+      altCapacityFields: {
+        stands: "Number of stands",
+        wave: "Number of ∩ humps",
+        bollard: "Number of bollards",
+        rack: "Number of gaps",
+      },
       type: {
         unknown: "Unknown type",
         stands: "Stands",
