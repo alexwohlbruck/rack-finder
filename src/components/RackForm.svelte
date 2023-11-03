@@ -319,6 +319,7 @@
       <Input
         bind:value={form.altCapacity}
         on:input={altCapacityChanged}
+        on:focus={() => (form.altCapacity = "")}
         id="capacity-alt"
         type="number"
         required
@@ -331,6 +332,7 @@
       <div class="mb-1">{$t("rack.attributes.capacity")}</div>
       <Input
         bind:value={form.capacity}
+        on:focus={() => (form.capacity = "")}
         id="capacity"
         type="number"
         required
