@@ -9,6 +9,7 @@
     Spinner,
     Radio,
     Textarea,
+    Button as FlowbiteButton,
   } from "flowbite-svelte";
   import Button from "../lib/Button.svelte";
   import { mapStore } from "../store/map";
@@ -104,7 +105,45 @@
       value: "two-tier",
       name: "Two tier",
     },
+    {
+      value: "anchors",
+      name: "Anchors",
+    },
+    {
+      value: "building",
+      name: "Building",
+    },
+    {
+      value: "wide_stands",
+      name: "Wide stands",
+    },
+    {
+      value: "safe_loops",
+      name: "Safe loops",
+    },
+    {
+      value: "lockers",
+      name: "Lockers",
+    },
+    {
+      value: "informal",
+      name: "Informal",
+    },
+    {
+      value: "shed",
+      name: "Shed",
+    },
+    // TODO: Icons
+    // {
+    //   value: "streetpod",
+    //   name: "Streetpod",
+    // },
+    // {
+    //   value: "tree",
+    //   name: "Tree",
+    // },
   ];
+  let showOtherTypes = false;
   const accessOptions = [
     {
       value: "yes",
@@ -210,23 +249,43 @@
     <div>{$t("rack.attributes.type")}</div>
   </Label>
 
-  <div class="grid gap-2 w-full grid-cols-3 sm:grid-cols-5 md:grid-cols-4">
-    {#each rackTypeOptions as type}
-      <Radio
-        name="custom"
-        custom
-        value={type.value}
-        bind:group={form.bicycle_parking}
+  <div
+    class="types grid gap-2 w-full grid-cols-3 sm:grid-cols-5 md:grid-cols-4"
+  >
+    {#each rackTypeOptions as type, i}
+      <div
+        class={showOtherTypes
+          ? ""
+          : "hidden [&:nth-child(-n+6)]:block sm:[&:nth-child(-n+10)]:block md:[&:nth-child(-n+10)]:hidden md:[&:nth-child(-n+8)]:block"}
       >
-        <div
-          class="inline-flex flex-col justify-center items-center gap-1 p-2 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-primary-500 peer-checked:border-primary-600 peer-checked:text-primary-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+        <Radio
+          name="custom"
+          custom
+          value={type.value}
+          bind:group={form.bicycle_parking}
         >
-          <RackIcon name={type.value} capacity="1" size={6} />
-          <P size="xs" weight="medium">{type.name}</P>
-        </div>
-      </Radio>
+          <div
+            class="inline-flex flex-col justify-center items-center gap-1 p-2 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-primary-500 peer-checked:border-primary-600 peer-checked:text-primary-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+          >
+            <RackIcon name={type.value} capacity="1" size={6} />
+            <P size="xs" weight="medium">{type.name}</P>
+          </div>
+        </Radio>
+      </div>
     {/each}
   </div>
+
+  {#if !showOtherTypes}
+    <div class="flex flex-col items-center">
+      <FlowbiteButton
+        outline
+        size="xs"
+        on:click={() => (showOtherTypes = true)}
+      >
+        Show more
+      </FlowbiteButton>
+    </div>
+  {/if}
 
   <Label for="capacity">
     <div class="mb-1">{$t("rack.attributes.capacity")}</div>
