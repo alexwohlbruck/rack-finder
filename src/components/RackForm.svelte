@@ -99,57 +99,69 @@
   const accessOptions = [
     {
       value: "yes",
-      name: "Public",
+      name: $t("rack.access.yes"),
     },
     {
       value: "permissive",
-      name: "Permissive (Needs key/code access or must be customer)",
+      name: `${$t("rack.access.permissive")} (${$t(
+        "rack.access.permissiveDescription"
+      )})`,
     },
     {
       value: "private",
-      name: "Private (Private residence or business)",
+      name: `${$t("rack.access.private")} (${$t(
+        "rack.access.privateDescription"
+      )})`,
     },
   ];
   const indoorOptions = [
     {
       value: "yes",
-      name: "Indoors",
+      name: $t("rack.indoors.yes"),
     },
     {
       value: "no",
-      name: "Outdoors",
+      name: $t("rack.indoors.no"),
     },
   ];
   const coverageOptions = [
     {
       value: "no",
-      name: "Exposed",
+      name: $t("rack.covered.no"),
     },
     {
       value: "yes",
-      name: "Covered",
+      name: $t("rack.covered.yes"),
     },
     {
       value: "partial",
-      name: "Partially covered",
+      name: $t("rack.covered.partial"),
     },
   ];
   const footTrafficOptions = [
     {
       value: "high",
-      name: "High traffic (Public square, ped path, etc)",
+      name: `${$t("rack.foot_traffic.high")} (${$t(
+        "rack.foot_traffic.highDescription"
+      )})`,
     },
     {
       value: "medium",
-      name: "Medium traffic (Nearby a high traffic area, but not directly visible)",
+      name: `${$t("rack.foot_traffic.medium")} (${$t(
+        "rack.foot_traffic.mediumDescription"
+      )})`,
     },
     {
       value: "low",
-      name: "Low traffic (Side of building, parking lot, etc)",
+      name: `${$t("rack.foot_traffic.low")} (${$t(
+        "rack.foot_traffic.lowDescription"
+      )})`,
     },
     {
       value: "none",
-      name: "No traffic (Back of building, alleyway, etc)",
+      name: `${$t("rack.foot_traffic.none")} (${$t(
+        "rack.foot_traffic.noneDescription"
+      )})`,
     },
   ];
 

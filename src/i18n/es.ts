@@ -107,14 +107,22 @@ export default {
       },
       foot_traffic: {
         none: "Sin tráfico peatonal",
+        noneDescription: "Parte trasera del edificio, callejón, etc.",
         low: "Tráfico peatonal bajo",
+        lowDescription: "Lado del edificio, estacionamiento, etc.",
         medium: "Tráfico peatonal medio",
+        mediumDescription:
+          "Cerca de un área de alto tráfico, pero no directamente visible",
         high: "Tráfico peatonal alto",
+        highDescription: "Plaza pública, camino peatonal, etc.",
       },
       access: {
         private: "Privado",
+        privateDescription: "Residencia o negocio privado",
         yes: "Público",
         permissive: "Acceso permisivo",
+        permissiveDescription:
+          "Necesita acceso clave / código o debe ser cliente",
         customers: "Solo clientes",
       },
       indoors: {

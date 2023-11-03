@@ -106,15 +106,23 @@ export default {
         no: "Exposé",
       },
       foot_traffic: {
-        none: "Pas de trafic piétonnier",
+        none: "Aucun trafic piétonnier",
+        noneDescription: "Arrière du bâtiment, ruelle, etc.",
         low: "Faible trafic piétonnier",
+        lowDescription: "Côté du bâtiment, parking, etc.",
         medium: "Trafic piétonnier moyen",
+        mediumDescription:
+          "Près d'une zone à fort trafic, mais pas directement visible",
         high: "Trafic piétonnier élevé",
+        highDescription: "Place publique, chemin piétonnier, etc.",
       },
       access: {
         private: "Privé",
+        privateDescription: "Résidence ou entreprise privée",
         yes: "Public",
         permissive: "Accès permissif",
+        permissiveDescription:
+          "Besoin d'un accès clé / code ou doit être client",
         customers: "Clients seulement",
       },
       indoors: {

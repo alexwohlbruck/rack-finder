@@ -107,14 +107,21 @@ export default {
       },
       foot_traffic: {
         none: "No foot traffic",
+        noneDescription: "Back of building, alleyway, etc",
         low: "Low foot traffic",
+        lowDescription: "Side of building, parking lot, etc",
         medium: "Medium foot traffic",
+        mediumDescription:
+          "Nearby a high traffic area, but not directly visible",
         high: "High foot traffic",
+        highDescription: "Public square, ped path, etc",
       },
       access: {
         private: "Private",
+        privateDescription: "Private residence or business",
         yes: "Public",
         permissive: "Permissive access",
+        permissiveDescription: "Needs key/code access or must be customer",
         customers: "Customers only",
       },
       indoor: {
