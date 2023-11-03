@@ -40,8 +40,11 @@
     const radius = ignoreZoom
       ? DEFAULT_FETCH_RADIUS
       : RACKS_FETCH_OUTER_BOUNDS_RATIO(getViewportRadius());
+    const radiusWithBuffer = ignoreZoom
+      ? radius
+      : RACKS_FETCH_OUTER_BOUNDS_RATIO(radius);
     areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
-    op.fetchRacks(center, radius);
+    op.fetchRacks(center, ignoreZoom ? DEFAULT_FETCH_RADIUS : radiusWithBuffer);
   }
 
   // Check if the map bounds are within any of the previously loaded areas
