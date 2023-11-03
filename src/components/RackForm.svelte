@@ -175,11 +175,11 @@
   const indoorOptions = [
     {
       value: "yes",
-      name: $t("rack.indoors.yes"),
+      name: $t("rack.indoor.yes"),
     },
     {
       value: "no",
-      name: $t("rack.indoors.no"),
+      name: $t("rack.indoor.no"),
     },
   ];
   const coverageOptions = [

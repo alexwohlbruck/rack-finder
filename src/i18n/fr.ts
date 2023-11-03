@@ -131,7 +131,7 @@ export default {
           "Besoin d'un accès clé / code ou doit être client",
         customers: "Clients seulement",
       },
-      indoors: {
+      indoor: {
         yes: "À l'intérieur",
         no: "À l'extérieur",
       },
