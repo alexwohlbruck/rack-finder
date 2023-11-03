@@ -47,9 +47,17 @@
 
   function initForm(originalRack) {
     if (originalRack) {
+      const type = originalRack.tags.bicycle_parking;
+      let computedAltCapacity = 1;
+      if (Object.keys(altCapacityFields).includes(type)) {
+        computedAltCapacity = altCapacityFields[type]?.reverseCompute(
+          originalRack.tags.capacity
+        );
+      }
       form = {
         ...form,
         ...originalRack.tags,
+        altCapacity: computedAltCapacity,
       };
     }
   }
@@ -58,10 +66,6 @@
   $: rack = $racksStore[params.id];
   $: isMyRack = rack?.user === me?.display_name;
   $: editMode = $mapStore.editMode;
-  $: {
-    const originalRack = $racksStore[params.id];
-    initForm(originalRack);
-  }
   $: if (editMode) {
     const rack = $racksStore[$location.split("/")[2]];
     if (rack) {
@@ -84,6 +88,7 @@
       default: 1,
       min: 1,
       capacity: (x) => parseInt(x) * 2,
+      reverseCompute: (x) => Math.ceil(parseInt(x) / 2),
     },
     wave: {
       label: $t("rack.altCapacityFields.wave"),
@@ -91,19 +96,26 @@
       min: 2,
       max: 6,
       capacity: (x) => parseInt(x) * 2 + 1,
+      reverseCompute: (x) => Math.ceil((parseInt(x) - 1) / 2),
     },
     bollard: {
       label: $t("rack.altCapacityFields.bollard"),
       default: 1,
       capacity: (x) => parseInt(x) * 2,
+      reverseCompute: (x) => Math.ceil(parseInt(x) / 2),
     },
     rack: {
       label: $t("rack.altCapacityFields.rack"),
       default: 5,
       max: 20,
       capacity: (x) => parseInt(x) + 2, // Allow bike on each end
+      reverseCompute: (x) => parseInt(x) - 2,
     },
   };
+  $: {
+    const originalRack = $racksStore[params.id];
+    initForm(originalRack);
+  }
 
   function typeChanged() {
     if (Object.keys(altCapacityFields).includes(form.bicycle_parking)) {
