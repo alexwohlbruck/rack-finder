@@ -44,7 +44,9 @@
 
   function setLightPreset(lightPreset = "day") {
     if (!map || !mapLoaded) return;
-    map.setConfigProperty("basemap", "lightPreset", lightPreset);
+    if (mapHasBasemap()) {
+      map.setConfigProperty("basemap", "lightPreset", lightPreset);
+    }
   }
 
   function setDarkTheme(dark?: boolean) {
@@ -52,7 +54,18 @@
   }
 
   function showPOILabels(show: boolean) {
-    map.setConfigProperty("basemap", "showPointOfInterestLabels", show);
+    if (mapHasBasemap()) {
+      map.setConfigProperty("basemap", "showPointOfInterestLabels", show);
+    }
+  }
+
+  function mapHasBasemap() {
+    try {
+      map.style.fragments?.some((f: any) => f.id === "basemap");
+      return true;
+    } catch (err) {
+      return false;
+    }
   }
 
   $: {
