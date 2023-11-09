@@ -61,8 +61,7 @@
 
   function mapHasBasemap() {
     try {
-      map.style.fragments?.some((f: any) => f.id === "basemap");
-      return true;
+      return map.style.fragments?.some((f: any) => f.id === "basemap");
     } catch (err) {
       return false;
     }
