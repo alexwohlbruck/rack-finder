@@ -49,7 +49,9 @@
     if (map.getLayer("satellite") && $prefsStore.prefs.buildings3d) {
       map.addLayer(buildings3dConfig);
     } else {
-      map.removeLayer(buildings3dLayerName);
+      if (map.getLayer(buildings3dLayerName)) {
+        map.removeLayer(buildings3dLayerName);
+      }
     }
   }
 
