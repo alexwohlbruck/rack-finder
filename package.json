@@ -26,7 +26,7 @@
     "flowbite-svelte": "^0.44.4",
     "flowbite-svelte-icons": "^0.4.4",
     "i18next": "^23.4.6",
-    "mapbox-gl": "^3.0.0-beta.3",
+    "mapbox-gl": "^3.0.0-rc.1",
     "osm-auth": "^2.2.0",
     "stream": "^0.0.2",
     "suncalc": "^1.9.0",
