@@ -278,7 +278,7 @@ const dictToKVList = (dict) => {
     .filter(({ value }) => value); // Remove empty tags
 };
 
-export const addBikeRack = async (rack: Rack) => {
+export const addBikeRack = async (rack: Partial<Rack>) => {
   const { lat, lng } = rack;
   const tags = dictToKVList(rack.tags);
 
@@ -332,7 +332,10 @@ export const getBikeRack = async (id: number, type: "node") => {
   }
 };
 
-export const editBikeRack = async (rack: Rack, requestReview = true) => {
+export const editBikeRack = async (
+  rack: Partial<Rack>,
+  requestReview = true
+) => {
   const { id, version, lat, lng } = rack;
   const tags = dictToKVList(rack.tags);
 

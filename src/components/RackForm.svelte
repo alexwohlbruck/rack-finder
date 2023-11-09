@@ -232,6 +232,7 @@
       tags: form,
       description: form.description ? form.description : undefined,
     };
+    delete payload.tags.altCapacity;
     submitLoading = true;
     if (editMode) {
       await editBikeRack(
@@ -241,9 +242,9 @@
           ...payload,
         },
         !isMyRack
-      ); // TODO: Type error
+      );
     } else {
-      await addBikeRack(payload); // TODO: Type error
+      await addBikeRack(payload);
     }
     push("/");
     submitLoading = false;
