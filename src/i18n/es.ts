@@ -147,6 +147,8 @@ export default {
       editTitle: "Editar estacionamiento",
       instruction: "Arrastre el marcador a la ubicación del estacionamiento",
       addToMap: "Agregar al mapa",
+      enter: "Escribir",
+      enterCapacityInstead: "Escribir capacidad",
     },
     deleteConfirmationModal: {
       deleteWarning: "Este estacionamiento se eliminará de OpenStreetMap.",

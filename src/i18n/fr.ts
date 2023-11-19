@@ -147,6 +147,8 @@ export default {
       editTitle: "Modifier le rack à vélos",
       instruction: "Faites glisser le marqueur à l'emplacement du rack",
       addToMap: "Ajouter à la carte",
+      enter: "Entrer",
+      enterCapacityInstead: "Entrez la capacité à la place",
     },
     deleteConfirmationModal: {
       deleteWarning: "Ce rack sera supprimé d'OpenStreetMap.",

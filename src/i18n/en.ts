@@ -146,6 +146,8 @@ export default {
       editTitle: "Edit bike rack", // TODO: Add type variable
       instruction: "Drag the marker to the location of the rack",
       addToMap: "Add to map",
+      enter: "Enter",
+      enterCapacityInstead: "Enter capacity instead",
     },
     deleteConfirmationModal: {
       deleteWarning: "This rack will be deleted from OpenStreetMap.",

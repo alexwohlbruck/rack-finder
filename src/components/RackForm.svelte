@@ -112,6 +112,10 @@
       reverseCompute: (x) => parseInt(x) - 2,
     },
   };
+  $: showAltCapacityField = Object.keys(altCapacityFields).includes(
+    form.bicycle_parking
+  );
+  let manualEnterCapacity = false;
   $: {
     const originalRack = $racksStore[params.id];
     initForm(originalRack);
@@ -127,7 +131,7 @@
   }
 
   function altCapacityChanged() {
-    const computedCapacity = altCapacityFields[form.bicycle_parking].capacity(
+    const computedCapacity = altCapacityFields[form.bicycle_parking]?.capacity(
       form.altCapacity
     );
     if (computedCapacity && !isNaN(computedCapacity)) {
@@ -313,32 +317,59 @@
     </div>
   {/if}
 
-  {#if Object.keys(altCapacityFields).includes(form.bicycle_parking)}
+  {#if showAltCapacityField && !manualEnterCapacity}
     <!-- Abstracted capacity form which asks about the rack details instead of the direct capacity -->
     <Label for="capacity-alt">
-      <div class="mb-1">{altCapacityFields[form.bicycle_parking].label}</div>
-      <Input
-        bind:value={form.altCapacity}
-        on:input={altCapacityChanged}
-        on:focus={() => (form.altCapacity = "")}
-        id="capacity-alt"
-        type="number"
-        required
-        min={altCapacityFields[form.bicycle_parking].min}
-        max={altCapacityFields[form.bicycle_parking].max}
-      />
+      <div class="mb-1">
+        {altCapacityFields[form.bicycle_parking].label}
+      </div>
+      <div class="flex gap-2">
+        <Input
+          bind:value={form.altCapacity}
+          on:input={altCapacityChanged}
+          on:focus={() => (form.altCapacity = "")}
+          id="capacity-alt"
+          type="number"
+          required
+          min={altCapacityFields[form.bicycle_parking].min}
+          max={altCapacityFields[form.bicycle_parking].max}
+        />
+        {#if showAltCapacityField}
+          <FlowbiteButton
+            outline
+            size="xs"
+            class="whitespace-nowrap"
+            on:click={() => (manualEnterCapacity = true)}
+          >
+            {$t("rackForm.enterCapacityInstead")}
+          </FlowbiteButton>
+        {/if}
+      </div>
     </Label>
   {:else}
     <Label for="capacity">
       <div class="mb-1">{$t("rack.attributes.capacity")}</div>
-      <Input
-        bind:value={form.capacity}
-        on:focus={() => (form.capacity = "")}
-        id="capacity"
-        type="number"
-        required
-        min="1"
-      />
+      <div class="flex gap-2">
+        <Input
+          bind:value={form.capacity}
+          on:focus={() => (form.capacity = "")}
+          id="capacity"
+          type="number"
+          required
+          min="1"
+        />
+        {#if showAltCapacityField}
+          <FlowbiteButton
+            outline
+            size="xs"
+            class="whitespace-nowrap"
+            on:click={() => (manualEnterCapacity = false)}
+          >
+            {$t("rackForm.enter")}
+            {altCapacityFields[form.bicycle_parking]?.label?.toLowerCase()}
+          </FlowbiteButton>
+        {/if}
+      </div>
     </Label>
   {/if}
 
