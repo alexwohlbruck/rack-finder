@@ -203,7 +203,7 @@ export default {
       free: "This app is 100% free to use and open source. None of your data will be tracked, stored or sold, with the exception of any public contributions you make via your",
       account: "account",
       contributionsOpenSource:
-        "These contributions are public and open source, and will be attributed to you licensed under the the",
+        "These contributions are public and open source, and will be attributed to you licensed under the",
       license: "ODbL license",
       happyCycling: "Happy cycling! 🚲🚲",
       madeBy: "Made with 💛 by",
