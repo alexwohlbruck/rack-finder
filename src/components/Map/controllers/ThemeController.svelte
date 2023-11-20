@@ -79,14 +79,20 @@
 
   map.on("style.load", () => {
     setDarkTheme();
-    showPOILabels(false);
+    showPOILabels($prefsStore.prefs.showPOIs);
   });
 
   $: {
-    if ($prefsStore.prefs.autoSatellite) {
+    if (mapLoaded && $prefsStore.prefs.autoSatellite) {
       toggleSatellite(contributeMode);
     }
   }
+  $: {
+    if (mapLoaded) {
+      showPOILabels($prefsStore.prefs.showPOIs);
+    }
+  }
+
   // Handle change to satellite
   let satellite = $mapStore.satellite;
   $: {

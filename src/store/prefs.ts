@@ -14,6 +14,7 @@ export type Preferences = {
   locateOnOpen?: boolean;
   autoSatellite?: boolean;
   buildings3d?: boolean;
+  showPOIs?: boolean;
 };
 
 const defaultPrefs: {
@@ -31,6 +32,7 @@ const defaultPrefs: {
     locateOnOpen: true,
     autoSatellite: true,
     buildings3d: true,
+    showPOIs: false,
   },
   visits: 0,
   onboardingCompleted: false,

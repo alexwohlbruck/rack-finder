@@ -186,6 +186,7 @@ export default {
       locateOnOpen: "Locate me upon opening the app",
       autoSatellite: "Turn on satellite view in add/edit mode",
       buildings3d: "Show 3D buildings in satellite view",
+      showPOIs: "Show points of interest on the map",
       dangerZone: "Danger zone",
       clearCache: "Clear application cache",
       clearCacheDescription:

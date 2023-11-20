@@ -131,6 +131,10 @@
       <Toggle bind:checked={prefs.buildings3d}>
         {$t("preferencesModal.buildings3d")}
       </Toggle>
+
+      <Toggle bind:checked={prefs.showPOIs}>
+        {$t("preferencesModal.showPOIs")}
+      </Toggle>
     </div>
   </div>
 

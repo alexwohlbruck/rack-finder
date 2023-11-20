@@ -187,6 +187,7 @@ export default {
       locateOnOpen: "Localízame al abrir la aplicación",
       autoSatellite: "Activar vista satelital en modo agregar / editar",
       buildings3d: "Mostrar edificios 3D en vista satelital",
+      showPOIs: "Mostrar puntos de interés en el mapa",
       dangerZone: "Zona de peligro",
       clearCache: "Borrar caché de la aplicación",
       clearCacheDescription:
