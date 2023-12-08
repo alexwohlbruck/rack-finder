@@ -11,7 +11,7 @@
   $: open = !$prefsStore.onboardingCompleted;
 </script>
 
-<Modal bind:open size="xs" permanent>
+<Modal bind:open size="xs" dismissable={false}>
   <Stepper
     steps={[
       WelcomeStep,
