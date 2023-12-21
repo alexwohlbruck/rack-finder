@@ -218,7 +218,7 @@ export default {
     toast: {
       error: "Oops! Something went wrong.",
       contributeConfirmation:
-        "Thanks! Your contribution will is now live on the map!.",
+        "Thanks! Your contribution is now live on the map.",
       reviewConfirmation:
         "Thanks! Your edit will be reviewed by the community.",
       deleteConfirmation: "Thanks! This feature has been removed from the map.",

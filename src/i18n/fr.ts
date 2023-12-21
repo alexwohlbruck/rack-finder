@@ -220,7 +220,7 @@ export default {
     toast: {
       error: "Oups! Quelque chose s'est mal passé.",
       contributeConfirmation:
-        "Merci! Votre contribution apparaîtra sur la carte sous peu.",
+        "Merci! Votre contribution est désormais en ligne sur la carte.",
       reviewConfirmation:
         "Merci! Votre modification sera examinée par la communauté.",
       deleteConfirmation:
