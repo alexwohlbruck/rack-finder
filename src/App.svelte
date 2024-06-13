@@ -3,6 +3,7 @@
   import Map from "./components/Map/Map.svelte";
   import OnboardingModal from "./components/OnboardingModal.svelte";
   import InstallModal from "./components/InstallModal.svelte";
+  import StickerModal from "./components/stickers/StickerModal.svelte";
   import ProfilePanel from "./components/ProfilePanel.svelte";
   import Toast from "./lib/Toast.svelte";
   import AppLogoPanel from "./components/AppLogoPanel.svelte";
@@ -23,10 +24,10 @@
   import { setContext } from "svelte";
   import { key } from "./components/Map/map.config";
   import PlacementMarker from "./components/Map/markers/PlacementMarker.svelte";
-  import { showToast } from "./store/toast";
 
   let map, fetchRacks;
   let installModal = false;
+  let stickerModal = true;
 
   setContext(key, {
     getMap: () => map,
@@ -37,6 +38,7 @@
 <div class:dark={$dark}>
   <OnboardingModal />
   <InstallModal bind:open={installModal} />
+  <StickerModal bind:open={stickerModal} />
   <Toast />
 
   <main class="h-[100dvh] bg-gray-50 dark:bg-gray-900">
