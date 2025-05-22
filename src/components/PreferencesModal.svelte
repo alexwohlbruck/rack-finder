@@ -48,6 +48,7 @@
   const languageOptions = [
     { name: "Automatic", value: "auto" },
     { name: "English", value: "en-US" },
+    { name: "Deutsch", value: "de-DE" },
     { name: "Español", value: "es-ES" },
     { name: "Français", value: "fr-FR" },
     // { name: "Italiano", value: "it-IT" },

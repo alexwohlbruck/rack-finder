@@ -3,12 +3,13 @@ import { createI18nStore } from "svelte-i18next";
 import { derived } from "svelte/store";
 
 import en from "./en";
+import de from "./de";
 import es from "./es";
 import fr from "./fr";
 
 i18next.init({
   fallbackLng: "en",
-  resources: { en, es, fr },
+  resources: { en, de, es, fr },
   interpolation: {
     escapeValue: false, // not needed for svelte as it escapes by default
   },
