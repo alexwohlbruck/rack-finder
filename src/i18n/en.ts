@@ -126,6 +126,7 @@ export default {
         private: "Private",
         privateDescription: "Private residence or business",
         yes: "Public",
+        permit: "Only with permission.",
         permissive: "Permissive access",
         permissiveDescription: "Needs key/code access or must be customer",
         customers: "Customers only",
