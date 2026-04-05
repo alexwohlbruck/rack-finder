@@ -43,12 +43,6 @@
       // TODO: Fallback to friendlyName/snakeToWords
       name: $t(`rack.type.${type}`),
     })),
-    footTraffic: [
-      { value: "high", name: $t("rack.foot_traffic.high") },
-      { value: "medium", name: $t("rack.foot_traffic.medium") },
-      { value: "low", name: $t("rack.foot_traffic.low") },
-      { value: "none", name: $t("rack.foot_traffic.none") },
-    ],
     covered: [
       { value: "yes", name: $t("rack.covered.yes") },
       { value: "partial", name: $t("rack.covered.partial") },
@@ -96,14 +90,6 @@
     bind:value={filter.ignoreType}
     id="covered"
     items={filterOptions.type}
-    class="!mt-2"
-  />
-
-  <Label for="covered">{$t("rack.attributes.foot_traffic")}</Label>
-  <MultiSelect
-    bind:value={filter.footTraffic}
-    id="covered"
-    items={filterOptions.footTraffic}
     class="!mt-2"
   />
 

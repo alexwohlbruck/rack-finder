@@ -66,7 +66,6 @@ export default {
         distance: "Distance",
         access: "Access",
         covered: "Rain coverage",
-        foot_traffic: "Foot traffic",
         indoor: "Indoors",
         description: "Description",
       },
@@ -110,17 +109,6 @@ export default {
         yes: "Covered",
         partial: "Partially covered",
         no: "Exposed",
-      },
-      foot_traffic: {
-        none: "No foot traffic",
-        noneDescription: "Back of building, alleyway, etc",
-        low: "Low foot traffic",
-        lowDescription: "Side of building, parking lot, etc",
-        medium: "Medium foot traffic",
-        mediumDescription:
-          "Nearby a high traffic area, but not directly visible",
-        high: "High foot traffic",
-        highDescription: "Public square, ped path, etc",
       },
       access: {
         private: "Private",

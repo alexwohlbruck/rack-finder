@@ -32,7 +32,6 @@ export const RackCoverages = ["yes", "no", "partial"] as const;
 export type RackType = (typeof RackTypes)[number];
 export type RackCoverage = (typeof RackCoverages)[number];
 export type RackAccess = "yes" | "private" | "permissive";
-export type RackFootTraffic = "high" | "medium" | "low" | "none";
 export type RackIndoor = "yes" | "no";
 
 // https://wiki.openstreetmap.org/wiki/Key:bicycle_parking
@@ -42,7 +41,6 @@ export type RackTags = {
   capacity?: number;
   covered?: RackCoverage;
   access?: RackAccess;
-  foot_traffic?: RackFootTraffic;
   indoor?: RackIndoor;
   description?: string;
 };

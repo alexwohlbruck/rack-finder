@@ -4,7 +4,6 @@ import {
   type Rack,
   type RackCoverage,
   type RackType,
-  type RackFootTraffic,
 } from "../types/rack";
 import { mapStore } from "./map";
 import { prefsStore } from "./prefs";
@@ -17,7 +16,6 @@ export type SortOptions = {
 export type FilterOptions = {
   ignoreType: RackType[];
   covered: RackCoverage[];
-  footTraffic: RackFootTraffic[];
   indoorOnly: boolean;
   minCapacity: number;
   maxDistance: number;
@@ -43,7 +41,6 @@ const searchOptionsStore = syncedWritable<{
   filter: {
     ignoreType: [],
     covered: [],
-    footTraffic: [],
     indoorOnly: false,
     minCapacity: 1,
     maxDistance: 1000,
@@ -114,7 +111,6 @@ const racks = derived(
         const {
           ignoreType,
           covered: coveredSelection,
-          footTraffic: trafficSelection,
           indoorOnly,
           minCapacity,
           maxDistance,
@@ -125,19 +121,11 @@ const racks = derived(
         const {
           bicycle_parking: type,
           covered,
-          foot_traffic,
           indoor,
         } = rack.tags;
 
         // Hide types
         if (ignoreType && ignoreType?.length && ignoreType.includes(type)) {
-          return false;
-        }
-        // Foot traffic
-        if (
-          (!foot_traffic && trafficSelection?.length) ||
-          (trafficSelection?.length && !trafficSelection.includes(foot_traffic))
-        ) {
           return false;
         }
         // Rain coverage

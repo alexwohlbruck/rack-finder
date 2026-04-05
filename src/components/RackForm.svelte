@@ -200,32 +200,6 @@
       name: $t("rack.covered.partial"),
     },
   ];
-  const footTrafficOptions = [
-    {
-      value: "high",
-      name: `${$t("rack.foot_traffic.high")} (${$t(
-        "rack.foot_traffic.highDescription"
-      )})`,
-    },
-    {
-      value: "medium",
-      name: `${$t("rack.foot_traffic.medium")} (${$t(
-        "rack.foot_traffic.mediumDescription"
-      )})`,
-    },
-    {
-      value: "low",
-      name: `${$t("rack.foot_traffic.low")} (${$t(
-        "rack.foot_traffic.lowDescription"
-      )})`,
-    },
-    {
-      value: "none",
-      name: `${$t("rack.foot_traffic.none")} (${$t(
-        "rack.foot_traffic.noneDescription"
-      )})`,
-    },
-  ];
 
   async function submit() {
     const mapCenter = get(mapStore).center;
@@ -389,16 +363,6 @@
       bind:value={form.covered}
       id="covered"
       items={coverageOptions}
-      placeholder={$t("common.chooseOption")}
-    />
-  </Label>
-
-  <Label for="foot_traffic">
-    <div class="mb-1">{$t("rack.attributes.foot_traffic")}</div>
-    <Select
-      bind:value={form.foot_traffic}
-      id="foot_traffic"
-      items={footTrafficOptions}
       placeholder={$t("common.chooseOption")}
     />
   </Label>

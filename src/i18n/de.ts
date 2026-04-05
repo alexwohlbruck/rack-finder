@@ -65,7 +65,6 @@ export default {
         distance: "Entfernung",
         access: "Zugang",
         covered: "Überdachung",
-        foot_traffic: "Fußgängerverkehr",
         indoor: "Innenbereich",
         description: "Beschreibung",
       },
@@ -109,17 +108,6 @@ export default {
         yes: "Überdacht",
         partial: "Teilweise überdacht",
         no: "Nicht überdacht",
-      },
-      foot_traffic: {
-        none: "Kein Fußgängerverkehr",
-        noneDescription: "Hinter dem Gebäude, Gasse etc.",
-        low: "Wenig Fußgängerverkehr",
-        lowDescription: "Seitlich am Gebäude, Parkplatz etc.",
-        medium: "Mittlerer Fußgängerverkehr",
-        mediumDescription:
-          "Nahe einer belebten Gegend, aber nicht direkt sichtbar",
-        high: "Starker Fußgängerverkehr",
-        highDescription: "Öffentlicher Platz, Fußgängerweg etc.",
       },
       access: {
         private: "Privat",

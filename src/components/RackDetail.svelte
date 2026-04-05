@@ -62,7 +62,6 @@
     "bicycle_parking",
     "capacity",
     "covered",
-    "foot_traffic",
     "access",
     "indoor",
     "description",
@@ -268,16 +267,6 @@
             <P size="sm" weight="medium">
               {$t(tags.indoor === "yes" ? "common.yes" : "common.no")}
             </P>
-          </div>
-        </ListgroupItem>
-      {/if}
-      {#if tags.foot_traffic}
-        <ListgroupItem>
-          <div class="flex flex-col">
-            <P size="sm">{$t("rack.attributes.foot_traffic")}</P>
-            <P size="sm" weight="medium"
-              >{$t(`rack.foot_traffic.${tags.foot_traffic}`)}</P
-            >
           </div>
         </ListgroupItem>
       {/if}

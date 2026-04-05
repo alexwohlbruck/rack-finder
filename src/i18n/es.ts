@@ -66,7 +66,6 @@ export default {
         distance: "Distancia",
         access: "Acceso",
         covered: "Cobertura de lluvia",
-        foot_traffic: "Tráfico de peatones",
         indoor: "En interiores",
         description: "Descripción",
       },
@@ -110,17 +109,6 @@ export default {
         yes: "Cubierto",
         partial: "Parcialmente cubierto",
         no: "Expuesto",
-      },
-      foot_traffic: {
-        none: "Sin tráfico peatonal",
-        noneDescription: "Parte trasera del edificio, callejón, etc.",
-        low: "Tráfico peatonal bajo",
-        lowDescription: "Lado del edificio, estacionamiento, etc.",
-        medium: "Tráfico peatonal medio",
-        mediumDescription:
-          "Cerca de un área de alto tráfico, pero no directamente visible",
-        high: "Tráfico peatonal alto",
-        highDescription: "Plaza pública, camino peatonal, etc.",
       },
       access: {
         private: "Privado",
