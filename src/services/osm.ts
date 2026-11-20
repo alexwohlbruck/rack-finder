@@ -310,6 +310,21 @@ export const addBikeRack = async (rack: Partial<Rack>) => {
   }
 };
 
+// Public read of an element's current OSM metadata (version, last editor).
+// Uses plain fetch so it works without signing in.
+export const getElementMeta = async (
+  type: Rack["type"],
+  id: number
+): Promise<Pick<Rack, "version" | "user" | "uid" | "timestamp" | "changeset">> => {
+  const response = await fetch(`${OSM_BASE_URL}/${type}/${id}.json`);
+  if (!response.ok) {
+    throw new Error(`OSM request failed: ${response.status}`);
+  }
+  const { elements } = await response.json();
+  const { version, user, uid, timestamp, changeset } = elements[0];
+  return { version, user, uid, timestamp, changeset };
+};
+
 export const getBikeRack = async (id: number, type: "node") => {
   try {
     // include center point for ways
@@ -336,10 +351,12 @@ export const editBikeRack = async (
   rack: Partial<Rack>,
   requestReview = true
 ) => {
-  const { id, version, lat, lng } = rack;
+  const { id, lat, lng } = rack;
   const tags = dictToKVList(rack.tags);
 
   try {
+    // Search results carry no version, and a cached one may be stale
+    const { version } = await getElementMeta("node", id);
     const changeset = await createChangeset(`Edit bike rack`, requestReview);
 
     const newVersion = await editNode({
@@ -368,8 +385,9 @@ export const editBikeRack = async (
 
 export const deleteBikeRack = async (rack: Rack, requestReview = true) => {
   try {
+    const { version } = await getElementMeta("node", rack.id);
     const changeset = await createChangeset(`Remove bike rack`, requestReview);
-    await deleteNode(changeset, rack);
+    await deleteNode(changeset, { ...rack, version });
     await closeChangeset(changeset);
     if (!requestReview) {
       removeRack(rack.id);

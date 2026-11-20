@@ -3,36 +3,54 @@ import type { Geolocation } from "../types/geolocation";
 import devData from "./south-end-data.json";
 import config from "../config";
 
-const { useDevData, overpassUrl: baseUrl } = config;
+const { useDevData, overpassUrls } = config;
 
-// Overpass asks clients to retry these with exponential backoff
+// Public Overpass instances are frequently overloaded or throttling, so spread
+// requests across several and fail over to the next one when a server errors
+// or hangs
+const REQUEST_TIMEOUT_MS = 30000;
 const RETRYABLE_STATUSES = [429, 502, 503, 504];
-const MAX_ATTEMPTS = 4;
-const INITIAL_BACKOFF_MS = 1000;
+
+let nextServer = Math.floor(Math.random() * overpassUrls.length);
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const op = async (query: string) => {
-  const url = `${baseUrl}?data=${encodeURIComponent(query)}`;
-  let backoff = INITIAL_BACKOFF_MS;
+const fetchWithTimeout = async (url: string) => {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  try {
+    return await fetch(url, { signal: controller.signal });
+  } catch {
+    return null; // network error or timeout
+  } finally {
+    clearTimeout(timer);
+  }
+};
 
-  for (let attempt = 1; ; attempt++) {
-    const response = await fetch(url).catch(() => null);
+export const op = async (query: string) => {
+  // Round robin: each query starts on the next server in the list
+  const first = nextServer;
+  nextServer = (nextServer + 1) % overpassUrls.length;
+
+  let lastError = "network error";
+  for (let i = 0; i < overpassUrls.length; i++) {
+    const server = overpassUrls[(first + i) % overpassUrls.length];
+    const response = await fetchWithTimeout(
+      `${server}?data=${encodeURIComponent(query)}`
+    );
     if (response?.ok) {
       return response.json();
     }
 
+    lastError = `${response?.status ?? "network error"} from ${server}`;
     const retryable = !response || RETRYABLE_STATUSES.includes(response.status);
-    if (!retryable || attempt >= MAX_ATTEMPTS) {
-      throw new Error(
-        `Overpass request failed: ${response?.status ?? "network error"}`
-      );
-    }
+    if (!retryable) break; // e.g. 400 from a bad query: no server will accept it
 
-    // Jitter so clients that failed together don't retry together
-    await sleep(backoff + Math.random() * backoff);
-    backoff *= 2;
+    // Brief jittered pause so failing clients don't stampede the next server
+    await sleep(250 + Math.random() * 500);
   }
+
+  throw new Error(`Overpass request failed: ${lastError}`);
 };
 
 export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
