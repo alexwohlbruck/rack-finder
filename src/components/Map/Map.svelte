@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Map } from "mapbox-gl";
   import { onMount, onDestroy } from "svelte";
-  import * as op from "../../services/overpass";
+  import * as barrelman from "../../services/barrelman";
   import { mapStore, storeMapPosition } from "../../store/map";
   import "../../../node_modules/mapbox-gl/dist/mapbox-gl.css";
   import {
@@ -50,7 +50,7 @@
     const area = { lat: center.lat, lng: center.lng, radius };
     areasLoaded.push(area);
     try {
-      await op.fetchRacks(
+      await barrelman.fetchRacks(
         center,
         ignoreZoom ? DEFAULT_FETCH_RADIUS : radiusWithBuffer
       );

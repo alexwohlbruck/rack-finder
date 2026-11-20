@@ -42,7 +42,12 @@
     PenOutline,
     TrashBinSolid,
   } from "flowbite-svelte-icons";
-  import { authenticate, checkAuthenticated } from "../services/osm";
+  import {
+    authenticate,
+    checkAuthenticated,
+    getElementMeta,
+  } from "../services/osm";
+  import { addRack } from "../store/racks";
 
   const { getMap } = getContext(key) as any;
   const map = getMap();
@@ -69,6 +74,24 @@
 
   $: rack = $racksStore[params.id];
   $: tags = rack?.tags;
+
+  // Search results don't include OSM metadata (last editor, version), so
+  // fetch it from the OSM API once per opened rack
+  let metaLoadedFor;
+  $: if (rack && rack.id !== metaLoadedFor) {
+    metaLoadedFor = rack.id;
+    loadMeta(rack);
+  }
+
+  async function loadMeta({ id, type }: Rack) {
+    try {
+      const meta = await getElementMeta(type, id);
+      const current = $racksStore[id];
+      if (current) addRack({ ...current, ...meta });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   let lastId;
   let cycleDistance = 0;
