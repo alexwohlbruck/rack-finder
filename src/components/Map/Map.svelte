@@ -15,6 +15,8 @@
   import { haversine } from "../../util";
   import type { Position } from "../../types/geolocation";
   import SatelliteToggle from "./controls/SatelliteToggle.svelte";
+  import { showToast } from "../../store/toast";
+  import { t } from "../../i18n";
 
   // Store a list of areas which bike racks have already been fetched
   const areasLoaded: {
@@ -32,7 +34,7 @@
     }, DEBOUNCE_TIME);
   };
 
-  export function fetchRacks(ignoreZoom = false, center?: Position) {
+  export async function fetchRacks(ignoreZoom = false, center?: Position) {
     if (!map) return;
     const tooFarZoom = !ignoreZoom && map.getZoom() < RACKS_LAYER_MAX_ZOOM;
     center = center || map.getCenter();
@@ -43,8 +45,20 @@
     const radiusWithBuffer = ignoreZoom
       ? radius
       : RACKS_FETCH_OUTER_BOUNDS_RATIO(radius);
-    areasLoaded.push({ lat: center.lat, lng: center.lng, radius });
-    op.fetchRacks(center, ignoreZoom ? DEFAULT_FETCH_RADIUS : radiusWithBuffer);
+    // Mark the area before fetching so map moves don't send duplicate queries
+    // while a request is in flight; forget it on failure so it can be retried
+    const area = { lat: center.lat, lng: center.lng, radius };
+    areasLoaded.push(area);
+    try {
+      await op.fetchRacks(
+        center,
+        ignoreZoom ? DEFAULT_FETCH_RADIUS : radiusWithBuffer
+      );
+    } catch (error) {
+      areasLoaded.splice(areasLoaded.indexOf(area), 1);
+      console.error(error);
+      showToast($t("toast.racksLoadFailed"), "error");
+    }
   }
 
   // Check if the map bounds are within any of the previously loaded areas

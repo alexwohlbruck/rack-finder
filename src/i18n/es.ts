@@ -206,6 +206,8 @@ export default {
       viewOn: "Ver proyecto en",
     },
     toast: {
+      racksLoadFailed:
+        "No se pudieron cargar los racks para bicicletas porque el servidor de datos del mapa está ocupado. Mueve el mapa para intentarlo de nuevo.",
       error: "¡Ups! Algo salió mal.",
       contributeConfirmation:
         "¡Gracias! Tu contribución ahora está disponible en el mapa.",

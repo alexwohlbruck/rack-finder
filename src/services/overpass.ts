@@ -5,10 +5,34 @@ import config from "../config";
 
 const { useDevData, overpassUrl: baseUrl } = config;
 
+// Overpass asks clients to retry these with exponential backoff
+const RETRYABLE_STATUSES = [429, 502, 503, 504];
+const MAX_ATTEMPTS = 4;
+const INITIAL_BACKOFF_MS = 1000;
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const op = async (query: string) => {
-  const response = await fetch(`${baseUrl}?data=${encodeURIComponent(query)}`);
-  const data = await response.json();
-  return data;
+  const url = `${baseUrl}?data=${encodeURIComponent(query)}`;
+  let backoff = INITIAL_BACKOFF_MS;
+
+  for (let attempt = 1; ; attempt++) {
+    const response = await fetch(url).catch(() => null);
+    if (response?.ok) {
+      return response.json();
+    }
+
+    const retryable = !response || RETRYABLE_STATUSES.includes(response.status);
+    if (!retryable || attempt >= MAX_ATTEMPTS) {
+      throw new Error(
+        `Overpass request failed: ${response?.status ?? "network error"}`
+      );
+    }
+
+    // Jitter so clients that failed together don't retry together
+    await sleep(backoff + Math.random() * backoff);
+    backoff *= 2;
+  }
 };
 
 export const fetchRacks = async ({ lat, lng }: Geolocation, radius: number) => {
