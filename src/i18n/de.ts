@@ -205,6 +205,8 @@ export default {
       viewOn: "Projekt ansehen auf",
     },
     toast: {
+      racksLoadFailed:
+        "Fahrradständer konnten nicht geladen werden, weil der Kartendatenserver ausgelastet ist. Bewege die Karte, um es erneut zu versuchen.",
       error: "Ups! Etwas ist schiefgelaufen.",
       contributeConfirmation:
         "Danke! Dein Beitrag ist jetzt auf der Karte sichtbar.",

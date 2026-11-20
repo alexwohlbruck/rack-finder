@@ -205,6 +205,8 @@ export default {
       viewOn: "View project on",
     },
     toast: {
+      racksLoadFailed:
+        "Couldn't load bike racks because the map data server is busy. Move the map to try again.",
       error: "Oops! Something went wrong.",
       contributeConfirmation:
         "Thanks! Your contribution is now live on the map.",

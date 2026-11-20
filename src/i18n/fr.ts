@@ -206,6 +206,8 @@ export default {
       viewOn: "Voir le projet sur",
     },
     toast: {
+      racksLoadFailed:
+        "Impossible de charger les racks à vélos, car le serveur de données cartographiques est surchargé. Déplacez la carte pour réessayer.",
       error: "Oups! Quelque chose s'est mal passé.",
       contributeConfirmation:
         "Merci! Votre contribution est désormais en ligne sur la carte.",
