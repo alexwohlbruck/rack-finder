@@ -67,22 +67,38 @@ export const logout = () => {
   push("/");
 };
 
-export const init = async () => {
-  // Single page auth method, check code and authenticate
-  if (
-    useSinglePageAuth &&
-    window.location.search
-      .slice(1)
-      .split("&")
-      .some((p) => p.startsWith("code="))
-  ) {
-    await authenticate();
-  }
+const hasAuthResponse = () => {
+  const params = new URLSearchParams(window.location.search);
+  return params.has("code") || params.has("error");
+};
 
-  // Return auth token to parent window when authentication is complete
-  if (window.opener) {
-    window.opener.authComplete(window.location.href);
-    window.close();
+/*
+  Called before the app mounts. In popup mode, OSM redirects the login popup
+  back here with ?code=. openstreetmap.org sends Cross-Origin-Opener-Policy:
+  same-origin, which severs window.opener, so the popup can't call back into
+  the main window directly. osm-auth (>= 3) listens on a BroadcastChannel
+  instead: post the URL there and close the popup.
+  Returns true if this window is the login popup and is closing.
+*/
+export const handleAuthPopupLanding = () => {
+  if (useSinglePageAuth || !hasAuthResponse()) return false;
+
+  new BroadcastChannel("osm-api-auth-complete").postMessage(
+    window.location.href
+  );
+  window.close();
+
+  // If the window couldn't be closed (e.g. the URL was opened directly),
+  // drop the auth params and carry on as a normal page load
+  window.history.replaceState(null, "", window.location.pathname);
+  return true;
+};
+
+export const init = async () => {
+  // Single page auth method (Safari/iOS): this page was redirected back from
+  // OSM with ?code=, so finish authenticating here
+  if (useSinglePageAuth && hasAuthResponse()) {
+    await authenticate();
   }
 
   // If the user is authenticated, get the user details
